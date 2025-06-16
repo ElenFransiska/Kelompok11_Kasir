@@ -1,7 +1,7 @@
 menu.php
 <?php
 // menu.php - Menampilkan daftar makanan dan minuman
-$conn = new mysqli("localhost", "username", "password", "database");
+$conn = new mysqli("localhost", "root", "", "database");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
