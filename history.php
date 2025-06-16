@@ -2,7 +2,7 @@
 // history.php - Menampilkan riwayat pesanan
 require 'db_connection.php'; // Koneksi ke database
 
-$sql = "SELECT h.*, p.nama AS pelanggan_nama FROM history h JOIN pelanggan p ON h.pelanggan_id = p.id ORDER BY h.created_at DESC";
+$sql = "SELECT h.*, p.nama AS pelanggan_nama FROM history h JOIN pelanggan p ON h.pelanggan_id = p.id ORDER BY h.tanggal DESC";
 $result = $conn->query($sql);
 ?>
 <!DOCTYPE html>
