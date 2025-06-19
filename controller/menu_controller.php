@@ -1,5 +1,5 @@
 <?php
-require 'db_connection.php';
+require '../db_connection.php';
 
 class MenuController {
     private $conn;
@@ -51,7 +51,7 @@ try {
     $menuData = $controller->getMenuItems();
     
     // Pass data to view
-    require 'menu_view.php';
+    require '../view/menu_view.php';
     
 } catch (Exception $e) {
     // Handle errors gracefully
