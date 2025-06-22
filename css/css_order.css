@@ -1,4 +1,4 @@
-/* style.css */
+/* css_order.css */
 
 /* Variabel CSS untuk konsistensi */
 :root {
@@ -233,16 +233,16 @@ p {
 .menu-grid {
     display: grid;
     /* Disesuaikan: minmax lebih kecil untuk item yang tidak terlalu besar, memungkinkan lebih banyak kolom jika ruang cukup */
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Disesuaikan untuk tampilan yang lebih rapat */
-    gap: 1.8rem; /* Jarak antar kartu sedikit lebih besar */
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* Disesuaikan dari 180px, agar lebih kecil */
+    gap: 1.5rem; /* Disesuaikan dari 1.8rem */
     justify-content: center;
     align-items: stretch;
 }
 
 .menu-item-card {
     background: var(--card-bg); /* Menggunakan gradien untuk background kartu */
-    border-radius: 20px; /* Lebih membulat */
-    box-shadow: 0 6px 20px var(--shadow-light); /* Bayangan lebih lembut */
+    border-radius: 18px; /* Disesuaikan dari 20px */
+    box-shadow: 0 5px 18px var(--shadow-light); /* Bayangan lebih lembut, sedikit disesuaikan */
     text-align: center;
     transition: transform 0.3s cubic-bezier(.25,.8,.25,1), box-shadow 0.3s cubic-bezier(.25,.8,.25,1); /* Kurva transisi lebih baik */
     display: flex;
@@ -263,13 +263,13 @@ p {
     background: rgba(var(--primary), 0.1); /* Warna primary transparan */
     opacity: 0;
     transition: opacity 0.3s ease;
-    border-radius: 20px;
+    border-radius: 18px; /* Disesuaikan dari 20px */
     z-index: -1;
 }
 
 .menu-item-card:hover {
-    transform: translateY(-12px); /* Lift lebih tinggi */
-    box-shadow: 0 18px 45px var(--shadow-medium); /* Bayangan lebih kuat */
+    transform: translateY(-10px); /* Disesuaikan dari -12px */
+    box-shadow: 0 15px 40px var(--shadow-medium); /* Disesuaikan dari 18px */
 }
 
 .menu-item-card:hover::before {
@@ -278,18 +278,18 @@ p {
 
 .menu-item-card img {
     width: 100%;
-    height: 140px; /* Disesuaikan, membuat gambar lebih kecil */
+    height: 120px; /* Disesuaikan dari 140px, membuat gambar lebih kecil */
     object-fit: cover;
     border-radius: 18px 18px 0 0;
     transition: transform 0.5s cubic-bezier(.25,.8,.25,1); /* Transisi lebih lambat dan halus */
 }
 
 .menu-item-card:hover img {
-    transform: scale(1.1); /* Zoom yang lebih terlihat */
+    transform: scale(1.08); /* Disesuaikan dari 1.1 */
 }
 
 .card-content {
-    padding: 20px; /* Disesuaikan dari 18px */
+    padding: 15px; /* Disesuaikan dari 20px */
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -297,19 +297,19 @@ p {
 }
 
 .card-content h4 {
-    font-size: 1.35rem; /* Disesuaikan dari 1.4rem */
+    font-size: 1.25rem; /* Disesuaikan dari 1.35rem */
     color: var(--dark);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem; /* Disesuaikan */
     font-weight: 700; /* Lebih tebal */
     letter-spacing: -0.3px;
 }
 
 .card-content p.description {
-    font-size: 0.88rem; /* Disesuaikan dari 0.85rem */
+    font-size: 0.85rem; /* Disesuaikan dari 0.88rem */
     color: var(--text-medium);
-    margin-bottom: 12px; /* Disesuaikan dari 10px */
+    margin-bottom: 10px; /* Disesuaikan dari 12px */
     flex-grow: 1;
-    min-height: 42px; /* Sedikit lebih tinggi untuk deskripsi 2 baris */
+    min-height: 40px; /* Sedikit disesuaikan */
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -319,19 +319,19 @@ p {
 }
 
 .card-content p.price {
-    font-size: 1.45rem; /* Disesuaikan dari 1.4rem */
+    font-size: 1.35rem; /* Disesuaikan dari 1.45rem */
     font-weight: 900; /* Sangat tebal */
     color: var(--secondary);
-    margin-bottom: 15px; /* Disesuaikan dari 12px */
+    margin-bottom: 12px; /* Disesuaikan dari 15px */
     letter-spacing: -0.5px;
     text-shadow: 0 1px 2px rgba(139, 92, 246, 0.2); /* Bayangan pada harga */
 }
 
 .stok-info {
-    font-size: 0.82rem; /* Disesuaikan dari 0.8rem */
+    font-size: 0.8rem; /* Disesuaikan dari 0.82rem */
     color: var(--text-medium);
-    margin-top: -8px;
-    margin-bottom: 0;
+    margin-top: -6px; /* Disesuaikan dari -8px */
+    margin-bottom: 15px; /* Disesuaikan agar ada ruang untuk tombol */
     font-weight: 600;
     text-transform: capitalize; /* Kapitalisasi huruf pertama */
 }
@@ -360,15 +360,52 @@ p {
     100% { transform: scale(1); opacity: 1; }
 }
 
+/* NEW: Styles for the "Pesan" button on menu_page.php */
+.menu-item-order-btn {
+    background: linear-gradient(to right, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    padding: 10px 18px; /* Padding tombol */
+    border-radius: 10px; /* Sudut membulat */
+    font-size: 0.95rem; /* Ukuran font tombol */
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    text-decoration: none; /* Penting untuk link */
+    display: inline-flex; /* Agar ikon dan teks sejajar */
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Jarak antara ikon dan teks */
+    width: calc(100% - 30px); /* Hampir selebar kartu */
+    margin: 0 auto; /* Tengah */
+    margin-top: 10px; /* Jarak dari stok-info */
+}
+
+.menu-item-order-btn:hover {
+    background: linear-gradient(to right, var(--primary-dark), #004085);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
+}
+
+.menu-item-order-btn[aria-disabled="true"] {
+    background-color: #cccccc !important; /* Warna abu-abu */
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+    transform: none !important;
+    pointer-events: none; /* Memastikan tidak bisa diklik */
+    opacity: 0.6;
+}
+
 
 /* Styles specific to pesan_makanan.php (order specific elements) */
 .order-quantity-input {
-    width: 70px;
-    padding: 8px 10px; /* Lebih besar */
+    width: 65px; /* Disesuaikan dari 70px */
+    padding: 7px 9px; /* Disesuaikan */
     border: 1px solid var(--border-color);
-    border-radius: 10px; /* Lebih membulat */
+    border-radius: 9px; /* Disesuaikan */
     text-align: center;
-    font-size: 1rem; /* Lebih besar */
+    font-size: 0.95rem; /* Disesuaikan */
     -moz-appearance: textfield;
     transition: all 0.3s ease;
     background-color: var(--light); /* Background input */
@@ -376,7 +413,7 @@ p {
 .order-quantity-input:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.3); /* Shadow lebih besar */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Shadow lebih kecil */
 }
 .order-quantity-input::-webkit-outer-spin-button,
 .order-quantity-input::-webkit-inner-spin-button {
@@ -387,33 +424,33 @@ p {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 12px; /* Jarak lebih besar */
-    margin-top: 15px; /* Lebih banyak ruang */
+    gap: 10px; /* Disesuaikan dari 12px */
+    margin-top: 12px; /* Disesuaikan dari 15px */
 }
 .order-button-main {
     background: linear-gradient(to right, var(--success), #218838);
     color: white;
     border: none;
-    padding: 18px 40px; /* Padding lebih besar */
-    border-radius: 15px; /* Lebih membulat */
-    font-size: 1.35rem; /* Font lebih besar */
+    padding: 16px 35px; /* Disesuaikan dari 18px */
+    border-radius: 12px; /* Disesuaikan dari 15px */
+    font-size: 1.25rem; /* Disesuaikan dari 1.35rem */
     font-weight: 700;
     cursor: pointer;
     transition: all 0.4s ease;
-    box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4); /* Bayangan lebih kuat */
-    margin-top: 4.5rem; /* Jarak lebih besar */
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3); /* Disesuaikan dari 8px */
+    margin-top: 4rem; /* Disesuaikan dari 4.5rem */
     width: fit-content;
     display: flex;
     align-items: center;
-    gap: 15px; /* Jarak ikon lebih besar */
+    gap: 12px; /* Disesuaikan dari 15px */
     position: relative;
     overflow: hidden;
     letter-spacing: 0.5px;
 }
 .order-button-main:hover {
     background: linear-gradient(to right, #218838, #1e7e34);
-    transform: translateY(-7px) scale(1.03); /* Efek hover lebih dramatis */
-    box-shadow: 0 15px 35px rgba(40, 167, 69, 0.6);
+    transform: translateY(-5px) scale(1.02); /* Disesuaikan dari -7px */
+    box-shadow: 0 10px 25px rgba(40, 167, 69, 0.5); /* Disesuaikan dari 15px */
 }
 .order-button-main:disabled {
     background-color: #cccccc;
@@ -435,8 +472,8 @@ p {
     opacity: 0;
 }
 .order-button-main:hover::before {
-    width: 250%; /* Efek kilat lebih besar */
-    height: 250%;
+    width: 200%; /* Disesuaikan dari 250% */
+    height: 200%; /* Disesuaikan dari 250% */
     opacity: 1;
 }
 .add-to-cart-btn {
@@ -445,17 +482,17 @@ p {
 
 /* Message Box Styling */
 .message-box {
-    padding: 20px 35px; /* Padding lebih besar */
-    margin-bottom: 4rem; /* Jarak lebih besar */
-    border-radius: 18px; /* Lebih membulat */
-    font-size: 1.2rem; /* Font lebih besar */
+    padding: 18px 30px; /* Disesuaikan dari 20px */
+    margin-bottom: 3.5rem; /* Disesuaikan dari 4rem */
+    border-radius: 15px; /* Disesuaikan dari 18px */
+    font-size: 1.15rem; /* Disesuaikan dari 1.2rem */
     font-weight: 600;
     border: 1px solid transparent;
     animation: fadeInScale 0.7s forwards; /* Animasi lebih lambat */
-    max-width: 700px; /* Lebih lebar */
+    max-width: 650px; /* Disesuaikan dari 700px */
     margin-left: auto;
     margin-right: auto;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Bayangan lebih kuat */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Disesuaikan dari 8px */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -475,7 +512,7 @@ p {
 }
 
 @keyframes fadeInScale {
-    from { opacity: 0; transform: translateY(-40px) scale(0.9); } /* Efek awal lebih rendah dan kecil */
+    from { opacity: 0; transform: translateY(-30px) scale(0.95); } /* Disesuaikan dari -40px, 0.9 */
     to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
@@ -505,40 +542,45 @@ p {
         height: 5px;
     }
     .menu-grid {
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* Disesuaikan */
-        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* Disesuaikan lagi untuk 1024px */
+        gap: 1.2rem; /* Disesuaikan */
     }
     .menu-item-card img {
-        height: 120px; /* Disesuaikan */
+        height: 100px; /* Disesuaikan lagi */
     }
     .card-content h4 {
-        font-size: 1.25rem;
+        font-size: 1.1rem; /* Disesuaikan */
     }
     .card-content p.description {
-        font-size: 0.85rem;
-        min-height: 38px;
+        font-size: 0.8rem; /* Disesuaikan */
+        min-height: 35px; /* Disesuaikan */
     }
     .card-content p.price {
-        font-size: 1.3rem;
+        font-size: 1.15rem; /* Disesuaikan */
     }
     .stok-info {
-        font-size: 0.8rem;
+        font-size: 0.75rem; /* Disesuaikan */
+    }
+    .menu-item-order-btn { /* Untuk 1024px */
+        padding: 8px 15px;
+        font-size: 0.85rem;
+        width: calc(100% - 20px);
     }
     .order-quantity-input {
-        width: 60px;
-        padding: 7px 8px;
-        font-size: 0.95rem;
+        width: 55px; /* Disesuaikan */
+        padding: 6px 7px; /* Disesuaikan */
+        font-size: 0.9rem; /* Disesuaikan */
     }
     .order-button-main {
-        padding: 14px 30px;
-        font-size: 1.1rem;
-        margin-top: 3.5rem;
-        gap: 10px;
+        padding: 12px 25px; /* Disesuaikan */
+        font-size: 1rem; /* Disesuaikan */
+        margin-top: 3rem; /* Disesuaikan */
+        gap: 8px; /* Disesuaikan */
     }
     .message-box {
-        font-size: 1.1rem;
-        padding: 15px 25px;
-        margin-bottom: 3rem;
+        font-size: 1.05rem; /* Disesuaikan */
+        padding: 14px 22px; /* Disesuaikan */
+        margin-bottom: 2.8rem; /* Disesuaikan */
     }
 }
 
@@ -588,48 +630,53 @@ p {
         height: 4px;
     }
     .menu-grid {
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* Disesuaikan */
-        gap: 1.2rem;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Disesuaikan lagi */
+        gap: 1rem; /* Disesuaikan */
     }
     .menu-item-card {
         border-radius: 15px;
     }
     .menu-item-card img {
-        height: 100px; /* Disesuaikan */
+        height: 90px; /* Disesuaikan lagi */
     }
     .card-content {
-        padding: 12px;
+        padding: 10px; /* Disesuaikan */
     }
     .card-content h4 {
-        font-size: 1.1rem;
+        font-size: 1rem; /* Disesuaikan */
     }
     .card-content p.description {
-        font-size: 0.78rem;
-        min-height: 32px;
-        margin-bottom: 8px;
+        font-size: 0.75rem; /* Disesuaikan */
+        min-height: 30px; /* Disesuaikan */
+        margin-bottom: 6px; /* Disesuaikan */
     }
     .card-content p.price {
-        font-size: 1.1rem;
-        margin-bottom: 10px;
+        font-size: 1.05rem; /* Disesuaikan */
+        margin-bottom: 8px; /* Disesuaikan */
     }
     .stok-info {
-        font-size: 0.75rem;
+        font-size: 0.7rem; /* Disesuaikan */
+    }
+    .menu-item-order-btn { /* Untuk 768px */
+        padding: 7px 12px;
+        font-size: 0.8rem;
+        width: calc(100% - 20px);
     }
     .order-quantity-input {
-        width: 55px;
-        font-size: 0.85rem;
+        width: 50px; /* Disesuaikan */
+        font-size: 0.8rem; /* Disesuaikan */
     }
     .order-button-main {
-        padding: 10px 20px;
-        font-size: 0.95rem;
-        margin-top: 2.5rem;
-        border-radius: 10px;
+        padding: 9px 18px; /* Disesuaikan */
+        font-size: 0.9rem; /* Disesuaikan */
+        margin-top: 2.2rem; /* Disesuaikan */
+        border-radius: 9px; /* Disesuaikan */
     }
     .message-box {
-        font-size: 0.95rem;
-        padding: 12px 20px;
-        margin-bottom: 2.5rem;
-        border-radius: 12px;
+        font-size: 0.95rem; /* Disesuaikan */
+        padding: 10px 18px; /* Disesuaikan */
+        margin-bottom: 2.2rem; /* Disesuaikan */
+        border-radius: 10px; /* Disesuaikan */
     }
     .footer {
         padding: 1.5rem;
@@ -677,41 +724,47 @@ p {
     }
     .menu-grid {
         grid-template-columns: 1fr; /* Tetap stack pada layar sangat kecil */
-        gap: 1rem;
+        gap: 0.8rem; /* Disesuaikan */
     }
     .menu-item-card img {
-        height: 100px; /* Tetap kecil */
+        height: 80px; /* Disesuaikan lagi */
     }
     .card-content h4 {
-        font-size: 1rem;
+        font-size: 0.95rem; /* Disesuaikan */
     }
     .card-content p.description {
-        font-size: 0.7rem;
-        min-height: 28px;
-        margin-bottom: 6px;
+        font-size: 0.68rem; /* Disesuaikan */
+        min-height: 25px; /* Disesuaikan */
+        margin-bottom: 5px; /* Disesuaikan */
     }
     .card-content p.price {
-        font-size: 1rem;
-        margin-bottom: 8px;
+        font-size: 0.95rem; /* Disesuaikan */
+        margin-bottom: 6px; /* Disesuaikan */
     }
     .stok-info {
-        font-size: 0.7rem;
+        font-size: 0.68rem; /* Disesuaikan */
+    }
+    .menu-item-order-btn { /* Untuk 500px */
+        padding: 6px 10px;
+        font-size: 0.75rem;
+        width: calc(100% - 20px);
     }
     .order-quantity-input {
-        width: 50px;
-        padding: 5px 6px;
-        font-size: 0.8rem;
+        width: 45px; /* Disesuaikan */
+        padding: 4px 5px; /* Disesuaikan */
+        font-size: 0.75rem; /* Disesuaikan */
     }
     .order-button-main {
-        padding: 8px 15px;
-        font-size: 0.8rem;
-        margin-top: 2rem;
-        gap: 8px;
+        padding: 7px 12px; /* Disesuaikan */
+        font-size: 0.75rem; /* Disesuaikan */
+        margin-top: 1.8rem; /* Disesuaikan */
+        border-radius: 8px; /* Disesuaikan */
     }
     .message-box {
-        font-size: 0.85rem;
-        padding: 10px 15px;
-        margin-bottom: 1.5rem;
+        font-size: 0.8rem; /* Disesuaikan */
+        padding: 8px 12px; /* Disesuaikan */
+        margin-bottom: 1.2rem; /* Disesuaikan */
+        border-radius: 8px; /* Disesuaikan */
     }
     .footer {
         padding: 1rem;
