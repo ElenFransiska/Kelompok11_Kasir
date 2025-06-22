@@ -24,3 +24,25 @@ INSERT INTO produk (kategori, nama, image, keterangan, stok) VALUES
 ('Minuman', 'Soda', 'soda.jpg', 'Minuman bersoda dengan rasa buah.', 22),
 ('Minuman', 'Air Mineral', 'air_mineral.jpg', 'Air mineral segar dan sehat.', 50);
 
+DELIMITER //
+
+CREATE TRIGGER check_duplicate_nama
+BEFORE INSERT ON produk
+FOR EACH ROW
+BEGIN
+    DECLARE duplicate_count INT;
+
+    -- Check for existing product with the same name
+    SELECT COUNT(*) INTO duplicate_count
+    FROM produk
+    WHERE nama = NEW.nama;
+
+    -- If a duplicate is found, signal an error
+    IF duplicate_count > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Produk sudah ada';
+    END IF;
+END;
+
+//
+
+DELIMITER ;

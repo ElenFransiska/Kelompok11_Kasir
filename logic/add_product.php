@@ -23,13 +23,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) {
             // Simpan ke database
             $image_path = "images/" . $filename; // Path relatif untuk disimpan di database
-            $sql = "INSERT INTO produk (kategori, nama, image, keterangan, stok) 
-                    VALUES ('$kategori', '$nama', '$image_path', '$keterangan', $stok)";
             
-            if ($conn->query($sql) === TRUE) {
+            try {
+                $sql = "INSERT INTO produk (kategori, nama, image, keterangan, stok) 
+                        VALUES ('$kategori', '$nama', '$image_path', '$keterangan', $stok)";
+                
+                // Execute the query
+                $conn->query($sql);
+                
+                // Redirect on success
                 header("Location: ../Interface/admin.php?message=Produk+berhasil+ditambahkan");
-            } else {
-                header("Location: ../Interface/admin.php?message=Error: " . urlencode($conn->error));
+            } catch (mysqli_sql_exception $e) {
+                // Handle duplicate error
+                if ($e->getMessage() === 'Produk sudah ada') {
+                    header("Location: ../Interface/admin.php?message=Produk+sedang+ada");
+                } else {
+                    header("Location: ../Interface/admin.php?message=Error: " . urlencode($e->getMessage()));
+                }
             }
         } else {
             header("Location: ../Interface/admin.php?message=Gagal+mengupload+gambar");
