@@ -49,7 +49,7 @@ $result = $conn->query($sql);
                         <td><?php echo $row['id_produk']; ?></td>
                         <td><?php echo $row['kategori']; ?></td>
                         <td><?php echo $row['nama']; ?></td>
-                        <td><img src="<?php echo $row['image']; ?>" alt="<?php echo $row['nama']; ?>" width="50"></td>
+                        <td><img src="../<?= $row['image'] ?>" alt="<?= $row['nama'] ?>"></td>
                         <td><?php echo $row['keterangan']; ?></td>
                         <td><?php echo $row['stok']; ?></td>
                         <td>
@@ -84,7 +84,7 @@ $result = $conn->query($sql);
 
         <div class="product-form">
             <h2>Tambah Produk</h2>
-            <form method="POST" action="../logic/add_product.php">
+            <form method="POST" action="../logic/add_product.php" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="kategori">Kategori</label>
                     <select id="kategori" name="kategori" required>
