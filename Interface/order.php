@@ -43,9 +43,9 @@ $conn->close(); // Tutup koneksi setelah semua operasi selesai pada satu request
             [Nama Cafe/Restoran Anda]
         </div>
         <nav class="navbar-nav">
-            <a href="index.php" class="nav-link">Home</a>
+            <a href="home.php" class="nav-link">Home</a>
+            <a href="menu_page.php" class="nav-link active">Menu</a> 
             <a href="pesan.php" class="nav-link">Pesan Sekarang</a>
-            <a href="menu_page.php" class="nav-link active">Menu</a> <!-- Link aktif untuk halaman ini -->
             <a href="contact.php" class="nav-link">Hubungi Kami</a>
         </nav>
     </header>
