@@ -1,0 +1,720 @@
+/* style.css */
+
+/* Variabel CSS untuk konsistensi */
+:root {
+    --primary: #007bff; /* Blue */
+    --primary-light: #66b2ff; /* Lighter blue for subtle gradients */
+    --primary-dark: #0056b3;
+    --secondary: #8b5cf6; /* A nice purple for price or accents */
+    --secondary-light: #a78bfa;
+    --light: #f8f9fa; /* Lighter background */
+    --dark: #343a40; /* Dark text */
+    --text-medium: #6c757d; /* Medium grey text */
+    --info-blue: #17a2b8; /* Info blue */
+    --bg-light-blue: #e0f2f7; /* Very light blue background */
+    --bg-gradient-start: #f0f8ff; /* Lightest blue for gradient start */
+    --bg-gradient-end: #e6f7ff;   /* Slightly darker light blue for gradient end */
+    --danger: #dc3545; /* Red */
+    --success: #28a745; /* Green */
+    --warning: #ffc107; /* Orange */
+    --border-color: #ced4da;
+    --card-bg: linear-gradient(145deg, #ffffff, #f0f0f0); /* Subtle card background gradient */
+    --shadow-light: rgba(0, 0, 0, 0.05);
+    --shadow-medium: rgba(0, 0, 0, 0.1);
+    --shadow-strong: rgba(0, 0, 0, 0.15);
+}
+
+/* Basic Reset & Body Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+    color: var(--dark);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    scroll-behavior: smooth;
+    overflow-x: hidden; /* Mencegah scroll horizontal yang tidak diinginkan */
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: white;
+    color: var(--dark);
+    padding: 1rem 2.5rem; /* Padding lebih besar */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px var(--shadow-light); /* Bayangan lebih halus */
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(0,0,0,0.05); /* Garis bawah halus */
+}
+
+.navbar-brand {
+    font-size: 1.85rem; /* Lebih besar */
+    font-weight: 700;
+    color: var(--primary-dark);
+    text-decoration: none;
+    letter-spacing: -0.7px; /* Sedikit penyesuaian spasi huruf */
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Jarak antara logo dan teks */
+}
+
+.navbar-brand .logo-placeholder {
+    width: 35px; /* Ukuran logo */
+    height: 35px;
+    background-color: var(--primary);
+    border-radius: 8px; /* Sudut membulat */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 800;
+    line-height: 1; /* Untuk memastikan teks di tengah */
+}
+
+.navbar-nav {
+    display: flex;
+    gap: 1.8rem; /* Jarak antar link lebih besar */
+}
+
+.nav-link {
+    color: var(--dark);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.6rem 1rem; /* Padding lebih besar */
+    border-radius: 8px; /* Lebih membulat */
+    transition: all 0.3s ease; /* Transisi lebih halus */
+    position: relative; /* Untuk efek underline */
+    overflow: hidden; /* Untuk efek hover */
+}
+
+.nav-link:hover {
+    background-color: var(--primary-light); /* Warna hover lebih terang */
+    color: white;
+    transform: translateY(-3px) scale(1.02); /* Efek lift dan scale lebih terasa */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.nav-link.active {
+    background: linear-gradient(45deg, var(--primary), var(--primary-dark)); /* Gradien untuk active link */
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
+}
+
+/* Main Content Wrapper */
+.main-content {
+    flex-grow: 1;
+    padding: 3.5rem 2.5rem; /* Padding lebih besar */
+    max-width: 1280px; /* Lebar maksimum lebih besar */
+    margin: 0 auto;
+    width: 100%;
+}
+
+h1, h2, h3 {
+    color: var(--dark);
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 2.75rem;
+    line-height: 1.3;
+}
+
+h2 {
+    font-size: 2.25rem;
+}
+
+p {
+    font-size: 1.05rem; /* Sedikit lebih kecil */
+    color: var(--text-medium);
+    margin-bottom: 1.2rem; /* Sedikit lebih kecil */
+}
+
+/* Footer Styles */
+.footer {
+    background-color: var(--dark);
+    color: white;
+    text-align: center;
+    padding: 2.2rem; /* Padding lebih besar */
+    margin-top: auto;
+    font-size: 0.95rem; /* Lebih besar sedikit */
+    box-shadow: 0 -5px 25px var(--shadow-medium); /* Bayangan lebih kuat */
+    border-top-left-radius: 20px; /* Lebih membulat */
+    border-top-right-radius: 20px;
+    letter-spacing: 0.2px;
+}
+.footer p {
+    margin-bottom: 0.6rem;
+    color: rgba(255, 255, 255, 0.9); /* Sedikit transparan */
+}
+.footer p:last-child {
+    margin-bottom: 0;
+    font-size: 0.85rem; /* Lebih besar sedikit */
+    opacity: 0.7;
+}
+
+/* --- Specific Styles for menu_page.php and pesan_makanan.php (shared components) --- */
+
+.order-page-title, .menu-page-title {
+    text-align: center;
+    margin-bottom: 1.8rem; /* Sedikit lebih banyak ruang */
+    color: var(--primary-dark);
+    font-size: 3.2rem; /* Lebih besar */
+    font-weight: 800;
+    letter-spacing: -1px; /* Spasi huruf lebih rapat */
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.1); /* Bayangan teks yang lebih jelas */
+}
+
+.order-page-description, .menu-page-description {
+    text-align: center;
+    font-size: 1.15rem; /* Lebih besar sedikit */
+    color: var(--text-medium);
+    margin-bottom: 4rem; /* Jarak lebih besar */
+    max-width: 800px; /* Lebih lebar */
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.8; /* Jarak baris lebih longgar */
+}
+
+.menu-category-section {
+    background: rgba(255, 255, 255, 0.95); /* Sedikit lebih buram */
+    padding: 3rem 2.5rem; /* Padding lebih besar */
+    border-radius: 25px; /* Lebih membulat */
+    box-shadow: 0 12px 40px var(--shadow-medium); /* Bayangan lebih kuat */
+    margin-bottom: 3.5rem; /* Jarak antar bagian lebih besar */
+    transition: all 0.4s ease; /* Transisi lebih lambat */
+    border: 1px solid rgba(255, 255, 255, 0.7); /* Border lebih jelas */
+    backdrop-filter: blur(5px); /* Efek blur pada background (modern look) */
+}
+
+.menu-category-section:hover {
+    box-shadow: 0 20px 50px var(--shadow-strong); /* Bayangan sangat kuat */
+    transform: translateY(-8px); /* Lift lebih tinggi */
+}
+
+.menu-category-section h3 {
+    font-size: 2.5rem; /* Lebih besar */
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 3rem; /* Lebih banyak ruang */
+    position: relative;
+    padding-bottom: 18px; /* Lebih banyak ruang untuk underline */
+    font-weight: 800; /* Extra bold */
+    letter-spacing: -0.8px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.08);
+}
+
+.menu-category-section h3::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 120px; /* Underline lebih panjang */
+    height: 6px; /* Underline lebih tebal */
+    background: linear-gradient(90deg, var(--primary), var(--primary-dark)); /* Gradien pada underline */
+    border-radius: 5px;
+}
+
+.menu-grid {
+    display: grid;
+    /* Disesuaikan: minmax lebih kecil untuk item yang tidak terlalu besar, memungkinkan lebih banyak kolom jika ruang cukup */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Disesuaikan untuk tampilan yang lebih rapat */
+    gap: 1.8rem; /* Jarak antar kartu sedikit lebih besar */
+    justify-content: center;
+    align-items: stretch;
+}
+
+.menu-item-card {
+    background: var(--card-bg); /* Menggunakan gradien untuk background kartu */
+    border-radius: 20px; /* Lebih membulat */
+    box-shadow: 0 6px 20px var(--shadow-light); /* Bayangan lebih lembut */
+    text-align: center;
+    transition: transform 0.3s cubic-bezier(.25,.8,.25,1), box-shadow 0.3s cubic-bezier(.25,.8,.25,1); /* Kurva transisi lebih baik */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.8); /* Border putih halus */
+    position: relative;
+    z-index: 1;
+}
+
+.menu-item-card::before { /* Efek overlay saat hover */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(var(--primary), 0.1); /* Warna primary transparan */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 20px;
+    z-index: -1;
+}
+
+.menu-item-card:hover {
+    transform: translateY(-12px); /* Lift lebih tinggi */
+    box-shadow: 0 18px 45px var(--shadow-medium); /* Bayangan lebih kuat */
+}
+
+.menu-item-card:hover::before {
+    opacity: 1;
+}
+
+.menu-item-card img {
+    width: 100%;
+    height: 140px; /* Disesuaikan, membuat gambar lebih kecil */
+    object-fit: cover;
+    border-radius: 18px 18px 0 0;
+    transition: transform 0.5s cubic-bezier(.25,.8,.25,1); /* Transisi lebih lambat dan halus */
+}
+
+.menu-item-card:hover img {
+    transform: scale(1.1); /* Zoom yang lebih terlihat */
+}
+
+.card-content {
+    padding: 20px; /* Disesuaikan dari 18px */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-content h4 {
+    font-size: 1.35rem; /* Disesuaikan dari 1.4rem */
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+    font-weight: 700; /* Lebih tebal */
+    letter-spacing: -0.3px;
+}
+
+.card-content p.description {
+    font-size: 0.88rem; /* Disesuaikan dari 0.85rem */
+    color: var(--text-medium);
+    margin-bottom: 12px; /* Disesuaikan dari 10px */
+    flex-grow: 1;
+    min-height: 42px; /* Sedikit lebih tinggi untuk deskripsi 2 baris */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+}
+
+.card-content p.price {
+    font-size: 1.45rem; /* Disesuaikan dari 1.4rem */
+    font-weight: 900; /* Sangat tebal */
+    color: var(--secondary);
+    margin-bottom: 15px; /* Disesuaikan dari 12px */
+    letter-spacing: -0.5px;
+    text-shadow: 0 1px 2px rgba(139, 92, 246, 0.2); /* Bayangan pada harga */
+}
+
+.stok-info {
+    font-size: 0.82rem; /* Disesuaikan dari 0.8rem */
+    color: var(--text-medium);
+    margin-top: -8px;
+    margin-bottom: 0;
+    font-weight: 600;
+    text-transform: capitalize; /* Kapitalisasi huruf pertama */
+}
+
+.stok-info.low-stock {
+    color: var(--warning);
+    font-weight: 700;
+    animation: pulseWarning 1.5s infinite; /* Animasi berkedip */
+}
+.stok-info.out-of-stock {
+    color: var(--danger);
+    font-weight: 700;
+    text-transform: uppercase;
+    animation: pulseDanger 1.2s infinite; /* Animasi berkedip */
+}
+
+@keyframes pulseWarning {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.03); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulseDanger {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.7; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+
+/* Styles specific to pesan_makanan.php (order specific elements) */
+.order-quantity-input {
+    width: 70px;
+    padding: 8px 10px; /* Lebih besar */
+    border: 1px solid var(--border-color);
+    border-radius: 10px; /* Lebih membulat */
+    text-align: center;
+    font-size: 1rem; /* Lebih besar */
+    -moz-appearance: textfield;
+    transition: all 0.3s ease;
+    background-color: var(--light); /* Background input */
+}
+.order-quantity-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.3); /* Shadow lebih besar */
+}
+.order-quantity-input::-webkit-outer-spin-button,
+.order-quantity-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.order-form-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px; /* Jarak lebih besar */
+    margin-top: 15px; /* Lebih banyak ruang */
+}
+.order-button-main {
+    background: linear-gradient(to right, var(--success), #218838);
+    color: white;
+    border: none;
+    padding: 18px 40px; /* Padding lebih besar */
+    border-radius: 15px; /* Lebih membulat */
+    font-size: 1.35rem; /* Font lebih besar */
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4); /* Bayangan lebih kuat */
+    margin-top: 4.5rem; /* Jarak lebih besar */
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Jarak ikon lebih besar */
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.5px;
+}
+.order-button-main:hover {
+    background: linear-gradient(to right, #218838, #1e7e34);
+    transform: translateY(-7px) scale(1.03); /* Efek hover lebih dramatis */
+    box-shadow: 0 15px 35px rgba(40, 167, 69, 0.6);
+}
+.order-button-main:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+.order-button-main::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.25); /* Efek kilat lebih kuat */
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.5s ease-out, height 0.5s ease-out, opacity 0.5s ease-out;
+    opacity: 0;
+}
+.order-button-main:hover::before {
+    width: 250%; /* Efek kilat lebih besar */
+    height: 250%;
+    opacity: 1;
+}
+.add-to-cart-btn {
+    display: none; /* Hidden on order page as well */
+}
+
+/* Message Box Styling */
+.message-box {
+    padding: 20px 35px; /* Padding lebih besar */
+    margin-bottom: 4rem; /* Jarak lebih besar */
+    border-radius: 18px; /* Lebih membulat */
+    font-size: 1.2rem; /* Font lebih besar */
+    font-weight: 600;
+    border: 1px solid transparent;
+    animation: fadeInScale 0.7s forwards; /* Animasi lebih lambat */
+    max-width: 700px; /* Lebih lebar */
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Bayangan lebih kuat */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.message-box.success {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+}
+
+.message-box.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-color: #f5c6cb;
+}
+
+@keyframes fadeInScale {
+    from { opacity: 0; transform: translateY(-40px) scale(0.9); } /* Efek awal lebih rendah dan kecil */
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+
+/* Responsive Adjustments (General, applied to all pages using style.css) */
+@media (max-width: 1024px) {
+    .main-content {
+        padding: 3rem 2rem;
+    }
+    .order-page-title, .menu-page-title {
+        font-size: 2.8rem;
+    }
+    .order-page-description, .menu-page-description {
+        font-size: 1.05rem;
+        margin-bottom: 3rem;
+    }
+    .menu-category-section {
+        padding: 2.5rem 2rem;
+        margin-bottom: 3rem;
+    }
+    .menu-category-section h3 {
+        font-size: 2rem;
+        margin-bottom: 2.5rem;
+    }
+    .menu-category-section h3::after {
+        width: 100px;
+        height: 5px;
+    }
+    .menu-grid {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* Disesuaikan */
+        gap: 1.5rem;
+    }
+    .menu-item-card img {
+        height: 120px; /* Disesuaikan */
+    }
+    .card-content h4 {
+        font-size: 1.25rem;
+    }
+    .card-content p.description {
+        font-size: 0.85rem;
+        min-height: 38px;
+    }
+    .card-content p.price {
+        font-size: 1.3rem;
+    }
+    .stok-info {
+        font-size: 0.8rem;
+    }
+    .order-quantity-input {
+        width: 60px;
+        padding: 7px 8px;
+        font-size: 0.95rem;
+    }
+    .order-button-main {
+        padding: 14px 30px;
+        font-size: 1.1rem;
+        margin-top: 3.5rem;
+        gap: 10px;
+    }
+    .message-box {
+        font-size: 1.1rem;
+        padding: 15px 25px;
+        margin-bottom: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1rem 1.5rem;
+    }
+    .navbar-brand {
+        font-size: 1.6rem;
+        gap: 8px;
+    }
+    .navbar-brand .logo-placeholder {
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+    }
+    .navbar-nav {
+        gap: 1.2rem;
+    }
+    .nav-link {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.88rem;
+    }
+    .main-content {
+        padding: 2.5rem 1.5rem;
+    }
+    .order-page-title, .menu-page-title {
+        font-size: 2.2rem;
+        margin-bottom: 1.2rem;
+    }
+    .order-page-description, .menu-page-description {
+        font-size: 0.95rem;
+        margin-bottom: 2.5rem;
+    }
+    .menu-category-section {
+        padding: 2rem 1.5rem;
+        margin-bottom: 2.5rem;
+        border-radius: 20px;
+    }
+    .menu-category-section h3 {
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+        padding-bottom: 12px;
+    }
+    .menu-category-section h3::after {
+        width: 80px;
+        height: 4px;
+    }
+    .menu-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* Disesuaikan */
+        gap: 1.2rem;
+    }
+    .menu-item-card {
+        border-radius: 15px;
+    }
+    .menu-item-card img {
+        height: 100px; /* Disesuaikan */
+    }
+    .card-content {
+        padding: 12px;
+    }
+    .card-content h4 {
+        font-size: 1.1rem;
+    }
+    .card-content p.description {
+        font-size: 0.78rem;
+        min-height: 32px;
+        margin-bottom: 8px;
+    }
+    .card-content p.price {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+    }
+    .stok-info {
+        font-size: 0.75rem;
+    }
+    .order-quantity-input {
+        width: 55px;
+        font-size: 0.85rem;
+    }
+    .order-button-main {
+        padding: 10px 20px;
+        font-size: 0.95rem;
+        margin-top: 2.5rem;
+        border-radius: 10px;
+    }
+    .message-box {
+        font-size: 0.95rem;
+        padding: 12px 20px;
+        margin-bottom: 2.5rem;
+        border-radius: 12px;
+    }
+    .footer {
+        padding: 1.5rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.6rem;
+        padding: 0.8rem 1rem;
+    }
+    .navbar-nav {
+        width: 100%;
+        justify-content: space-around;
+        gap: 0.4rem;
+        margin-top: 8px;
+    }
+    .nav-link {
+        flex-grow: 1;
+        text-align: center;
+        padding: 0.5rem 0.4rem;
+        font-size: 0.8rem;
+    }
+    .main-content {
+        padding: 1.5rem 1rem;
+    }
+    .order-page-title, .menu-page-title {
+        font-size: 1.8rem;
+    }
+    .order-page-description, .menu-page-description {
+        font-size: 0.85rem;
+        margin-bottom: 1.8rem;
+    }
+    .menu-category-section h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1.2rem;
+        padding-bottom: 10px;
+    }
+    .menu-category-section h3::after {
+        width: 60px;
+        height: 3px;
+    }
+    .menu-grid {
+        grid-template-columns: 1fr; /* Tetap stack pada layar sangat kecil */
+        gap: 1rem;
+    }
+    .menu-item-card img {
+        height: 100px; /* Tetap kecil */
+    }
+    .card-content h4 {
+        font-size: 1rem;
+    }
+    .card-content p.description {
+        font-size: 0.7rem;
+        min-height: 28px;
+        margin-bottom: 6px;
+    }
+    .card-content p.price {
+        font-size: 1rem;
+        margin-bottom: 8px;
+    }
+    .stok-info {
+        font-size: 0.7rem;
+    }
+    .order-quantity-input {
+        width: 50px;
+        padding: 5px 6px;
+        font-size: 0.8rem;
+    }
+    .order-button-main {
+        padding: 8px 15px;
+        font-size: 0.8rem;
+        margin-top: 2rem;
+        gap: 8px;
+    }
+    .message-box {
+        font-size: 0.85rem;
+        padding: 10px 15px;
+        margin-bottom: 1.5rem;
+    }
+    .footer {
+        padding: 1rem;
+        font-size: 0.75rem;
+    }
+}

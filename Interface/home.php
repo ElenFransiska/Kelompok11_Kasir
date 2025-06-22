@@ -15,7 +15,7 @@
         </div>
         <nav class="navbar-nav">
             <a href="index.php" class="nav-link active">Home</a>
-            <a href="pesan_makanan.php" class="nav-link">Pesan Sekarang</a>
+            <a href="order.php" class="nav-link">Pesan Sekarang</a>
             <a href="contact.php" class="nav-link">Hubungi Kami</a>
         </nav>
     </header>
