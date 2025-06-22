@@ -23,7 +23,7 @@ if (isset($_SESSION['login_message'])) {
             <a href="login.php" class="big-button admin-button">
                 <span class="icon">&#128100;</span> Masuk Sebagai Admin
             </a>
-            <a href="" class="big-button customer-button">
+            <a href="Interface/home.php" class="big-button customer-button">
                 <span class="icon">&#128101;</span> Masuk Sebagai Customer
             </a>
         </div>

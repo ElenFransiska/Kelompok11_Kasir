@@ -68,7 +68,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
             </div>
         <?php endif; ?>
 
-        <form action="admin_login.php" method="POST">
+        <form action="Interface/admin.php" method="POST">
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" placeholder="Masukkan username" required>
