@@ -1,0 +1,329 @@
+/* style.css */
+
+/* CSS Variables */
+:root {
+    --primary-blue: #007bff;
+    --dark-blue: #0056b3;
+    --light-gray: #f0f2f5;
+    --white: #ffffff;
+    --text-dark: #333333;
+    --text-medium: #555555;
+    --border-light: #dddddd;
+    --success-bg: #d4edda;
+    --success-text: #155724;
+    --error-bg: #f8d7da;
+    --error-text: #721c24;
+    --shadow-light: 0 4px 20px rgba(0, 0, 0, 0.1);
+    --admin-color: #28a745; /* Green for admin */
+    --customer-color: #ffc107; /* Yellow for customer */
+}
+
+/* Base Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #e0f2f7, #c1e0f0); /* Soft blue gradient */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    color: var(--text-dark);
+}
+
+.container {
+    background-color: var(--white);
+    padding: 40px;
+    border-radius: 15px; /* Slightly more rounded */
+    box-shadow: var(--shadow-light);
+    width: 100%;
+    max-width: 420px; /* Slightly wider */
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    border: 1px solid rgba(255, 255, 255, 0.6); /* Subtle white border */
+    backdrop-filter: blur(5px); /* Optional: Frosted glass effect */
+    -webkit-backdrop-filter: blur(5px); /* For Safari */
+}
+
+/* --- Styles for Landing Page (index.php) --- */
+.landing-page h2 {
+    color: var(--primary-blue);
+    margin-bottom: 25px;
+    font-size: 28px;
+    font-weight: 700;
+}
+.landing-page p {
+    font-size: 18px;
+    color: var(--text-medium);
+    margin-bottom: 35px;
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 20px; /* Space between buttons */
+}
+
+.big-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px 25px;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--white);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.big-button .icon {
+    font-size: 28px;
+    margin-right: 12px;
+}
+
+.admin-button {
+    background: linear-gradient(to right, var(--admin-color), #218838); /* Green gradient */
+}
+
+.admin-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(40, 167, 69, 0.4);
+    background: linear-gradient(to right, #218838, #1e7e34);
+}
+
+.customer-button {
+    background: linear-gradient(to right, var(--customer-color), #e0a800); /* Yellow/Orange gradient */
+}
+
+.customer-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(255, 193, 7, 0.4);
+    background: linear-gradient(to right, #e0a800, #c69500);
+}
+
+.big-button:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Styles for Login Page (admin_login.php) --- */
+.login-form-container h2 {
+    color: var(--primary-blue);
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.form-group {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--text-medium);
+    font-size: 16px;
+    font-weight: 500;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 14px 15px;
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    font-size: 17px;
+    color: var(--text-dark);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
+    background-color: var(--light-gray);
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.3);
+    outline: none;
+    background-color: var(--white);
+}
+
+.login-button {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(to right, var(--primary-blue), var(--dark-blue));
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    font-size: 19px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+}
+
+.login-button:hover {
+    background: linear-gradient(to right, var(--dark-blue), #004085);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
+}
+
+.login-button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+}
+
+.arrow-icon {
+    font-size: 22px;
+    transition: transform 0.3s ease;
+}
+
+.login-button:hover .arrow-icon {
+    transform: translateX(8px);
+}
+
+.back-link {
+    margin-top: 20px;
+    font-size: 15px;
+}
+.back-link a {
+    color: var(--primary-blue);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.back-link a:hover {
+    color: var(--dark-blue);
+    text-decoration: underline;
+}
+
+
+/* Messages for login status */
+.message {
+    padding: 12px 20px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    font-size: 15px;
+    text-align: center;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+}
+
+.message.success {
+    background-color: var(--success-bg);
+    color: var(--success-text);
+    border: 1px solid #b3dfc8;
+}
+
+.message.error {
+    background-color: var(--error-bg);
+    color: var(--error-text);
+    border: 1px solid #f0b9bb;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Styles for Dashboard/Home Content --- */
+.dashboard-content {
+    padding: 20px 0;
+}
+.dashboard-content h2 {
+    color: var(--admin-color); /* Green for admin dashboard */
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+/* Customer home page specific heading color */
+.dashboard-content h2:has(+ p) { /* A bit tricky, targets h2 followed by a p */
+    color: var(--customer-color); /* Change to yellow for customer home */
+}
+/* Simpler alternative for specific page: */
+/* If you make customer_home.php use a specific class for its H2: */
+/* .customer-home-title { color: var(--customer-color); } */
+
+.dashboard-content p {
+    font-size: 18px;
+    color: var(--text-medium);
+    margin-bottom: 30px;
+}
+.logout-button {
+    background-color: #dc3545; /* Red for logout */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 3px 10px rgba(220, 53, 69, 0.3);
+}
+.logout-button:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
+}
+.logout-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(220, 53, 69, 0.2);
+}
+
+/* Basic Responsiveness */
+@media (max-width: 550px) {
+    .container {
+        padding: 30px 20px;
+        margin: 10px;
+        border-radius: 10px;
+        max-width: 90%; /* Adjust max-width for smaller screens */
+    }
+    .landing-page .button-group {
+        flex-direction: column; /* Ensure buttons stack */
+    }
+    .big-button {
+        font-size: 18px;
+        padding: 15px 20px;
+    }
+    .big-button .icon {
+        font-size: 24px;
+        margin-right: 10px;
+    }
+    h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    label {
+        font-size: 15px;
+    }
+    input[type="text"],
+    input[type="password"] {
+        padding: 12px 12px;
+        font-size: 16px;
+    }
+    .login-button {
+        padding: 14px;
+        font-size: 17px;
+    }
+    .arrow-icon {
+        font-size: 20px;
+    }
+    .message {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+    .dashboard-content h2 {
+        font-size: 24px;
+    }
+    .dashboard-content p {
+        font-size: 17px;
+    }
+}
