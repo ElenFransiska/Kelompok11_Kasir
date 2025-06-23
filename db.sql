@@ -79,3 +79,21 @@ JOIN order_items oi ON o.id_order = oi.id_order
 JOIN produk p ON oi.id_produk = p.id_produk
 GROUP BY o.id_order
 ORDER BY o.created_at DESC;
+
+CREATE VIEW view_menu AS SELECT kategori, nama, image, keterangan, harga FROM produk ORDER BY kategori, nama;
+
+CREATE TABLE `admin` (
+  `id_admin` int(5) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id_admin`, `nama`, `username`, `password`) VALUES
+(1, 'admin', 'admin', '21232f297a57a5a743894a0e4a801fc3'),
+(2, 'elen', 'elen', '508c71d57a2c2dd1ed8c3ede5b3012d5'),
+(3, 'raymond', 'raymond', 'f2a415aa78c7621831da5995e1447242');
