@@ -1,29 +1,47 @@
 <?php
-// menu_page.php - Halaman untuk menampilkan daftar menu
+// menu_page.php - Halaman untuk menampilkan daftar menu dari tabel 'produk'
 session_start();
 // Memastikan koneksi database berada di direktori yang benar
 // Asumsi db_connection.php berada satu tingkat di atas direktori ini.
 require_once '../db_connection.php'; 
 
+// Inisialisasi $menu_items dan $error_message/info_message
 $menu_items = [];
-// Ambil semua menu dari database untuk ditampilkan
-$sql_get_menu = "SELECT id, nama_menu, deskripsi, harga, stok, kategori, gambar_url FROM menu ORDER BY kategori, nama_menu";
-$result_get_menu = $conn->query($sql_get_menu);
+$error_message = '';
+$info_message = '';
 
-if ($result_get_menu && $result_get_menu->num_rows > 0) {
-    while ($row = $result_get_menu->fetch_assoc()) {
-        $menu_items[] = $row;
+// Cek apakah $conn berhasil terdefinisi dan merupakan objek MySQLi yang valid setelah require_once
+if (!isset($conn) || !$conn instanceof mysqli || $conn->connect_error) {
+    // Jika koneksi gagal atau $conn tidak terdefinisi dengan benar, tampilkan pesan error
+    // Ini membantu debug jika db_connection.php gagal tanpa fatal error langsung
+    $error_message = "Tidak dapat terhubung ke database. Mohon cek konfigurasi koneksi database Anda. ";
+    if (isset($conn) && $conn->connect_error) {
+        $error_message .= "Error: " . $conn->connect_error; // Tambahkan detail error koneksi jika ada
     }
-} else if (!$result_get_menu) {
-    error_log("Failed to fetch menu items on menu_page: " . $conn->error);
-    // Tampilkan pesan error jika gagal mengambil menu dari database
-    $error_message = "Terjadi kesalahan saat mengambil daftar menu dari database. Mohon coba lagi nanti.";
+    // Pastikan array kosong agar tidak ada loop yang mencoba query
+    $menu_items = []; 
 } else {
-    // Jika tidak ada menu di database
-    $info_message = "Saat ini belum ada item menu yang tersedia.";
-}
+    // Koneksi database berhasil, lanjutkan dengan query
+    // Ambil semua menu dari database untuk ditampilkan dari tabel 'produk'
+    // PERBAIKAN PENTING: Menyesuaikan nama kolom sesuai tabel 'produk' dan menambahkan 'harga'
+    $sql_get_menu = "SELECT id_produk, kategori, nama, image, keterangan, stok FROM produk ORDER BY kategori, nama;"; // UBAH: nama kolom dan penambahan 'harga'
+    $result_get_menu = $conn->query($sql_get_menu);
 
-$conn->close(); // Tutup koneksi setelah semua operasi selesai pada satu request
+    if ($result_get_menu && $result_get_menu->num_rows > 0) {
+        while ($row = $result_get_menu->fetch_assoc()) {
+            $menu_items[] = $row;
+        }
+    } else if (!$result_get_menu) {
+        // Query gagal dieksekusi (contoh: tabel tidak ada, sintaks salah)
+        error_log("Failed to fetch menu items on menu_page: " . $conn->error);
+        $error_message = "Terjadi kesalahan saat mengambil daftar menu dari database. Mohon coba lagi nanti. (SQL Error: " . $conn->error . ")";
+    } else {
+        // Query berhasil dieksekusi, tetapi tidak ada baris data (tabel kosong)
+        $info_message = "Saat ini belum ada item menu yang tersedia.";
+    }
+
+    $conn->close(); // Tutup koneksi setelah semua operasi selesai pada satu request
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -54,12 +72,12 @@ $conn->close(); // Tutup koneksi setelah semua operasi selesai pada satu request
         <h1 class="menu-page-title">Daftar Menu Kami</h1>
         <p class="menu-page-description">Jelajahi berbagai pilihan makanan dan minuman lezat yang kami tawarkan. Setiap hidangan dibuat dengan bahan-bahan segar pilihan untuk memastikan cita rasa terbaik.</p>
 
-        <?php if (isset($error_message)): ?>
+        <?php if (!empty($error_message)): ?>
             <div class="message-box error">
                 <i class="fas fa-exclamation-circle"></i>
                 <?php echo htmlspecialchars($error_message); ?>
             </div>
-        <?php elseif (isset($info_message)): ?>
+        <?php elseif (!empty($info_message)): ?>
             <div class="message-box success">
                 <i class="fas fa-info-circle"></i>
                 <?php echo htmlspecialchars($info_message); ?>
@@ -69,8 +87,12 @@ $conn->close(); // Tutup koneksi setelah semua operasi selesai pada satu request
         <?php
         // Kelompokkan menu berdasarkan kategori
         $categorized_menu = [];
-        foreach ($menu_items as $item) {
-            $categorized_menu[$item['kategori']][] = $item;
+        // Pastikan $menu_items tidak kosong sebelum di-loop
+        if (!empty($menu_items)) {
+            foreach ($menu_items as $item) {
+                // Menggunakan 'kategori' dari tabel produk
+                $categorized_menu[$item['kategori']][] = $item;
+            }
         }
 
         // Tampilkan kategori dan item menu
@@ -82,12 +104,14 @@ $conn->close(); // Tutup koneksi setelah semua operasi selesai pada satu request
                     <div class="menu-grid">
                         <?php foreach ($items_in_category as $menu_item): ?>
                             <div class="menu-item-card">
-                                <img src="<?php echo htmlspecialchars($menu_item['gambar_url']); ?>" alt="Gambar <?php echo htmlspecialchars($menu_item['nama_menu']); ?>">
+                                <!-- PERBAIKAN: Menggunakan 'image' dari tabel produk -->
+                                <img src="<?php echo htmlspecialchars($menu_item['image']); ?>" alt="Gambar <?php echo htmlspecialchars($menu_item['nama']); ?>">
                                 <div class="card-content">
                                     <div>
-                                        <h4><?php echo htmlspecialchars($menu_item['nama_menu']); ?></h4>
-                                        <p class="description"><?php echo htmlspecialchars($menu_item['deskripsi']); ?></p>
-                                        <p class="price">Rp <?php echo number_format($menu_item['harga'], 0, ',', '.'); ?></p>
+                                        <!-- PERBAIKAN: Menggunakan 'nama' dari tabel produk -->
+                                        <h4><?php echo htmlspecialchars($menu_item['nama']); ?></h4>
+                                        <!-- PERBAIKAN: Menggunakan 'keterangan' dari tabel produk -->
+                                        <p class="description"><?php echo htmlspecialchars($menu_item['keterangan']); ?></p>
                                         <p class="stok-info <?php 
                                             if ($menu_item['stok'] <= 5 && $menu_item['stok'] > 0) { echo 'low-stock'; }
                                             else if ($menu_item['stok'] <= 0) { echo 'out-of-stock'; }
@@ -99,9 +123,9 @@ $conn->close(); // Tutup koneksi setelah semua operasi selesai pada satu request
                                         </p>
                                     </div>
                                     <!-- Tombol Pesan baru per item menu -->
-                                    <a href="pesan_makanan.php?menu_id=<?php echo $menu_item['id']; ?>" 
-                                       class="menu-item-order-btn" 
-                                       <?php echo ($menu_item['stok'] <= 0) ? 'aria-disabled="true" style="pointer-events: none; opacity: 0.6; cursor: not-allowed;"' : ''; ?>>
+                                    <!-- PERBAIKAN: Menggunakan 'id_produk' dari tabel produk dan menghapus atribut `aria-disabled` serta `style` -->
+                                    <a href="pesan_makanan.php?menu_id=<?php echo $menu_item['id_produk']; ?>" 
+                                       class="menu-item-order-btn">
                                         <i class="fas fa-cart-plus"></i> Pesan
                                     </a>
                                 </div>
