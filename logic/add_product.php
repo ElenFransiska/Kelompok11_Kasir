@@ -15,9 +15,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             mkdir('../images', 0777, true);
         }
 
-        // Generate nama file unik
+        // Generate nama file berdasarkan nama produk
         $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-        $filename = uniqid() . '.' . $ext;
+        // Sanitizing the product name to create a valid filename
+        $sanitized_name = preg_replace('/[^a-zA-Z0-9_-]/', '_', strtolower($nama));
+        $filename = $sanitized_name . '.' . $ext; // Use sanitized name
         $target_path = "../images/" . $filename;
 
         // Simpan file

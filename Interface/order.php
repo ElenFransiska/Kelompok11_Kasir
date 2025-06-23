@@ -105,7 +105,7 @@ if (!isset($conn) || !$conn instanceof mysqli || $conn->connect_error) {
                         <?php foreach ($items_in_category as $menu_item): ?>
                             <div class="menu-item-card">
                                 <!-- PERBAIKAN: Menggunakan 'image' dari tabel produk -->
-                                <img src="<?php echo htmlspecialchars($menu_item['image']); ?>" alt="Gambar <?php echo htmlspecialchars($menu_item['nama']); ?>">
+                                <img src="../<?= htmlspecialchars($menu_item['image']) ?>" alt="Gambar <?= htmlspecialchars($menu_item['nama']) ?>">
                                 <div class="card-content">
                                     <div>
                                         <!-- PERBAIKAN: Menggunakan 'nama' dari tabel produk -->

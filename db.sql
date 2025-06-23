@@ -43,3 +43,39 @@ END;
 //
 
 DELIMITER ;
+
+CREATE TABLE orders (
+    id_order INT AUTO_INCREMENT PRIMARY KEY,
+    nama_pembeli VARCHAR(100) NOT NULL,
+    meja INT NOT NULL,
+    total_harga DECIMAL(12,2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE order_items (
+    id_order_item INT AUTO_INCREMENT PRIMARY KEY,
+    id_order INT NOT NULL,
+    id_produk INT NOT NULL,
+    jumlah INT NOT NULL,
+    harga_satuan DECIMAL(12,2) NOT NULL,
+    FOREIGN KEY (id_order) REFERENCES orders(id_order) ON DELETE CASCADE,
+    FOREIGN KEY (id_produk) REFERENCES produk(id_produk)
+);
+
+--inputan dari order.php ke orders dan order_items
+--nanti di order.php akan memunculkan produk apa saja yang di inputkan dari tabel order_items
+--nanti dari tabel orders akan masuk ke tabel history yang nantinya akan di display di history.php
+
+--jangan dlu di INSERT
+SELECT 
+    o.id_order, 
+    o.nama_pembeli, 
+    o.meja, 
+    o.total_harga, 
+    DATE(o.created_at) AS tanggal,
+    GROUP_CONCAT(CONCAT(p.nama, ' (', oi.jumlah, 'x Rp', oi.harga_satuan, ')') SEPARATOR ', ') AS items
+FROM orders o
+JOIN order_items oi ON o.id_order = oi.id_order
+JOIN produk p ON oi.id_produk = p.id_produk
+GROUP BY o.id_order
+ORDER BY o.created_at DESC;
