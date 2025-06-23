@@ -26,41 +26,7 @@ $result = $conn->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manajemen Produk</title>
     <link rel="stylesheet" href="../css/css_product.css">
-    <style>
-        /* CSS untuk memposisikan tombol logout di pojok kanan atas */
-        .logout-fixed-top-right {
-            position: fixed; /* Membuat tombol tetap di posisi bahkan saat di-scroll */
-            top: 20px;       /* Jarak dari tepi atas */
-            right: 20px;     /* Jarak dari tepi kanan */
-            z-index: 1000;   /* Memastikan tombol berada di atas konten lain */
-        }
-
-        .logout-fixed-top-right button {
-            background-color: #f44336; /* Merah */
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Efek bayangan */
-            transition: background-color 0.3s ease; /* Transisi hover */
-        }
-        .logout-fixed-top-right button:hover {
-            background-color: #d32f2f;
-        }
-
-        /* Anda mungkin perlu menyesuaikan margin/padding pada body atau .product-container
-           jika tombol logout menutupi header konten utama.
-           Contoh: */
-        body {
-            padding-top: 60px; /* Memberi ruang di bagian atas agar tombol tidak menutupi konten */
-        }
-        /* Atau jika product-container sudah punya margin-top, tambah lagi: */
-        /* .product-container {
-            margin-top: 40px; 
-        } */
-    </style>
+    
 </head>
 <body>
     <div class="logout-fixed-top-right">
