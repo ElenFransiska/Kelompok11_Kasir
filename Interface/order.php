@@ -24,7 +24,7 @@ if (!isset($conn) || !$conn instanceof mysqli || $conn->connect_error) {
     // Koneksi database berhasil, lanjutkan dengan query
     // Ambil semua menu dari database untuk ditampilkan dari tabel 'produk'
     // PERBAIKAN PENTING: Menyesuaikan nama kolom sesuai tabel 'produk' dan menambahkan 'harga'
-    $sql_get_menu = "SELECT id_produk, kategori, nama, image, keterangan, stok FROM produk ORDER BY kategori, nama;"; // UBAH: nama kolom dan penambahan 'harga'
+    $sql_get_menu = "SELECT id_produk, kategori, nama, image, keterangan, stok, harga FROM produk ORDER BY kategori, nama;"; // UBAH: nama kolom dan penambahan 'harga'
     $result_get_menu = $conn->query($sql_get_menu);
 
     if ($result_get_menu && $result_get_menu->num_rows > 0) {
@@ -112,6 +112,9 @@ if (!isset($conn) || !$conn instanceof mysqli || $conn->connect_error) {
                                         <h4><?php echo htmlspecialchars($menu_item['nama']); ?></h4>
                                         <!-- PERBAIKAN: Menggunakan 'keterangan' dari tabel produk -->
                                         <p class="description"><?php echo htmlspecialchars($menu_item['keterangan']); ?></p>
+                                        <!-- Menggunakan 'harga' dari tabel produk -->
+                                        <p class="price">Rp <?php echo number_format($menu_item['harga'], 0, ',', '.'); ?></p>
+                                        <!-- Menggunakan 'stok' dari tabel produk -->
                                         <p class="stok-info <?php 
                                             if ($menu_item['stok'] <= 5 && $menu_item['stok'] > 0) { echo 'low-stock'; }
                                             else if ($menu_item['stok'] <= 0) { echo 'out-of-stock'; }
