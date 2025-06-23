@@ -9,21 +9,17 @@ CREATE TABLE produk (
     harga INT
 );
 
--- Menambahkan dummy data untuk kategori makanan
-INSERT INTO produk (kategori, nama, image, keterangan, stok) VALUES
-('Makanan', 'Nasi Goreng', 'nasi_goreng.jpg', 'Nasi goreng spesial dengan telur dan ayam.', 10),
-('Makanan', 'Sate Ayam', 'sate_ayam.jpg', 'Sate ayam dengan bumbu kacang.', 15),
-('Makanan', 'Rendang', 'rendang.jpg', 'Daging sapi yang dimasak dengan rempah-rempah.', 8),
-('Makanan', 'Mie Goreng', 'mie_goreng.jpg', 'Mie goreng dengan sayuran dan telur.', 12),
-('Makanan', 'Bakso', 'bakso.jpg', 'Bakso daging sapi dengan kuah kaldu.', 20);
-
--- Menambahkan dummy data untuk kategori minuman
-INSERT INTO produk (kategori, nama, image, keterangan, stok) VALUES
-('Minuman', 'Es Teh Manis', 'es_teh_manis.jpg', 'Teh manis yang disajikan dengan es.', 25),
-('Minuman', 'Jus Jeruk', 'jus_jeruk.jpg', 'Jus jeruk segar tanpa tambahan gula.', 30),
-('Minuman', 'Kopi Hitam', 'kopi_hitam.jpg', 'Kopi hitam yang disajikan panas.', 18),
-('Minuman', 'Soda', 'soda.jpg', 'Minuman bersoda dengan rasa buah.', 22),
-('Minuman', 'Air Mineral', 'air_mineral.jpg', 'Air mineral segar dan sehat.', 50);
+INSERT INTO produk (kategori, nama, image, keterangan, stok, harga) VALUES
+('Makanan', 'Nasi Goreng', '/images/nasi_goreng.jpg', 'Nasi yang digoreng dengan bumbu khas.', 50, 20000),
+('Makanan', 'Sate Ayam', '/images/sate_ayam.jpg', 'Daging ayam yang ditusuk dan dibakar.', 30, 25000),
+('Makanan', 'Rendang', '/images/rendang.jpg', 'Daging sapi yang dimasak dengan rempah.', 20, 30000),
+('Makanan', 'Gado-Gado', '/images/gado_gado.jpg', 'Salad sayuran dengan bumbu kacang.', 40, 15000),
+('Makanan', 'Bakso', '/images/bakso.jpg', 'Bola daging yang disajikan dengan kuah.', 60, 20000),
+('Minuman', 'Teh Manis', '/images/teh_manis.jpg', 'Teh yang disajikan dengan gula.', 100, 5000),
+('Minuman', 'Kopi', '/images/kopi.jpg', 'Kopi hitam yang diseduh panas.', 80, 10000),
+('Minuman', 'Es Teh', '/images/es_teh.jpg', 'Teh dingin yang menyegarkan.', 90, 7000),
+('Minuman', 'Jus Jeruk', '/images/jus_jeruk.jpg', 'Jus segar dari jeruk.', 70, 12000),
+('Minuman', 'Soda', '/images/soda.jpg', 'Minuman berkarbonasi yang menyegarkan.', 50, 8000);
 
 DELIMITER //
 
