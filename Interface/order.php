@@ -1,5 +1,5 @@
 <?php
-// menu_page.php - Halaman untuk menampilkan daftar menu dari tabel 'produk'
+// menu_page.php - Halaman untuk menampilkan daftar menu dari tabel 'produk' atau VIEW 'daftar_produk'
 session_start();
 // Memastikan koneksi database berada di direktori yang benar
 // Asumsi db_connection.php berada satu tingkat di atas direktori ini.
@@ -22,9 +22,19 @@ if (!isset($conn) || !$conn instanceof mysqli || $conn->connect_error) {
     $menu_items = []; 
 } else {
     // Koneksi database berhasil, lanjutkan dengan query
-    // Ambil semua menu dari database untuk ditampilkan dari tabel 'produk'
-    // PERBAIKAN PENTING: Menyesuaikan nama kolom sesuai tabel 'produk' dan menambahkan 'harga'
-    $sql_get_menu = "SELECT id_produk, kategori, nama, image, keterangan, stok, harga FROM produk ORDER BY kategori, nama;"; // UBAH: nama kolom dan penambahan 'harga'
+    // PENTING: Perintah 'CREATE VIEW' digunakan untuk membuat VIEW di database (SATU KALI SAJA),
+    // BUKAN untuk mengambil data di setiap request halaman.
+    // Untuk mengambil data, gunakan perintah 'SELECT'.
+    // Pastikan VIEW 'daftar_produk' sudah dibuat di database Anda dengan perintah SQL di atas.
+
+    // Mengambil semua kolom yang diperlukan dari VIEW 'daftar_produk'
+    // Kolom 'stok' DIHILANGKAN dari SELECT query ini sesuai permintaan Anda
+    $sql_get_menu = "SELECT kategori, nama, image, keterangan, harga FROM view_menu ORDER BY kategori, nama;"; 
+    
+    // Opsi: Jika Anda TIDAK ingin menggunakan VIEW dan ingin langsung dari tabel 'produk',
+    // gunakan baris di bawah ini sebagai ganti $sql_get_menu di atas:
+    // $sql_get_menu = "SELECT id_produk, kategori, nama, image, keterangan, stok, harga FROM produk ORDER BY kategori, nama;"; 
+
     $result_get_menu = $conn->query($sql_get_menu);
 
     if ($result_get_menu && $result_get_menu->num_rows > 0) {
@@ -32,11 +42,11 @@ if (!isset($conn) || !$conn instanceof mysqli || $conn->connect_error) {
             $menu_items[] = $row;
         }
     } else if (!$result_get_menu) {
-        // Query gagal dieksekusi (contoh: tabel tidak ada, sintaks salah)
+        // Query gagal dieksekusi (contoh: VIEW tidak ada, sintaks salah pada SELECT)
         error_log("Failed to fetch menu items on menu_page: " . $conn->error);
         $error_message = "Terjadi kesalahan saat mengambil daftar menu dari database. Mohon coba lagi nanti. (SQL Error: " . $conn->error . ")";
     } else {
-        // Query berhasil dieksekusi, tetapi tidak ada baris data (tabel kosong)
+        // Query berhasil dieksekusi, tetapi tidak ada baris data (VIEW kosong)
         $info_message = "Saat ini belum ada item menu yang tersedia.";
     }
 
@@ -104,33 +114,19 @@ if (!isset($conn) || !$conn instanceof mysqli || $conn->connect_error) {
                     <div class="menu-grid">
                         <?php foreach ($items_in_category as $menu_item): ?>
                             <div class="menu-item-card">
-                                <!-- PERBAIKAN: Menggunakan 'image' dari tabel produk -->
+                                <!-- Menggunakan 'image' dari hasil query VIEW/produk -->
                                 <img src="<?php echo htmlspecialchars($menu_item['image']); ?>" alt="Gambar <?php echo htmlspecialchars($menu_item['nama']); ?>">
                                 <div class="card-content">
                                     <div>
-                                        <!-- PERBAIKAN: Menggunakan 'nama' dari tabel produk -->
+                                        <!-- Menggunakan 'nama' dari hasil query VIEW/produk -->
                                         <h4><?php echo htmlspecialchars($menu_item['nama']); ?></h4>
-                                        <!-- PERBAIKAN: Menggunakan 'keterangan' dari tabel produk -->
+                                        <!-- Menggunakan 'keterangan' dari hasil query VIEW/produk -->
                                         <p class="description"><?php echo htmlspecialchars($menu_item['keterangan']); ?></p>
-                                        <!-- Menggunakan 'harga' dari tabel produk -->
+                                        <!-- Menggunakan 'harga' dari hasil query VIEW/produk -->
                                         <p class="price">Rp <?php echo number_format($menu_item['harga'], 0, ',', '.'); ?></p>
-                                        <!-- Menggunakan 'stok' dari tabel produk -->
-                                        <p class="stok-info <?php 
-                                            if ($menu_item['stok'] <= 5 && $menu_item['stok'] > 0) { echo 'low-stock'; }
-                                            else if ($menu_item['stok'] <= 0) { echo 'out-of-stock'; }
-                                        ?>">
-                                            Stok: <?php 
-                                            if ($menu_item['stok'] <= 0) { echo 'Habis'; }
-                                            else { echo htmlspecialchars($menu_item['stok']); }
-                                            ?>
-                                        </p>
+                                        <!-- Menghilangkan elemen stok-info sesuai permintaan sebelumnya -->
                                     </div>
                                     <!-- Tombol Pesan baru per item menu -->
-                                    <!-- PERBAIKAN: Menggunakan 'id_produk' dari tabel produk dan menghapus atribut `aria-disabled` serta `style` -->
-                                    <a href="pesan_makanan.php?menu_id=<?php echo $menu_item['id_produk']; ?>" 
-                                       class="menu-item-order-btn">
-                                        <i class="fas fa-cart-plus"></i> Pesan
-                                    </a>
                                 </div>
                             </div>
                         <?php endforeach; ?>
