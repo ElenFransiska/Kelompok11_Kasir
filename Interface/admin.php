@@ -30,9 +30,9 @@ $result = $conn->query($sql);
 </head>
 <body>
     <div class="logout-fixed-top-right">
-        <form action="../login.php" method="POST">
+        <a href="../index.php">
             <button type="submit">Logout</button>
-        </form>
+        </a>
     </div>
 
     <div class="product-container">
@@ -50,6 +50,7 @@ $result = $conn->query($sql);
                 <th>Image</th>
                 <th>Keterangan</th>
                 <th>Stok</th>
+                <th>Harga</th>
                 <th>Aksi</th>
             </tr>
             <?php if ($result->num_rows > 0): ?>
@@ -61,6 +62,7 @@ $result = $conn->query($sql);
                         <td><img src="../<?= $row['image'] ?>" alt="<?= $row['nama'] ?>"></td>
                         <td><?php echo $row['keterangan']; ?></td>
                         <td><?php echo $row['stok']; ?></td>
+                        <td><?php echo $row['harga']; ?></td>
                         <td>
                             <a href="edit_form.php?id=<?php echo $row['id_produk']; ?>" class="btn btn-primary">Edit</a>
                             <a href="../logic/delete_product.php?id=<?php echo $row['id_produk']; ?>" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?');">Hapus</a>
@@ -116,6 +118,10 @@ $result = $conn->query($sql);
                 <div class="form-group">
                     <label for="stok">Stok Produk</label>
                     <input type="number" id="stok" name="stok" required>
+                </div>
+                    <div class="form-group">
+                    <label for="harga">Harga Produk</label>
+                    <input type="number" id="harga" name="harga" required>
                 </div>
                 <button type="submit" class="submit-btn">Tambah Produk</button>
             </form>

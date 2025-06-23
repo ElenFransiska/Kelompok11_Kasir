@@ -8,6 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $image = $conn->real_escape_string($_POST['image']);
     $keterangan = $conn->real_escape_string($_POST['keterangan']);
     $stok = intval($_POST['stok']);
+    $harga = intval($_POST['harga']);
 
     $sql = "UPDATE produk SET 
             kategori='$kategori', 
@@ -15,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             image='$image', 
             keterangan='$keterangan', 
             stok=$stok 
+            harga=$harga 
             WHERE id_produk=$id";
     
     if ($conn->query($sql) === TRUE) {
