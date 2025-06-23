@@ -1,5 +1,7 @@
 <?php
 require_once '../db_connection.php';
+// Anda mungkin ingin memulai sesi di sini jika belum dilakukan di db_connection.php
+// session_start(); 
 
 // Konfigurasi paginasi
 $items_per_page = 5; // Jumlah item per halaman
@@ -24,10 +26,51 @@ $result = $conn->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manajemen Produk</title>
     <link rel="stylesheet" href="../css/css_product.css">
+    <style>
+        /* CSS untuk memposisikan tombol logout di pojok kanan atas */
+        .logout-fixed-top-right {
+            position: fixed; /* Membuat tombol tetap di posisi bahkan saat di-scroll */
+            top: 20px;       /* Jarak dari tepi atas */
+            right: 20px;     /* Jarak dari tepi kanan */
+            z-index: 1000;   /* Memastikan tombol berada di atas konten lain */
+        }
+
+        .logout-fixed-top-right button {
+            background-color: #f44336; /* Merah */
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Efek bayangan */
+            transition: background-color 0.3s ease; /* Transisi hover */
+        }
+        .logout-fixed-top-right button:hover {
+            background-color: #d32f2f;
+        }
+
+        /* Anda mungkin perlu menyesuaikan margin/padding pada body atau .product-container
+           jika tombol logout menutupi header konten utama.
+           Contoh: */
+        body {
+            padding-top: 60px; /* Memberi ruang di bagian atas agar tombol tidak menutupi konten */
+        }
+        /* Atau jika product-container sudah punya margin-top, tambah lagi: */
+        /* .product-container {
+            margin-top: 40px; 
+        } */
+    </style>
 </head>
 <body>
+    <div class="logout-fixed-top-right">
+        <form action="../login.php" method="POST">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+
     <div class="product-container">
-        <h1 class="product-header">Manajemen Produk</h1>
+        <h1 class="product-header">Manajemen Produk</h1> 
         
         <?php if (isset($_GET['message'])): ?>
             <div class="product-message success"><?php echo htmlspecialchars($_GET['message']); ?></div>
@@ -54,7 +97,7 @@ $result = $conn->query($sql);
                         <td><?php echo $row['stok']; ?></td>
                         <td>
                             <a href="edit_form.php?id=<?php echo $row['id_produk']; ?>" class="btn btn-primary">Edit</a>
-                            <a href="../logic/delete_product.php?id=<?php echo $row['id_produk']; ?>" class="btn btn-danger">Hapus</a>
+                            <a href="../logic/delete_product.php?id=<?php echo $row['id_produk']; ?>" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?');">Hapus</a>
                         </td>
                     </tr>
                 <?php endwhile; ?>
@@ -65,7 +108,6 @@ $result = $conn->query($sql);
             <?php endif; ?>
         </table>
 
-        <!-- Pagination -->
         <div class="pagination">
             <?php if ($current_page > 1): ?>
                 <a href="?page=<?php echo $current_page - 1; ?>">Sebelumnya</a>
