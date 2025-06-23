@@ -30,9 +30,9 @@ $result = $conn->query($sql);
 </head>
 <body>
     <div class="logout-fixed-top-right">
-        <form action="../login.php" method="POST">
+        <a href="../index.php">
             <button type="submit">Logout</button>
-        </form>
+        </a>
     </div>
 
     <div class="product-container">
