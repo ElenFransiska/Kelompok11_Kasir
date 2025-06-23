@@ -114,8 +114,13 @@ if (!isset($conn) || !$conn instanceof mysqli || $conn->connect_error) {
                     <div class="menu-grid">
                         <?php foreach ($items_in_category as $menu_item): ?>
                             <div class="menu-item-card">
+<<<<<<< HEAD
                                 <!-- Menggunakan 'image' dari hasil query VIEW/produk -->
                                 <img src="<?php echo htmlspecialchars($menu_item['image']); ?>" alt="Gambar <?php echo htmlspecialchars($menu_item['nama']); ?>">
+=======
+                                <!-- PERBAIKAN: Menggunakan 'image' dari tabel produk -->
+                                <img src="../<?= htmlspecialchars($menu_item['image']) ?>" alt="Gambar <?= htmlspecialchars($menu_item['nama']) ?>">
+>>>>>>> 078eb3e1e721079f0461065466852476a3c8cf19
                                 <div class="card-content">
                                     <div>
                                         <!-- Menggunakan 'nama' dari hasil query VIEW/produk -->
