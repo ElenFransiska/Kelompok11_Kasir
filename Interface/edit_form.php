@@ -44,6 +44,10 @@ if (isset($_GET['id'])) {
                 <label for="stok">Stok</label>
                 <input type="number" id="stok" name="stok" value="<?php echo $product['stok']; ?>" required>
             </div>
+            <div class="form-group">
+                <label for="harga">Harga</label>
+                <input type="number" id="harga" name="harga" value="<?php echo $product['harga']; ?>" required>
+            </div>
             <button type="submit" class="btn btn-success">Update Produk</button>
         </form>
     </div>

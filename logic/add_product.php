@@ -6,6 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nama = $conn->real_escape_string($_POST['nama']);
     $keterangan = $conn->real_escape_string($_POST['keterangan']);
     $stok = intval($_POST['stok']);
+    $harga = intval($_POST['harga']);
 
     // Proses upload gambar
     if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
@@ -25,8 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $image_path = "images/" . $filename; // Path relatif untuk disimpan di database
             
             try {
-                $sql = "INSERT INTO produk (kategori, nama, image, keterangan, stok) 
-                        VALUES ('$kategori', '$nama', '$image_path', '$keterangan', $stok)";
+                $sql = "INSERT INTO produk (kategori, nama, image, keterangan, stok, harga) 
+                        VALUES ('$kategori', '$nama', '$image_path', '$keterangan', $stok, $harga)";
                 
                 // Execute the query
                 $conn->query($sql);
