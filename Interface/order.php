@@ -58,7 +58,7 @@ if (!isset($conn) || !$conn instanceof mysqli || $conn->connect_error) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Menu - [Nama Cafe/Restoran Anda]</title>
+    <title>Daftar Menu</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Menggunakan CSS global dari direktori css/ -->
@@ -67,8 +67,8 @@ if (!isset($conn) || !$conn instanceof mysqli || $conn->connect_error) {
 <body>
     <header class="navbar">
         <div class="navbar-brand">
-            <span class="logo-placeholder">C/R</span> <!-- Placeholder logo -->
-            [Nama Cafe/Restoran Anda]
+            <span class="logo-placeholder">E/R</span> <!-- Placeholder logo -->
+            System Kasir
         </div>
         <nav class="navbar-nav">
             <a href="home.php" class="nav-link">Home</a>
@@ -114,13 +114,8 @@ if (!isset($conn) || !$conn instanceof mysqli || $conn->connect_error) {
                     <div class="menu-grid">
                         <?php foreach ($items_in_category as $menu_item): ?>
                             <div class="menu-item-card">
-<<<<<<< HEAD
                                 <!-- Menggunakan 'image' dari hasil query VIEW/produk -->
                                 <img src="<?php echo htmlspecialchars($menu_item['image']); ?>" alt="Gambar <?php echo htmlspecialchars($menu_item['nama']); ?>">
-=======
-                                <!-- PERBAIKAN: Menggunakan 'image' dari tabel produk -->
-                                <img src="../<?= htmlspecialchars($menu_item['image']) ?>" alt="Gambar <?= htmlspecialchars($menu_item['nama']) ?>">
->>>>>>> 078eb3e1e721079f0461065466852476a3c8cf19
                                 <div class="card-content">
                                     <div>
                                         <!-- Menggunakan 'nama' dari hasil query VIEW/produk -->
@@ -132,6 +127,7 @@ if (!isset($conn) || !$conn instanceof mysqli || $conn->connect_error) {
                                         <!-- Menghilangkan elemen stok-info sesuai permintaan sebelumnya -->
                                     </div>
                                     <!-- Tombol Pesan baru per item menu -->
+     
                                 </div>
                             </div>
                         <?php endforeach; ?>
