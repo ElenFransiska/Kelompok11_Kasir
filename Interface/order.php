@@ -74,7 +74,6 @@ if (!isset($conn) || !$conn instanceof mysqli || $conn->connect_error) {
             <a href="home.php" class="nav-link">Home</a>
             <a href="menu_page.php" class="nav-link active">Menu</a> 
             <a href="pesan.php" class="nav-link">Pesan Sekarang</a>
-            <a href="contact.php" class="nav-link">Hubungi Kami</a>
         </nav>
     </header>
 
