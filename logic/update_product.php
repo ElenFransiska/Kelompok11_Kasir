@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             nama='$nama', 
             image='$image', 
             keterangan='$keterangan', 
-            stok=$stok 
+            stok=$stok,
             harga=$harga 
             WHERE id_produk=$id";
     
