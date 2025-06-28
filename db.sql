@@ -79,7 +79,7 @@ CREATE TABLE order_items (
 -- GROUP BY o.id_order
 -- ORDER BY o.created_at DESC;
 
-CREATE VIEW view_menu AS SELECT kategori, nama, image, keterangan, harga FROM produk ORDER BY kategori, nama;
+CREATE VIEW view_menu AS SELECT id_produk, kategori, nama, image, keterangan, harga FROM produk ORDER BY kategori, nama;
 
     CREATE TABLE `admin` (
     `id_admin` int(5) NOT NULL,
