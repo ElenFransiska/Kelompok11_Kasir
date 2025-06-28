@@ -1,18 +1,7 @@
 <?php
 header('Content-Type: application/json');
 
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "kasir_db";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    echo json_encode(['success' => false, 'message' => 'Database connection failed: ' . $conn->connect_error]);
-    exit();
-}
+require_once '../db_connection.php';
 
 // Get the raw POST data
 $input = file_get_contents('php://input');
