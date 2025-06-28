@@ -96,3 +96,29 @@ CREATE VIEW view_menu AS SELECT id_produk, kategori, nama, image, keterangan, ha
     (1, 'admin', 'admin', '21232f297a57a5a743894a0e4a801fc3'),
     (2, 'elen', 'elen', '508c71d57a2c2dd1ed8c3ede5b3012d5'),
     (3, 'raymond', 'raymond', 'f2a415aa78c7621831da5995e1447242');
+
+CREATE VIEW vw_order_summary AS
+SELECT 
+    o.id_order,
+    o.nama_pembeli,
+    o.meja,
+    SUM(oi.jumlah) AS total_produk,
+    SUM(oi.jumlah * oi.harga_satuan) AS total_harga,
+    o.created_at
+FROM 
+    orders o
+JOIN 
+    order_items oi ON o.id_order = oi.id_order
+GROUP BY 
+    o.id_order, o.nama_pembeli, o.meja, o.created_at
+ORDER BY 
+    o.created_at DESC, o.nama_pembeli ASC;
+
+DELIMITER //
+
+CREATE PROCEDURE GetOrderSummary()
+BEGIN
+    SELECT * FROM vw_order_summary;
+END //
+
+DELIMITER ;

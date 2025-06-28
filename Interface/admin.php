@@ -30,6 +30,9 @@ $result = $conn->query($sql);
 </head>
 <body>
     <div class="logout-fixed-top-right">
+        <a href="history.php">
+            <button type="submit">History</button>
+        </a>
         <a href="../index.php">
             <button type="submit">Logout</button>
         </a>
