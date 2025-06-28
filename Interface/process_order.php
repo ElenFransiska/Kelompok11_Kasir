@@ -26,8 +26,6 @@ $conn->begin_transaction(); // Start transaction
 try {
     $totalHarga = 0;
     foreach ($items as $item) {
-        // Karena kita tidak menyimpan 'quantity' di order_items,
-        // kita akan menghitung total harga berdasarkan quantity dari frontend
         $totalHarga += $item['price'] * $item['quantity'];
     }
 
@@ -36,7 +34,7 @@ try {
     if ($stmt_order === FALSE) {
         throw new Exception("Prepare statement for orders failed: " . $conn->error);
     }
-    $stmt_order->bind_param("ssd", $namaPembeli, $meja, $totalHarga); // 'd' for double (harga)
+    $stmt_order->bind_param("ssd", $namaPembeli, $meja, $totalHarga);
     if (!$stmt_order->execute()) {
         throw new Exception("Execute statement for orders failed: " . $stmt_order->error);
     }
@@ -44,8 +42,6 @@ try {
     $stmt_order->close();
 
     // 2. Insert into 'order_items' table for each item and its quantity
-    // Kita akan membuat entri terpisah untuk setiap unit jika quantity > 1
-    // atau hanya satu entri jika quantity == 1.
     $stmt_order_item = $conn->prepare("INSERT INTO order_items (id_order, id_produk, harga_satuan) VALUES (?, ?, ?)");
     if ($stmt_order_item === FALSE) {
         throw new Exception("Prepare statement for order_item failed: " . $conn->error);
@@ -54,15 +50,26 @@ try {
     foreach ($items as $item) {
         $productId = $item['id'];
         $itemPrice = $item['price'];
-        $quantity = $item['quantity']; // Kuantitas dari frontend
+        $quantity = $item['quantity'];
 
-        // Loop untuk setiap kuantitas
+        // Loop for each quantity
         for ($i = 0; $i < $quantity; $i++) {
             $stmt_order_item->bind_param("iid", $orderId, $productId, $itemPrice);
             if (!$stmt_order_item->execute()) {
                 throw new Exception("Execute statement for order_item failed: " . $stmt_order_item->error);
             }
         }
+
+        // 3. Reduce stock in 'produk' table
+        $stmt_update_stock = $conn->prepare("UPDATE produk SET stok = stok - ? WHERE id_produk = ?");
+        if ($stmt_update_stock === FALSE) {
+            throw new Exception("Prepare statement for stock update failed: " . $conn->error);
+        }
+        $stmt_update_stock->bind_param("ii", $quantity, $productId);
+        if (!$stmt_update_stock->execute()) {
+            throw new Exception("Execute statement for stock update failed: " . $stmt_update_stock->error);
+        }
+        $stmt_update_stock->close();
     }
     $stmt_order_item->close();
 
