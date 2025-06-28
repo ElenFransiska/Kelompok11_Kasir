@@ -6,7 +6,7 @@ require_once '../db_connection.php';
 $products = [];
 // Perhatikan: Menggunakan 'nama' dan 'keterangan' sesuai struktur tabel Anda
 // Menghilangkan 'stok' dari SELECT query
-$sql = "SELECT id_produk, nama AS nama_produk, harga, kategori, keterangan AS deskripsi FROM produk ORDER BY kategori, nama_produk";
+$sql = "SELECT id_produk, nama AS nama_produk, harga, image, kategori, keterangan AS deskripsi FROM produk ORDER BY kategori, nama_produk";
 $result = $conn->query($sql);
 
 if ($result === FALSE) {
@@ -61,7 +61,7 @@ $conn->close();
                                  data-id="<?php echo $item['id_produk']; ?>"
                                  data-price="<?php echo $item['harga']; ?>"
                                  data-name="<?php echo htmlspecialchars($item['nama_produk']); ?>">
-                                <img src="<?php echo htmlspecialchars($item['gambar'] ?? 'https://via.placeholder.com/120?text=No+Image'); ?>" alt="<?php echo htmlspecialchars($item['nama_produk']); ?>">
+                                <img src="../<?= $item['image'] ?>" alt="<?= $item['nama_produk'] ?>">
                                 <h4><?php echo htmlspecialchars($item['nama_produk']); ?></h4>
                                 <p class="description"><?php echo htmlspecialchars($item['deskripsi']); ?></p>
                                 <p class="price">Rp <?php echo number_format($item['harga'], 0, ',', '.'); ?></p>
