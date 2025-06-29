@@ -28,12 +28,38 @@ if (empty($namaPembeli) || empty($nomorMeja) || empty($items)) {
 $conn->begin_transaction(); // Mulai transaksi untuk memastikan konsistensi data
 
 try {
+<<<<<<< HEAD
     $totalHargaPesanan = 0;
     $productsToUpdate = [];
+=======
+    $totalHarga = 0;
+    foreach ($items as $item) {
+        $totalHarga += $item['price'] * $item['quantity'];
+    }
+
+    // 1. Insert into 'orders' table
+    $stmt_order = $conn->prepare("INSERT INTO orders (nama_pembeli, meja, total_harga) VALUES (?, ?, ?)");
+    if ($stmt_order === FALSE) {
+        throw new Exception("Prepare statement for orders failed: " . $conn->error);
+    }
+    $stmt_order->bind_param("ssd", $namaPembeli, $meja, $totalHarga);
+    if (!$stmt_order->execute()) {
+        throw new Exception("Execute statement for orders failed: " . $stmt_order->error);
+    }
+    $orderId = $stmt_order->insert_id; // Get the last inserted order ID
+    $stmt_order->close();
+
+    // 2. Insert into 'order_items' table for each item and its quantity
+    $stmt_order_item = $conn->prepare("INSERT INTO order_items (id_order, id_produk, harga_satuan) VALUES (?, ?, ?)");
+    if ($stmt_order_item === FALSE) {
+        throw new Exception("Prepare statement for order_item failed: " . $conn->error);
+    }
+>>>>>>> 88937e32e22482fa05372350e983e8d0a0b166ae
 
     // Validasi stok dan hitung total harga
     foreach ($items as $item) {
         $productId = $item['id'];
+<<<<<<< HEAD
         $quantity = $item['quantity'];
 
         // Ambil stok terbaru dari database (penting untuk menghindari masalah race condition)
@@ -46,6 +72,31 @@ try {
         $result = $stmt->get_result();
         $productDB = $result->fetch_assoc();
         $stmt->close();
+=======
+        $itemPrice = $item['price'];
+        $quantity = $item['quantity'];
+
+        // Loop for each quantity
+        for ($i = 0; $i < $quantity; $i++) {
+            $stmt_order_item->bind_param("iid", $orderId, $productId, $itemPrice);
+            if (!$stmt_order_item->execute()) {
+                throw new Exception("Execute statement for order_item failed: " . $stmt_order_item->error);
+            }
+        }
+
+        // 3. Reduce stock in 'produk' table
+        $stmt_update_stock = $conn->prepare("UPDATE produk SET stok = stok - ? WHERE id_produk = ?");
+        if ($stmt_update_stock === FALSE) {
+            throw new Exception("Prepare statement for stock update failed: " . $conn->error);
+        }
+        $stmt_update_stock->bind_param("ii", $quantity, $productId);
+        if (!$stmt_update_stock->execute()) {
+            throw new Exception("Execute statement for stock update failed: " . $stmt_update_stock->error);
+        }
+        $stmt_update_stock->close();
+    }
+    $stmt_order_item->close();
+>>>>>>> 88937e32e22482fa05372350e983e8d0a0b166ae
 
         if (!$productDB || $productDB['stok'] < $quantity) {
             throw new Exception("Stok untuk produk " . htmlspecialchars($item['name']) . " tidak cukup. Stok tersedia: " . ($productDB['stok'] ?? 0));
@@ -123,4 +174,10 @@ try {
     $conn->close();
     echo json_encode($response);
 }
+<<<<<<< HEAD
 ?>
+=======
+
+$conn->close();
+?>
+>>>>>>> 88937e32e22482fa05372350e983e8d0a0b166ae

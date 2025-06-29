@@ -3,7 +3,12 @@ require_once '../db_connection.php';
 
 $products = [];
 // Perhatikan: Menggunakan 'nama' dan 'keterangan' sesuai struktur tabel Anda
+<<<<<<< HEAD
 $sql = "SELECT id_produk, nama AS nama_produk, harga, kategori, keterangan AS deskripsi, stok FROM produk ORDER BY kategori, nama_produk";
+=======
+// Menghilangkan 'stok' dari SELECT query
+$sql = "SELECT id_produk, nama AS nama_produk, harga, image, kategori, keterangan AS deskripsi FROM produk ORDER BY kategori, nama_produk";
+>>>>>>> 88937e32e22482fa05372350e983e8d0a0b166ae
 $result = $conn->query($sql);
 
 if ($result === FALSE) {
@@ -59,9 +64,14 @@ $conn->close();
                             <div class="product-card"
                                  data-id="<?php echo $item['id_produk']; ?>"
                                  data-price="<?php echo $item['harga']; ?>"
+<<<<<<< HEAD
                                  data-name="<?php echo htmlspecialchars($item['nama_produk']); ?>"
                                  data-stock="<?php echo $item['stok']; ?>">
                                 <img src="<?php echo htmlspecialchars($item['gambar'] ?? 'https://via.placeholder.com/120?text=No+Image'); ?>" alt="<?php echo htmlspecialchars($item['nama_produk']); ?>">
+=======
+                                 data-name="<?php echo htmlspecialchars($item['nama_produk']); ?>">
+                                <img src="../<?= $item['image'] ?>" alt="<?= $item['nama_produk'] ?>">
+>>>>>>> 88937e32e22482fa05372350e983e8d0a0b166ae
                                 <h4><?php echo htmlspecialchars($item['nama_produk']); ?></h4>
                                 <p class="description"><?php echo htmlspecialchars($item['deskripsi']); ?></p>
                                 <p class="stock">Stok: <span id="stock-<?php echo $item['id_produk']; ?>"><?php echo $item['stok']; ?></span></p>

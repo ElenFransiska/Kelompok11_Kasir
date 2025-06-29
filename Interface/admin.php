@@ -15,7 +15,7 @@ $total_items = $total_items_result->fetch_assoc()['total'];
 $total_pages = ceil($total_items / $items_per_page); // Total halaman
 
 // Ambil data produk dengan limit dan offset
-$sql = "SELECT * FROM produk LIMIT $items_per_page OFFSET $offset";
+$sql = "SELECT * FROM produk  ORDER BY kategori, nama LIMIT $items_per_page OFFSET $offset";
 $result = $conn->query($sql);
 ?>
 
@@ -30,6 +30,9 @@ $result = $conn->query($sql);
 </head>
 <body>
     <div class="logout-fixed-top-right">
+        <a href="history.php">
+            <button type="submit">History</button>
+        </a>
         <a href="../index.php">
             <button type="submit">Logout</button>
         </a>
