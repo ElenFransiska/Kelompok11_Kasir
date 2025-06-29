@@ -1,14 +1,8 @@
 <?php
-require_once '../db_connection.php'; 
+require_once '../db_connection.php'; // Sesuaikan path jika berbeda
 
 $products = [];
-// Perhatikan: Menggunakan 'nama' dan 'keterangan' sesuai struktur tabel Anda
-<<<<<<< HEAD
-$sql = "SELECT id_produk, nama AS nama_produk, harga, kategori, keterangan AS deskripsi, stok FROM produk ORDER BY kategori, nama_produk";
-=======
-// Menghilangkan 'stok' dari SELECT query
-$sql = "SELECT id_produk, nama AS nama_produk, harga, image, kategori, keterangan AS deskripsi FROM produk ORDER BY kategori, nama_produk";
->>>>>>> 88937e32e22482fa05372350e983e8d0a0b166ae
+$sql = "SELECT id_produk, nama AS nama_produk, harga, image, kategori, keterangan AS deskripsi, stok FROM produk ORDER BY kategori, nama_produk";
 $result = $conn->query($sql);
 
 if ($result === FALSE) {
@@ -32,9 +26,7 @@ $conn->close();
     <title>Pesan Makanan & Minuman | Kasir Anda</title>
     <link rel="stylesheet" href="../css/css_pesan.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-       
-    </style>
+    
 </head>
 <body>
     <div class="main-container">
@@ -64,15 +56,9 @@ $conn->close();
                             <div class="product-card"
                                  data-id="<?php echo $item['id_produk']; ?>"
                                  data-price="<?php echo $item['harga']; ?>"
-<<<<<<< HEAD
                                  data-name="<?php echo htmlspecialchars($item['nama_produk']); ?>"
-                                 data-stock="<?php echo $item['stok']; ?>">
-                                <img src="<?php echo htmlspecialchars($item['gambar'] ?? 'https://via.placeholder.com/120?text=No+Image'); ?>" alt="<?php echo htmlspecialchars($item['nama_produk']); ?>">
-=======
-                                 data-name="<?php echo htmlspecialchars($item['nama_produk']); ?>">
-                                <img src="../<?= $item['image'] ?>" alt="<?= $item['nama_produk'] ?>">
->>>>>>> 88937e32e22482fa05372350e983e8d0a0b166ae
-                                <h4><?php echo htmlspecialchars($item['nama_produk']); ?></h4>
+                                 data-stock="<?php echo $item['stok']; ?>"> <img src="../<?= htmlspecialchars($item['image'] ?? 'path/to/default/image.jpg'); ?>" alt="<?= htmlspecialchars($item['nama_produk']); ?>">
+                                 <h4><?php echo htmlspecialchars($item['nama_produk']); ?></h4>
                                 <p class="description"><?php echo htmlspecialchars($item['deskripsi']); ?></p>
                                 <p class="stock">Stok: <span id="stock-<?php echo $item['id_produk']; ?>"><?php echo $item['stok']; ?></span></p>
                                 <p class="price">Rp <?php echo number_format($item['harga'], 0, ',', '.'); ?></p>
@@ -121,7 +107,10 @@ $conn->close();
             const qtyInput = document.getElementById(`qty-${productId}`);
             const stockSpan = document.getElementById(`stock-${productId}`);
             const productCard = document.querySelector(`.product-card[data-id="${productId}"]`);
-            const currentStock = parseInt(productCard.dataset.stock); // Get original stock from data attribute
+            // Get current stock from the displayed stock, not original data attribute,
+            // as stock might have been updated by a prior successful order in the same session.
+            // This ensures client-side validation uses the most recent stock shown.
+            const currentAvailableStock = parseInt(stockSpan.textContent); 
 
             let currentQty = parseInt(qtyInput.value);
             let newQty = currentQty + change;
@@ -130,9 +119,9 @@ $conn->close();
             if (newQty < 0) newQty = 0;
 
             // Prevent adding more than available stock
-            if (change > 0 && newQty > currentStock) {
-                alert('Jumlah pesanan melebihi stok yang tersedia (' + currentStock + ').');
-                newQty = currentStock; // Cap at max stock
+            if (change > 0 && newQty > currentAvailableStock) {
+                alert('Jumlah pesanan melebihi stok yang tersedia (' + currentAvailableStock + ').');
+                newQty = currentAvailableStock; // Cap at max stock
             }
             
             qtyInput.value = newQty;
@@ -146,7 +135,9 @@ $conn->close();
                     name: productName,
                     price: productPrice,
                     quantity: newQty,
-                    stock: currentStock // Keep original stock for reference
+                    // We don't need to pass 'stock' from here to process_order.php,
+                    // as process_order.php will fetch the latest stock from DB.
+                    // stock: currentAvailableStock 
                 };
             } else {
                 delete cart[productId]; // Remove item if quantity is 0
@@ -236,6 +227,15 @@ $conn->close();
                     body: JSON.stringify(orderData)
                 });
 
+                // Check if the response is OK (status 200) and if it's JSON
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('Server responded with an error:', response.status, errorText);
+                    alert('Terjadi kesalahan pada server saat memproses pesanan. Silakan cek konsol browser atau log server.');
+                    window.location.href = 'menu_baru.php?status=error';
+                    return;
+                }
+
                 const result = await response.json();
 
                 if (result.success) {
@@ -245,38 +245,58 @@ $conn->close();
                     document.getElementById('nama_pembeli').value = '';
                     document.getElementById('meja').value = '';
                     
-                    // Reset all quantity inputs on product cards
+                    // Reset all quantity inputs on product cards to 0
                     document.querySelectorAll('.quantity-controls input').forEach(input => {
                         input.value = 0;
                     });
                     
-                    // Update stock display and disable buttons if stock becomes 0
+                    // Update stock display on the page and disable buttons if stock becomes 0
                     if (result.updated_stocks) {
                         result.updated_stocks.forEach(item => {
                             const stockSpan = document.getElementById(`stock-${item.id_produk}`);
                             if (stockSpan) {
                                 stockSpan.textContent = item.new_stock;
+                                const productCard = document.querySelector(`.product-card[data-id="${item.id_produk}"]`);
                                 if (item.new_stock <= 0) {
-                                    const productCard = document.querySelector(`.product-card[data-id="${item.id_produk}"]`);
-                                    if (productCard) {
-                                        productCard.querySelector('.quantity-controls button:last-child').disabled = true; // Disable '+' button
-                                        productCard.querySelector('.out-of-stock').style.display = 'block'; // Show "Stok Habis"
+                                    // Disable '+' button
+                                    const addButton = productCard.querySelector('.quantity-controls button:last-child');
+                                    if (addButton) addButton.disabled = true;
+                                    // Show "Stok Habis" message
+                                    let outOfStockMessage = productCard.querySelector('.out-of-stock');
+                                    if (!outOfStockMessage) {
+                                        outOfStockMessage = document.createElement('p');
+                                        outOfStockMessage.className = 'out-of-stock';
+                                        productCard.appendChild(outOfStockMessage);
                                     }
+                                    outOfStockMessage.textContent = 'Stok Habis';
+                                    outOfStockMessage.style.display = 'block';
+                                } else {
+                                    // Ensure '+' button is enabled if stock > 0
+                                    const addButton = productCard.querySelector('.quantity-controls button:last-child');
+                                    if (addButton) addButton.disabled = false;
+                                    // Hide "Stok Habis" message
+                                    const outOfStockMessage = productCard.querySelector('.out-of-stock');
+                                    if (outOfStockMessage) outOfStockMessage.style.display = 'none';
                                 }
                             }
                         });
                     }
 
                     updateCartDisplay();
-                    window.location.href = 'menu_baru.php?status=success'; // Redirect with success message
+                    // Redirect is good for showing the status message (success/error) once.
+                    // window.location.href = 'menu_baru.php?status=success'; 
+                    // Consider if you want to refresh the page or just update UI dynamically.
+                    // A full page reload might clear unsaved changes if there are any.
+                    // For now, keeping the reload as it was.
+                    window.location.href = 'menu_baru.php?status=success';
                 } else {
                     alert('Gagal menempatkan pesanan: ' + result.message);
-                    window.location.href = 'menu_baru.php?status=error'; // Redirect with error message
+                    window.location.href = 'menu_baru.php?status=error';
                 }
             } catch (error) {
-                console.error('Error:', error);
-                alert('Terjadi kesalahan saat memproses pesanan.');
-                window.location.href = 'menu_baru.php?status=error'; // Redirect with error message
+                console.error('Error in fetch:', error);
+                alert('Terjadi kesalahan jaringan atau respons tidak valid.');
+                window.location.href = 'menu_baru.php?status=error';
             }
         }
         document.addEventListener('DOMContentLoaded', updateCartDisplay); // Initialize cart display on load

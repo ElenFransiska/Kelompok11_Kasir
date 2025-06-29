@@ -28,38 +28,12 @@ if (empty($namaPembeli) || empty($nomorMeja) || empty($items)) {
 $conn->begin_transaction(); // Mulai transaksi untuk memastikan konsistensi data
 
 try {
-<<<<<<< HEAD
     $totalHargaPesanan = 0;
     $productsToUpdate = [];
-=======
-    $totalHarga = 0;
-    foreach ($items as $item) {
-        $totalHarga += $item['price'] * $item['quantity'];
-    }
-
-    // 1. Insert into 'orders' table
-    $stmt_order = $conn->prepare("INSERT INTO orders (nama_pembeli, meja, total_harga) VALUES (?, ?, ?)");
-    if ($stmt_order === FALSE) {
-        throw new Exception("Prepare statement for orders failed: " . $conn->error);
-    }
-    $stmt_order->bind_param("ssd", $namaPembeli, $meja, $totalHarga);
-    if (!$stmt_order->execute()) {
-        throw new Exception("Execute statement for orders failed: " . $stmt_order->error);
-    }
-    $orderId = $stmt_order->insert_id; // Get the last inserted order ID
-    $stmt_order->close();
-
-    // 2. Insert into 'order_items' table for each item and its quantity
-    $stmt_order_item = $conn->prepare("INSERT INTO order_items (id_order, id_produk, harga_satuan) VALUES (?, ?, ?)");
-    if ($stmt_order_item === FALSE) {
-        throw new Exception("Prepare statement for order_item failed: " . $conn->error);
-    }
->>>>>>> 88937e32e22482fa05372350e983e8d0a0b166ae
 
     // Validasi stok dan hitung total harga
     foreach ($items as $item) {
         $productId = $item['id'];
-<<<<<<< HEAD
         $quantity = $item['quantity'];
 
         // Ambil stok terbaru dari database (penting untuk menghindari masalah race condition)
@@ -72,31 +46,6 @@ try {
         $result = $stmt->get_result();
         $productDB = $result->fetch_assoc();
         $stmt->close();
-=======
-        $itemPrice = $item['price'];
-        $quantity = $item['quantity'];
-
-        // Loop for each quantity
-        for ($i = 0; $i < $quantity; $i++) {
-            $stmt_order_item->bind_param("iid", $orderId, $productId, $itemPrice);
-            if (!$stmt_order_item->execute()) {
-                throw new Exception("Execute statement for order_item failed: " . $stmt_order_item->error);
-            }
-        }
-
-        // 3. Reduce stock in 'produk' table
-        $stmt_update_stock = $conn->prepare("UPDATE produk SET stok = stok - ? WHERE id_produk = ?");
-        if ($stmt_update_stock === FALSE) {
-            throw new Exception("Prepare statement for stock update failed: " . $conn->error);
-        }
-        $stmt_update_stock->bind_param("ii", $quantity, $productId);
-        if (!$stmt_update_stock->execute()) {
-            throw new Exception("Execute statement for stock update failed: " . $stmt_update_stock->error);
-        }
-        $stmt_update_stock->close();
-    }
-    $stmt_order_item->close();
->>>>>>> 88937e32e22482fa05372350e983e8d0a0b166ae
 
         if (!$productDB || $productDB['stok'] < $quantity) {
             throw new Exception("Stok untuk produk " . htmlspecialchars($item['name']) . " tidak cukup. Stok tersedia: " . ($productDB['stok'] ?? 0));
@@ -114,44 +63,60 @@ try {
         ];
     }
 
-    // 1. Masukkan data ke tabel `orders` (tadi Anda menggunakan 'pesanan' di komentar, tapi di query 'orders')
+    // 1. Masukkan data ke tabel `orders`
+    // IMPORTANT: Based on your `image_17d476.png`, your database 'hotel' has a table named 'order' with different columns
+    // (id_order, namaCus, berat, jenislayanan, alamat, tanggal, status).
+    // And `image_e0c489.png` shows 'kasir_db' has 'orders' table.
+    // Ensure you are connecting to 'kasir_db' and that the 'orders' table exists with these columns:
+    // (nama_pembeli, meja, total_harga).
+    // If 'kasir_db' does not have 'orders' table, you need to create it.
+    // CREATE TABLE orders (
+    //     id_order INT AUTO_INCREMENT PRIMARY KEY,
+    //     nama_pembeli VARCHAR(255) NOT NULL,
+    //     meja VARCHAR(50) NOT NULL,
+    //     total_harga DECIMAL(10, 2) NOT NULL,
+    //     tanggal_pesanan TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    // );
     $stmt = $conn->prepare("INSERT INTO orders (nama_pembeli, meja, total_harga) VALUES (?, ?, ?)");
     if (!$stmt) {
-        throw new Exception("Prepare statement failed: " . $conn->error);
+        throw new Exception("Prepare statement for orders failed: " . $conn->error);
     }
     $stmt->bind_param("ssd", $namaPembeli, $nomorMeja, $totalHargaPesanan);
     if (!$stmt->execute()) {
         throw new Exception("Error inserting into orders: " . $stmt->error);
     }
-    $idPesanan = $conn->insert_id;
+    $idPesanan = $conn->insert_id; // This gets the auto-generated ID for the new order
     $stmt->close();
 
     // 2. Masukkan setiap item ke tabel `order_items` dan update stok
+    // Based on `image_e0c489.png`, your 'order_items' table has:
+    // id_order_item (PRIMARY KEY, AUTO_INCREMENT), id_order, id_produk, jumlah, harga_satuan.
+    // It does NOT have a 'subtotal' column.
     foreach ($productsToUpdate as $product) {
-        // Insert ke order_items
-        // Based on image_e0c489.png, your table is `order_items` and has `id_order`, `id_produk`, `jumlah`, `harga_satuan`.
-        // It does NOT have a `subtotal` column.
+        // Insert into order_items
+        // DO NOT include id_order_item in the INSERT, as it's AUTO_INCREMENT.
+        // Also, 'subtotal' is not in your order_items table schema.
         $stmt = $conn->prepare("INSERT INTO order_items (id_order, id_produk, jumlah, harga_satuan) VALUES (?, ?, ?, ?)");
         if (!$stmt) {
-            throw new Exception("Prepare statement failed: " . $conn->error);
+            throw new Exception("Prepare statement for order_items failed: " . $conn->error);
         }
-        // Bind parameters: 'iiid' for (id_order, id_produk, jumlah, harga_satuan)
+        // Bind parameters: 'iiid' corresponds to (id_order, id_produk, jumlah, harga_satuan)
         // 'i' for id_order (integer)
         // 'i' for id_produk (integer)
         // 'i' for jumlah (integer)
         // 'd' for harga_satuan (decimal/double)
-        $stmt->bind_param("iiid", $idPesanan, $product['id_produk'], $product['quantity_ordered'], $product['harga_satuan']);
+        $stmt->bind_param("iiid", $idPesanan, $product['id_produk'], $product['quantity_ordered'], $product['jumlah'], $product['harga_satuan']);
         
         if (!$stmt->execute()) {
             throw new Exception("Error inserting into order_items: " . $stmt->error);
         }
         $stmt->close();
 
-        // Update stok di tabel produk
+        // Update stok in the 'produk' table
         $newStock = $product['current_stock'] - $product['quantity_ordered'];
         $stmt = $conn->prepare("UPDATE produk SET stok = ? WHERE id_produk = ?");
         if (!$stmt) {
-            throw new Exception("Prepare statement failed: " . $conn->error);
+            throw new Exception("Prepare statement for product update failed: " . $conn->error);
         }
         $stmt->bind_param("ii", $newStock, $product['id_produk']);
         if (!$stmt->execute()) {
@@ -162,22 +127,16 @@ try {
         $response['updated_stocks'][] = ['id_produk' => $product['id_produk'], 'new_stock' => $newStock];
     }
 
-    $conn->commit(); // Commit transaksi jika semua berhasil
+    $conn->commit(); // Commit transaction if all successful
     $response['success'] = true;
     $response['message'] = 'Pesanan berhasil ditempatkan!';
 
 } catch (Exception $e) {
-    $conn->rollback(); // Rollback transaksi jika ada kesalahan
+    $conn->rollback(); // Rollback transaction if any error occurs
     $response['message'] = $e->getMessage();
-    error_log("Order processing error: " . $e->getMessage()); // Log error untuk debugging
+    error_log("Order processing error: " . $e->getMessage()); // Log detailed error for debugging
 } finally {
     $conn->close();
     echo json_encode($response);
 }
-<<<<<<< HEAD
 ?>
-=======
-
-$conn->close();
-?>
->>>>>>> 88937e32e22482fa05372350e983e8d0a0b166ae
