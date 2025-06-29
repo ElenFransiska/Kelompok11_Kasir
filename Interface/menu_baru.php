@@ -1,4 +1,5 @@
 <?php
+// Database connection
 require_once '../db_connection.php'; 
 
 // Fetch products from the database
@@ -27,6 +28,32 @@ $conn->close();
     <title>Pesan Makanan & Minuman | Kasir Anda</title>
     <link rel="stylesheet" href="../css/css_pesan.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Tambahan untuk Tombol Kembali */
+        .back-btn {
+            background-color: #f44336; /* Warna merah */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 15px; /* Spasi dari elemen di atasnya */
+            width: 100%; /* Lebar penuh */
+            box-sizing: border-box; /* Sertakan padding dalam perhitungan lebar */
+            text-align: center;
+            text-decoration: none; /* Untuk tag <a> agar terlihat seperti tombol */
+            display: inline-block; /* Untuk tag <a> */
+        }
+
+        .back-btn:hover {
+            background-color: #d32f2f; /* Warna merah lebih gelap saat hover */
+        }
+        /* Sesuaikan jika tombol pesan sekarang juga butuh penyesuaian margin/padding */
+        .place-order-btn {
+            margin-bottom: 10px; /* Tambahkan sedikit spasi di bawah tombol pesan */
+        }
+    </style>
 </head>
 <body>
     <div class="main-container">
@@ -54,19 +81,19 @@ $conn->close();
                     <div class="product-grid">
                         <?php foreach ($items as $item): ?>
                             <div class="product-card"
-                                 data-id="<?php echo $item['id_produk']; ?>"
-                                 data-price="<?php echo $item['harga']; ?>"
+                                 data-id="<?php echo htmlspecialchars($item['id_produk']); ?>"
+                                 data-price="<?php echo htmlspecialchars($item['harga']); ?>"
                                  data-name="<?php echo htmlspecialchars($item['nama_produk']); ?>">
-                                <img src="../<?= htmlspecialchars($item['image']) ?>" alt="<?= htmlspecialchars($item['nama_produk']) ?>">
-                                <h4><?php echo htmlspecialchars($item['nama_produk']); ?></h4>
-                                <p class="description"><?php echo htmlspecialchars($item['deskripsi']); ?></p>
-                                <p class="price">Rp <?php echo number_format($item['harga'], 0, ',', '.'); ?></p>
-                                <div class="quantity-controls">
-                                    <button onclick="updateQuantity(<?php echo $item['id_produk']; ?>, -1)">-</button>
-                                    <input type="text" id="qty-<?php echo $item['id_produk']; ?>" value="0" readonly>
-                                    <button onclick="updateQuantity(<?php echo $item['id_produk']; ?>, 1)">+</button>
-                                </div>
-                            </div>
+                                 <img src="../<?= htmlspecialchars($item['image']) ?>" alt="<?= htmlspecialchars($item['nama_produk']) ?>">
+                                 <h4><?php echo htmlspecialchars($item['nama_produk']); ?></h4>
+                                 <p class="description"><?php echo htmlspecialchars($item['deskripsi']); ?></p>
+                                 <p class="price">Rp <?php echo number_format($item['harga'], 0, ',', '.'); ?></p>
+                                 <div class="quantity-controls">
+                                     <button onclick="updateQuantity(<?php echo htmlspecialchars($item['id_produk']); ?>, -1)">-</button>
+                                     <input type="text" id="qty-<?php echo htmlspecialchars($item['id_produk']); ?>" value="0" readonly>
+                                     <button onclick="updateQuantity(<?php echo htmlspecialchars($item['id_produk']); ?>, 1)">+</button>
+                                 </div>
+                             </div>
                         <?php endforeach; ?>
                     </div>
                 </div>
@@ -92,6 +119,7 @@ $conn->close();
             </div>
 
             <button class="place-order-btn" onclick="placeOrder()">Pesan Sekarang</button>
+            <a href="home.php" class="back-btn">Kembali</a>
         </div>
     </div>
 

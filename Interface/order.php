@@ -50,6 +50,7 @@ if (!isset($conn) || !$conn instanceof mysqli || $conn->connect_error) {
             <a href="home.php" class="nav-link">Home</a>
             <a href="menu_page.php" class="nav-link active">Menu</a> 
             <a href="pesan.php" class="nav-link">Pesan Sekarang</a>
+            <a href="home.php" class="nav-link">Kembali</a>
         </nav>
     </header>
 
@@ -103,8 +104,7 @@ if (!isset($conn) || !$conn instanceof mysqli || $conn->connect_error) {
     </div>
 
     <footer class="footer">
-        <p>&copy; <?php echo date("Y"); ?> [Nama Cafe/Restoran Anda]. Semua Hak Dilindungi.</p>
-        <p>Powered by Program Kasir.</p>
+        <p>© <?php echo date("Y"); ?> RaymondElen</p>
     </footer>
 </body>
 </html>

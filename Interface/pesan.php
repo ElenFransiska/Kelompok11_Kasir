@@ -30,7 +30,32 @@ $conn->close();
     <title>Pesan Makanan & Minuman | Kasir Anda</title>
     <link rel="stylesheet" href="../css/css_pesan.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    
+    <style>
+        /* Tambahkan CSS untuk tombol kembali */
+        .back-btn {
+            background-color: #f44336; /* Warna merah */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 15px; /* Spasi dari elemen di atasnya */
+            width: 100%; /* Lebar penuh */
+            box-sizing: border-box; /* Include padding in width */
+            text-align: center;
+            text-decoration: none; /* Untuk tag <a> */
+            display: inline-block; /* Untuk tag <a> */
+        }
+
+        .back-btn:hover {
+            background-color: #d32f2f; /* Warna merah lebih gelap saat hover */
+        }
+        /* Sesuaikan jika tombol pesan sekarang juga butuh penyesuaian margin/padding */
+        .place-order-btn {
+            margin-bottom: 10px; /* Tambahkan sedikit spasi di bawah tombol pesan */
+        }
+    </style>
 </head>
 <body>
     <div class="main-container">
@@ -61,16 +86,16 @@ $conn->close();
                                  data-id="<?php echo $item['id_produk']; ?>"
                                  data-price="<?php echo $item['harga']; ?>"
                                  data-name="<?php echo htmlspecialchars($item['nama_produk']); ?>">
-                                <img src="../<?= $item['image'] ?>" alt="<?= $item['nama_produk'] ?>">
-                                <h4><?php echo htmlspecialchars($item['nama_produk']); ?></h4>
-                                <p class="description"><?php echo htmlspecialchars($item['deskripsi']); ?></p>
-                                <p class="price">Rp <?php echo number_format($item['harga'], 0, ',', '.'); ?></p>
-                                <div class="quantity-controls">
-                                    <button onclick="updateQuantity(<?php echo $item['id_produk']; ?>, -1)">-</button>
-                                    <input type="text" id="qty-<?php echo $item['id_produk']; ?>" value="0" readonly>
-                                    <button onclick="updateQuantity(<?php echo $item['id_produk']; ?>, 1)">+</button>
-                                </div>
-                                </div>
+                                 <img src="../<?= $item['image'] ?>" alt="<?= $item['nama_produk'] ?>">
+                                 <h4><?php echo htmlspecialchars($item['nama_produk']); ?></h4>
+                                 <p class="description"><?php echo htmlspecialchars($item['deskripsi']); ?></p>
+                                 <p class="price">Rp <?php echo number_format($item['harga'], 0, ',', '.'); ?></p>
+                                 <div class="quantity-controls">
+                                     <button onclick="updateQuantity(<?php echo $item['id_produk']; ?>, -1)">-</button>
+                                     <input type="text" id="qty-<?php echo $item['id_produk']; ?>" value="0" readonly>
+                                     <button onclick="updateQuantity(<?php echo $item['id_produk']; ?>, 1)">+</button>
+                                 </div>
+                             </div>
                         <?php endforeach; ?>
                     </div>
                 </div>
@@ -96,6 +121,7 @@ $conn->close();
             </div>
 
             <button class="place-order-btn" onclick="placeOrder()">Pesan Sekarang</button>
+            <a href="home.php" class="back-btn">Kembali</a>
         </div>
     </div>
 
@@ -105,15 +131,12 @@ $conn->close();
         function updateQuantity(productId, change) {
             const qtyInput = document.getElementById(`qty-${productId}`);
             const productCard = document.querySelector(`.product-card[data-id="${productId}"]`);
-            // Tidak perlu lagi currentStock karena stok dihilangkan
 
             let currentQty = parseInt(qtyInput.value);
             let newQty = currentQty + change;
 
             // Pastikan kuantitas tidak kurang dari 0
             if (newQty < 0) newQty = 0;
-
-            // Validasi stok dihilangkan
             
             qtyInput.value = newQty;
 
@@ -229,7 +252,7 @@ $conn->close();
                         input.value = 0;
                     });
                     
-                    // Pembaruan stok dihilangkan
+                    // Pembaruan stok dihilangkan dari tampilan langsung karena trigger DB
                     
                     updateCartDisplay();
                     window.location.href = 'menu_baru.php?status=success'; // Redirect dengan pesan sukses

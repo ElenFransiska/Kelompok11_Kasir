@@ -20,7 +20,6 @@ INSERT INTO produk (kategori, nama, image, keterangan, stok, harga) VALUES
 ('Minuman', 'Jus Jeruk', '/images/jus_jeruk.jpg', 'Jus segar dari jeruk.', 70, 12000),
 ('Minuman', 'Soda', '/images/soda.jpg', 'Minuman berkarbonasi yang menyegarkan.', 50, 8000);
 
-DELIMITER //
 
 CREATE TRIGGER check_duplicate_nama
 BEFORE INSERT ON produk
@@ -135,3 +134,24 @@ INSERT INTO `produk` (`id_produk`, `kategori`, `nama`, `image`, `keterangan`, `s
 (9, 'minuman', 'Jus Alpukat', 'images/jus_alpukat.jpg', 'Jus alpukat segar dengan susu cokelat.', 45, 18000),
 (10, 'minuman', 'Wedang Jahe', 'images/wedang_jahe.jpeg', 'Minuman hangat jahe dengan gula merah.', 40, 12000),
 (51, 'Minuman', 'Vanila Spesial', 'images/vanila_spesial.jpg', 'Jus Vanila dengan ekstrak Kopi', 4, 25000);
+
+
+
+CREATE TRIGGER trg_check_stock_before_order_item_insert
+BEFORE INSERT ON order_items
+FOR EACH ROW
+BEGIN
+    DECLARE current_stock INT;
+
+    SELECT stok INTO current_stock
+    FROM produk
+    WHERE id_produk = NEW.id_produk;
+
+    IF NEW.jumlah > current_stock THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Stok produk tidak cukup untuk pesanan ini.';
+    END IF;
+
+    -
+END$$
+
+DELIMITER ; 
