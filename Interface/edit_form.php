@@ -21,7 +21,7 @@ if (isset($_GET['id'])) {
     <div class="product-container">
         <h1 class="product-header">Edit Produk</h1>
         
-        <form method="POST" action="../logic/update_product.php" class="product-form">
+        <form method="POST" action="../logic/update_product.php" class="product-form" enctype="multipart/form-data">
             <input type="hidden" name="id_produk" value="<?php echo $product['id_produk']; ?>">
             
             <div class="form-group">
@@ -33,8 +33,9 @@ if (isset($_GET['id'])) {
                 <input type="text" id="nama" name="nama" value="<?php echo $product['nama']; ?>" required>
             </div>
             <div class="form-group">
-                <label for="image">Image URL</label>
-                <input type="text" id="image" name="image" value="<?php echo $product['image']; ?>" required>
+                <label for="image">Upload Gambar Baru (optional)</label>
+                <input type="file" id="image" name="image" accept="image/*">
+                <p>Current Image: <img src="<?php echo '../' . $product['image']; ?>" alt="Current Image" style="max-width: 100px; max-height: 100px;"></p>
             </div>
             <div class="form-group">
                 <label for="keterangan">Keterangan</label>
