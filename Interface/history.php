@@ -29,7 +29,7 @@ $result = fetchOrderSummary($conn);
         <?php endif; ?>
 
         <!-- Back Button -->
-        <a href="../index.php" class="back-btn">Kembali</a>
+        <a href="admin.php" class="back-btn">Kembali</a>
 
         <!-- Delete Link -->
         <a href="?action=delete" class="delete-link" onclick="return confirm('Apakah Anda yakin ingin menghapus seluruh riwayat pesanan?');">Hapus Riwayat</a>

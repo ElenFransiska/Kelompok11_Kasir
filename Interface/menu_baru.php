@@ -1,12 +1,12 @@
 <?php
-require_once '../db_connection.php';
+require_once '../db_connection.php'; 
 
+// Fetch products from the database
 $products = [];
-$sql = "SELECT id_produk, nama AS nama_produk, harga, kategori, keterangan AS deskripsi, stok, image FROM produk ORDER BY kategori, nama_produk";
+$sql = "SELECT id_produk, nama AS nama_produk, harga, image, kategori, keterangan AS deskripsi FROM produk ORDER BY kategori, nama_produk";
 $result = $conn->query($sql);
 
 if ($result === FALSE) {
-    // Menambahkan penanganan error yang lebih informatif jika query gagal
     die("Error fetching products: " . $conn->error . " SQL: " . $sql);
 }
 
@@ -25,7 +25,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pesan Makanan & Minuman | Kasir Anda</title>
-    <link rel="stylesheet" href="../css/css_menu_baru.css">
+    <link rel="stylesheet" href="../css/css_pesan.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -56,24 +56,16 @@ $conn->close();
                             <div class="product-card"
                                  data-id="<?php echo $item['id_produk']; ?>"
                                  data-price="<?php echo $item['harga']; ?>"
-                                 data-name="<?php echo htmlspecialchars($item['nama_produk']); ?>"
-                                 data-stock="<?php echo $item['stok']; ?>">
-                                <img src="<?php echo htmlspecialchars($item['image'] ?? 'https://via.placeholder.com/120?text=No+Image'); ?>" alt="<?php echo htmlspecialchars($item['nama_produk']); ?>">
+                                 data-name="<?php echo htmlspecialchars($item['nama_produk']); ?>">
+                                <img src="../<?= htmlspecialchars($item['image']) ?>" alt="<?= htmlspecialchars($item['nama_produk']) ?>">
                                 <h4><?php echo htmlspecialchars($item['nama_produk']); ?></h4>
                                 <p class="description"><?php echo htmlspecialchars($item['deskripsi']); ?></p>
-                                <p class="stock">Stok: <span id="stock-<?php echo $item['id_produk']; ?>"><?php echo $item['stok']; ?></span></p>
                                 <p class="price">Rp <?php echo number_format($item['harga'], 0, ',', '.'); ?></p>
                                 <div class="quantity-controls">
                                     <button onclick="updateQuantity(<?php echo $item['id_produk']; ?>, -1)">-</button>
                                     <input type="text" id="qty-<?php echo $item['id_produk']; ?>" value="0" readonly>
-                                    <button onclick="updateQuantity(<?php echo $item['id_produk']; ?>, 1)"
-                                            <?php echo ($item['stok'] <= 0) ? 'disabled' : ''; ?>>+</button>
+                                    <button onclick="updateQuantity(<?php echo $item['id_produk']; ?>, 1)">+</button>
                                 </div>
-                                <?php if ($item['stok'] <= 0): ?>
-                                    <p class="out-of-stock" id="oos-<?php echo $item['id_produk']; ?>" style="display: block;">Stok Habis</p>
-                                <?php else: ?>
-                                    <p class="out-of-stock" id="oos-<?php echo $item['id_produk']; ?>" style="display: none;">Stok Habis</p>
-                                <?php endif; ?>
                             </div>
                         <?php endforeach; ?>
                     </div>
@@ -104,23 +96,18 @@ $conn->close();
     </div>
 
     <script>
-        let cart = {}; 
+        let cart = {}; // Stores {productId: {name, price, quantity}}
 
         function updateQuantity(productId, change) {
             const qtyInput = document.getElementById(`qty-${productId}`);
             const productCard = document.querySelector(`.product-card[data-id="${productId}"]`);
-            const currentStock = parseInt(productCard.dataset.stock); 
 
             let currentQty = parseInt(qtyInput.value);
             let newQty = currentQty + change;
 
-            if (newQty < 0) newQty = 0; 
+            // Ensure quantity does not go below 0
+            if (newQty < 0) newQty = 0;
 
-            if (change > 0 && newQty > currentStock) {
-                alert('Jumlah pesanan melebihi stok yang tersedia (' + currentStock + ').');
-                newQty = currentStock; 
-            }
-            
             qtyInput.value = newQty;
 
             const productName = productCard.dataset.name;
@@ -128,28 +115,27 @@ $conn->close();
 
             if (newQty > 0) {
                 cart[productId] = {
-                    id: productId, 
+                    id: productId,
                     name: productName,
                     price: productPrice,
-                    quantity: newQty,
-                    stock: currentStock 
+                    quantity: newQty
                 };
             } else {
-                delete cart[productId]; 
+                delete cart[productId]; // Remove item if quantity is 0
             }
             updateCartDisplay();
         }
 
         function removeItemFromCart(productId) {
             const qtyInput = document.getElementById(`qty-${productId}`);
-            if (qtyInput) qtyInput.value = 0; 
+            if (qtyInput) qtyInput.value = 0; // Reset quantity in product card
             delete cart[productId];
             updateCartDisplay();
         }
 
         function updateCartDisplay() {
             const cartItemsList = document.getElementById('cart-items');
-            cartItemsList.innerHTML = ''; 
+            cartItemsList.innerHTML = ''; // Clear current cart display
             let total = 0;
             let hasItems = false;
 
@@ -175,7 +161,7 @@ $conn->close();
                 if (emptyMessage) {
                     emptyMessage.style.display = 'block';
                 } else {
-                    const newEmptyMessage = document.createElement('li'); 
+                    const newEmptyMessage = document.createElement('li');
                     newEmptyMessage.id = 'empty-cart-message';
                     newEmptyMessage.style.textAlign = 'center';
                     newEmptyMessage.style.color = '#888';
@@ -183,7 +169,7 @@ $conn->close();
                     cartItemsList.appendChild(newEmptyMessage);
                 }
             } else {
-                if (emptyMessage) emptyMessage.style.display = 'none'; 
+                if (emptyMessage) emptyMessage.style.display = 'none'; // Hide if there are items
             }
             
             document.getElementById('cart-total').textContent = `Rp ${numberFormat(total)}`;
@@ -210,7 +196,7 @@ $conn->close();
             const orderData = {
                 nama_pembeli: namaPembeli,
                 meja: meja,
-                items: Object.values(cart) 
+                items: Object.values(cart) // Convert cart object to array of items
             };
 
             try {
@@ -226,49 +212,29 @@ $conn->close();
 
                 if (result.success) {
                     alert('Pesanan berhasil ditempatkan!');
+                    // Clear cart and reset form after successful order
                     cart = {};
                     document.getElementById('nama_pembeli').value = '';
                     document.getElementById('meja').value = '';
                     
+                    // Reset all quantity inputs in product cards
                     document.querySelectorAll('.quantity-controls input').forEach(input => {
                         input.value = 0;
                     });
                     
-                    if (result.updated_stocks) {
-                        result.updated_stocks.forEach(item => {
-                            const stockSpan = document.getElementById(`stock-${item.id_produk}`);
-                            const oosMessage = document.getElementById(`oos-${item.id_produk}`);
-                            if (stockSpan) {
-                                stockSpan.textContent = item.new_stock;
-                                const productCard = document.querySelector(`.product-card[data-id="${item.id_produk}"]`);
-                                if (productCard) {
-                                    productCard.dataset.stock = item.new_stock; 
-                                    const plusButton = productCard.querySelector('.quantity-controls button:last-child');
-                                    if (item.new_stock <= 0) {
-                                        if (plusButton) plusButton.disabled = true; 
-                                        if (oosMessage) oosMessage.style.display = 'block'; 
-                                    } else {
-                                        if (plusButton) plusButton.disabled = false;
-                                        if (oosMessage) oosMessage.style.display = 'none'; 
-                                    }
-                                }
-                            }
-                        });
-                    }
-
-                    updateCartDisplay(); 
-                    window.location.href = 'menu_baru.php?status=success'; 
+                    updateCartDisplay();
+                    window.location.href = 'menu_baru.php?status=success'; // Redirect with success message
                 } else {
                     alert('Gagal menempatkan pesanan: ' + result.message);
-                    window.location.href = 'menu_baru.php?status=error';
+                    window.location.href = 'menu_baru.php?status=error'; // Redirect with error message
                 }
             } catch (error) {
                 console.error('Error:', error);
                 alert('Terjadi kesalahan saat memproses pesanan.');
-                window.location.href = 'menu_baru.php?status=error';
+                window.location.href = 'menu_baru.php?status=error'; // Redirect with error message
             }
         }
-        document.addEventListener('DOMContentLoaded', updateCartDisplay); /
+        document.addEventListener('DOMContentLoaded', updateCartDisplay); // Initialize cart display on load
     </script>
 </body>
 </html>
