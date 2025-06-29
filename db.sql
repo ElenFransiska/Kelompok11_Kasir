@@ -122,3 +122,16 @@ BEGIN
 END //
 
 DELIMITER ;
+
+INSERT INTO `produk` (`id_produk`, `kategori`, `nama`, `image`, `keterangan`, `stok`, `harga`) VALUES
+(1, 'makanan', 'Nasi Goreng Spesial', 'images/nasi_goreng_spesial.jpg', 'Nasi goreng dengan bumbu rempah pilihan dan telur mata sapi.', 50, 25000),
+(2, 'makanan', 'Mie Ayam Bakso', 'images/mie_ayam_bakso.jpg', 'Mie ayam dengan toping bakso sapi dan pangsit goreng.', 45, 22000),
+(3, 'makanan', 'Sate Ayam Madura', 'images/sate_ayam_madura.jpg', 'Sate ayam dengan bumbu kacang khas Madura.', 40, 30000),
+(4, 'makanan', 'Gado-Gado Siram', 'images/gado-gado_siram.jpg', 'Sayuran segar dengan lontong dan bumbu kacang siram.', 34, 20000),
+(5, 'makanan', 'Soto Betawi', 'images/soto_betawi.webp', 'Soto santan khas Betawi dengan daging sapi.', 30, 28000),
+(6, 'minuman', 'Es Teh Manis', 'images/es_teh_manis.webp', 'Minuman teh segar dengan gula asli.', 60, 8000),
+(7, 'minuman', 'Es Jeruk Peras', 'images/es_jeruk_peras.jpeg', 'Minuman jeruk peras asli tanpa pengawet.', 55, 10000),
+(8, 'minuman', 'Kopi Susu Dingin', 'images/kopi_susu_dingin.webp', 'Kopi robusta dengan susu dan es.', 50, 15000),
+(9, 'minuman', 'Jus Alpukat', 'images/jus_alpukat.jpg', 'Jus alpukat segar dengan susu cokelat.', 45, 18000),
+(10, 'minuman', 'Wedang Jahe', 'images/wedang_jahe.jpeg', 'Minuman hangat jahe dengan gula merah.', 40, 12000),
+(51, 'Minuman', 'Vanila Spesial', 'images/vanila_spesial.jpg', 'Jus Vanila dengan ekstrak Kopi', 4, 25000);
