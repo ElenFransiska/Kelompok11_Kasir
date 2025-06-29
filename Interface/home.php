@@ -47,12 +47,10 @@
         </section>
 
         <section class="action-buttons-section text-center">
-            <a href="pesan_makanan.php" class="btn btn-primary large-btn">
+            <a href="pesan.php" class="btn btn-primary large-btn">
                 <i class="fas fa-shopping-basket"></i> Pesan Sekarang
             </a>
-            <a href="contact.php" class="btn btn-outline-secondary large-btn">
-                <i class="fas fa-headset"></i> Hubungi Kami
-            </a>
+            
             </section>  
     </div>
 
