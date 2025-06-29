@@ -1,22 +1,52 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #e7f3ff; /* Light blue background */
     margin: 0;
     padding: 20px;
 }
 
 .history-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
     max-width: 800px;
     margin: auto;
-    background: white;
-    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #003366; /* Dark blue */
+}
+
+.message {
+    background-color: #cce5ff; /* Light blue message background */
+    color: #004085; /* Darker blue text */
+    padding: 10px;
+    border: 1px solid #b8daff; /* Light blue border */
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.back-btn, .delete-link {
+    display: inline-block;
+    background-color: #007BFF; /* Bright blue */
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.back-btn:hover, .delete-link:hover {
+    background-color: #0056b3; /* Darker blue on hover */
 }
 
 .history-table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 20px;
 }
 
 .history-table th, .history-table td {
@@ -26,14 +56,14 @@ body {
 }
 
 .history-table th {
-    background-color: #4CAF50;
-    color: white;
+    background-color: #007BFF; /* Bright blue header */
+    color: white; /* White text for header */
 }
 
 .history-table tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #f2f9ff; /* Very light blue for even rows */
 }
 
 .history-table tr:hover {
-    background-color: #ddd;
+    background-color: #d1e7ff; /* Light blue on hover */
 }

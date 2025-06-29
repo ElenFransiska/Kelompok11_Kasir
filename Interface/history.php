@@ -2,6 +2,12 @@
 require_once '../db_connection.php';
 require_once '../logic/logic_history.php'; // Include the logic file
 
+// Handle deletion of order history
+$message = '';
+if (isset($_GET['action']) && $_GET['action'] === 'delete') {
+    $message = deleteOrderHistory($conn);
+}
+
 // Fetch order summary
 $result = fetchOrderSummary($conn);
 ?>
@@ -17,6 +23,16 @@ $result = fetchOrderSummary($conn);
 <body>
     <div class="history-container">
         <h1>History Pesanan</h1>
+
+        <?php if (!empty($message)): ?>
+            <div class="message"><?php echo htmlspecialchars($message); ?></div>
+        <?php endif; ?>
+
+        <!-- Back Button -->
+        <a href="../index.php" class="back-btn">Kembali</a>
+
+        <!-- Delete Link -->
+        <a href="?action=delete" class="delete-link" onclick="return confirm('Apakah Anda yakin ingin menghapus seluruh riwayat pesanan?');">Hapus Riwayat</a>
 
         <table class="history-table">
             <tr>
