@@ -42,7 +42,7 @@ try {
     $stmt_order->close();
 
     // 2. Insert into 'order_items' table for each item and its quantity
-    $stmt_order_item = $conn->prepare("INSERT INTO order_items (id_order, id_produk, harga_satuan) VALUES (?, ?, ?)");
+    $stmt_order_item = $conn->prepare("INSERT INTO order_items (id_order, id_produk, jumlah, harga_satuan) VALUES (?, ?, ?, ?)");
     if ($stmt_order_item === FALSE) {
         throw new Exception("Prepare statement for order_item failed: " . $conn->error);
     }
@@ -52,12 +52,10 @@ try {
         $itemPrice = $item['price'];
         $quantity = $item['quantity'];
 
-        // Loop for each quantity
-        for ($i = 0; $i < $quantity; $i++) {
-            $stmt_order_item->bind_param("iid", $orderId, $productId, $itemPrice);
-            if (!$stmt_order_item->execute()) {
-                throw new Exception("Execute statement for order_item failed: " . $stmt_order_item->error);
-            }
+        // Insert into order_items with quantity
+        $stmt_order_item->bind_param("iiid", $orderId, $productId, $quantity, $itemPrice);
+        if (!$stmt_order_item->execute()) {
+            throw new Exception("Execute statement for order_item failed: " . $stmt_order_item->error);
         }
 
         // 3. Reduce stock in 'produk' table
