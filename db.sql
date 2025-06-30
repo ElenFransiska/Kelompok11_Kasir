@@ -137,9 +137,11 @@ INSERT INTO `produk` (`id_produk`, `kategori`, `nama`, `image`, `keterangan`, `s
 
 
 
-CREATE TRIGGER trg_check_stock_before_order_item_insert
+DELIMITER //
+
+CREATE TRIGGER trg_check_stock_before_order_item_insert 
 BEFORE INSERT ON order_items
-FOR EACH ROW
+FOR EACH ROW 
 BEGIN
     DECLARE current_stock INT;
 
@@ -151,7 +153,6 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Stok produk tidak cukup untuk pesanan ini.';
     END IF;
 
-    -
-END$$
+END //
 
-DELIMITER ; 
+DELIMITER ;
