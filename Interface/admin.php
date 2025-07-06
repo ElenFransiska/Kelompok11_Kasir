@@ -1,20 +1,18 @@
 <?php
 require_once '../db_connection.php';
-// Anda mungkin ingin memulai sesi di sini jika belum dilakukan di db_connection.php
-// session_start(); 
 
-// Konfigurasi paginasi
-$items_per_page = 5; // Jumlah item per halaman
-$current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Halaman saat ini
-$offset = ($current_page - 1) * $items_per_page; // Offset untuk query
+//paginasi
+$items_per_page = 5; 
+$current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($current_page - 1) * $items_per_page;
 
 // Hitung total item
 $total_items_query = "SELECT COUNT(*) AS total FROM produk";
 $total_items_result = $conn->query($total_items_query);
 $total_items = $total_items_result->fetch_assoc()['total'];
-$total_pages = ceil($total_items / $items_per_page); // Total halaman
+$total_pages = ceil($total_items / $items_per_page);
 
-// Ambil data produk dengan limit dan offset
+// Ambil datadari tabel produk dengan limit dari paginasi dan offset
 $sql = "SELECT * FROM produk  ORDER BY kategori, nama LIMIT $items_per_page OFFSET $offset";
 $result = $conn->query($sql);
 ?>
@@ -132,7 +130,3 @@ $result = $conn->query($sql);
     </div>
 </body>
 </html>
-
-<?php
-$conn->close();
-?>

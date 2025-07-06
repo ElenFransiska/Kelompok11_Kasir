@@ -1,6 +1,8 @@
 <?php
 require_once '../db_connection.php';
 
+
+// validasi input
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $kategori = $conn->real_escape_string($_POST['kategori']);
     $nama = $conn->real_escape_string($_POST['nama']);
@@ -10,34 +12,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Proses upload gambar
     if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
-        // Buat folder images jika belum ada
-        if (!is_dir('../images')) {
-            mkdir('../images', 0777, true);
-        }
 
         // Generate nama file berdasarkan nama produk
         $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-        // Sanitizing the product name to create a valid filename
-        $sanitized_name = preg_replace('/[^a-zA-Z0-9_-]/', '_', strtolower($nama));
-        $filename = $sanitized_name . '.' . $ext; // Use sanitized name
-        $target_path = "../images/" . $filename;
 
-        // Simpan file
+        // membuat nama filename yang telah dibuat dan dibersihkan lalu disimpan di folder khusus
+        $filename = strtolower(str_replace(' ', '_', $nama)) . '.' . $ext;
+        $target_path = "../images/$filename";
+
+
+        // function Simpan file
         if (move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) {
             // Simpan ke database
-            $image_path = "images/" . $filename; // Path relatif untuk disimpan di database
+            $image_path = "images/" . $filename;
             
             try {
                 $sql = "INSERT INTO produk (kategori, nama, image, keterangan, stok, harga) 
                         VALUES ('$kategori', '$nama', '$image_path', '$keterangan', $stok, $harga)";
                 
-                // Execute the query
+
                 $conn->query($sql);
                 
-                // Redirect on success
+                // Reaction if successful
                 header("Location: ../Interface/admin.php?message=Produk+berhasil+ditambahkan");
             } catch (mysqli_sql_exception $e) {
-                // Handle duplicate error
+                // Exeption duplicate error
                 if ($e->getMessage() === 'Produk sudah ada') {
                     header("Location: ../Interface/admin.php?message=Produk+sedang+ada");
                 } else {
