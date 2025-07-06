@@ -1,66 +1,51 @@
 <?php
 require_once '../db_connection.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $id = intval($_POST['id_produk']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Mengambil data dari form
+    $id = (int)$_POST['id_produk'];
     $kategori = $conn->real_escape_string($_POST['kategori']);
     $nama = $conn->real_escape_string($_POST['nama']);
     $keterangan = $conn->real_escape_string($_POST['keterangan']);
-    $stok = intval($_POST['stok']);
-    $harga = intval($_POST['harga']);
+    $stok = (int)$_POST['stok'];
+    $harga = (int)$_POST['harga'];
+
     $image_path = null;
 
-    // Check if a new image is uploaded
-    if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
-        // Create the images directory if it doesn't exist
-        if (!is_dir('../images')) {
-            mkdir('../images', 0777, true);
-        }
+    // Jika user meng-upload gambar baru
+    if (!empty($_FILES['image']['name']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
 
-        // Generate a new filename based on the product name
+        //Connection ekstensi file
         $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-        $sanitized_name = preg_replace('/[^a-zA-Z0-9_-]/', '_', strtolower($nama));
-        $filename = $sanitized_name . '.' . $ext;
-        $target_path = "../images/" . $filename;
 
-        // Move the uploaded file to the target directory
+        // untuk buat nama file dan disimpan di folder
+        $filename = strtolower(str_replace(' ', '_', $nama)) . '.' . $ext;
+        $target_path = "../images/$filename";
+
+        // Simpan file ke folder
         if (move_uploaded_file($_FILES['image']['tmp_name'], $target_path)) {
-            $image_path = "images/" . $filename; // Relative path for the database
+            $image_path = "images/$filename";
         } else {
-            header("Location: ../Interface/admin.php?message=Gagal+mengupload+gambar");
-            exit();
+            header("Location: ../Interface/admin.php?message=Gagal+upload+gambar");
+            exit;
         }
     }
 
-    // Build the SQL query
-    if ($image_path) {
-        // If a new image was uploaded, include it in the update
-        $sql = "UPDATE produk SET 
-                kategori='$kategori', 
-                nama='$nama', 
-                image='$image_path', 
-                keterangan='$keterangan', 
+    //update data produk
+    $setImage = $image_path ? ", image='$image_path'" : "";
+    $sql = "UPDATE produk SET 
+                kategori='$kategori',
+                nama='$nama',
+                keterangan='$keterangan',
                 stok=$stok,
-                harga=$harga 
-                WHERE id_produk=$id";
-    } else {
-        // If no new image was uploaded, exclude it from the update
-        $sql = "UPDATE produk SET 
-                kategori='$kategori', 
-                nama='$nama', 
-                keterangan='$keterangan', 
-                stok=$stok,
-                harga=$harga 
-                WHERE id_produk=$id";
-    }
+                harga=$harga
+                $setImage
+            WHERE id_produk=$id";
 
-    // Execute the query and handle the result
-    if ($conn->query($sql) === TRUE) {
-        header("Location: ../Interface/admin.php?message=Produk+berhasil+diupdate");
-    } else {
-        header("Location: ../Interface/admin.php?message=Error: " . urlencode($conn->error));
-    }
+    // Eksekusi query
+    $message = $conn->query($sql)
+        ? "Produk+berhasil+diupdate"
+        : "Error:+" . urlencode($conn->error);
+
+    header("Location: ../Interface/admin.php?message=$message");
 }
-
-$conn->close();
-?>

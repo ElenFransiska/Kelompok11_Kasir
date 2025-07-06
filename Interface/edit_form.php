@@ -1,6 +1,7 @@
 <?php
 require_once '../db_connection.php';
 
+// Cek validasi ID produk
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
     $sql = "SELECT * FROM produk WHERE id_produk=$id";
@@ -54,7 +55,3 @@ if (isset($_GET['id'])) {
     </div>
 </body>
 </html>
-
-<?php
-$conn->close();
-?>
