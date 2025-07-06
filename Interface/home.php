@@ -14,7 +14,7 @@
             Society Coffee
         </div>
         <nav class="navbar-nav">
-            <a href="index.php" class="nav-link active">Home</a>
+            <a href="#" class="nav-link active">Home</a>
             <a href="order.php" class="nav-link">Menu</a>
             <a href="pesan.php" class="nav-link">Pesan Sekarang</a>
             <a href="../index.php" class="nav-link">Kembali</a>

@@ -11,13 +11,13 @@ if (isset($_SESSION['login_message'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selamat Datang di System Kasir</title>
+    <title>Selamat Datang di Society Coffee</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/css_style.css">
 </head>
 <body>
     <div class="container landing-page">
-        <h2>Selamat Datang di System Kasir</h2>
+        <h2>Selamat Datang di Society Coffee    </h2>
         <p>Pilih bagaimana Anda ingin masuk:</p>
         <div class="button-group">
             <a href="interface/login.php" class="big-button admin-button">
