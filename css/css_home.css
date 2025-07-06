@@ -1,27 +1,22 @@
-/* style.css */
-
 :root {
-    --primary: #007bff; /* Blue - mirip dengan image_2c8f76.jpg */
+    --primary: #007bff;
     --primary-dark: #0056b3;
-    --secondary: #6c757d; /* Grey for outline buttons */
-    --light: #f8f9fa; /* Lighter background */
-    --dark: #343a40; /* Dark text */
-    --text-medium: #6c757d; /* Medium grey text */
-    --info-blue: #17a2b8; /* Info blue for outline button */
-    --bg-light-blue: #e0f2f7; /* Very light blue background */
-    --bg-gradient-start: #f0f8ff; /* Lightest blue for gradient start */
-    --bg-gradient-end: #e6f7ff;   /* Slightly darker light blue for gradient end */
+    --secondary: #6c757d;
+    --light: #f8f9fa;
+    --dark: #343a40;
+    --text-medium: #6c757d;
+    --info-blue: #17a2b8;
+    --bg-light-blue: #e0f2f7;
+    --bg-gradient-start: #f0f8ff;
+    --bg-gradient-end: #e6f7ff;
 }
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 body {
     font-family: 'Poppins', sans-serif;
-    /* Mirip background image_2c8f76.jpg */
     background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
     color: var(--dark);
     line-height: 1.6;
@@ -30,7 +25,6 @@ body {
     flex-direction: column;
 }
 
-/* Navbar Styles */
 .navbar {
     background-color: white;
     color: var(--dark);
@@ -44,18 +38,15 @@ body {
     top: 0;
     z-index: 1000;
 }
-
 .navbar-brand {
     font-size: 1.75rem;
     font-weight: 700;
     color: var(--primary-dark);
 }
-
 .navbar-nav {
     display: flex;
     gap: 1.5rem;
 }
-
 .nav-link {
     color: var(--dark);
     text-decoration: none;
@@ -64,41 +55,36 @@ body {
     border-radius: 5px;
     transition: background-color 0.2s ease, color 0.2s ease;
 }
-
 .nav-link:hover, .nav-link.active {
     background-color: var(--primary);
     color: white;
 }
-
-/* Main Content Wrapper */
 .main-content {
     flex-grow: 1;
     padding: 3rem 2rem;
-    max-width: 1000px; /* Sedikit lebih sempit agar mirip contoh */
+    max-width: 1000px;
     margin: 0 auto;
     width: 100%;
 }
 
-/* Text Alignment Helpers */
 .text-center {
     text-align: center;
 }
 
-/* Section Styling */
 section {
-    background-color: transparent; /* Background section transparan */
-    padding: 0; /* No padding on section itself */
+    background-color: transparent;
+    padding: 0;
     margin-bottom: 2.5rem;
 }
 
 h1, h2 {
-    color: var(--dark); /* Warna judul lebih gelap, mirip contoh */
+    color: var(--dark);
     margin-bottom: 1rem;
     font-weight: 700;
 }
 
 h1 {
-    font-size: 2.75rem; /* Ukuran h1 mirip contoh */
+    font-size: 2.75rem;
     line-height: 1.3;
 }
 
@@ -112,24 +98,22 @@ p {
     margin-bottom: 1.5rem;
 }
 
-/* Hero Section */
 .hero-section {
-    padding: 2rem 0; /* Kurangi padding vertikal */
+    padding: 2rem 0;
     margin-bottom: 2rem;
 }
 
 .hero-section h1 {
     font-size: 2.5rem;
-    color: var(--dark); /* Tetap gelap */
+    color: var(--dark);
 }
 
 .hero-section p {
     font-size: 1.05rem;
     max-width: 700px;
-    margin: 0.5rem auto 0; /* Kurangi margin bawah */
+    margin: 0.5rem auto 0;
 }
 
-/* Info Cards Section (mirip image_2c8f76.jpg) */
 .info-cards-section {
     margin-bottom: 3rem;
 }
@@ -137,8 +121,8 @@ p {
 .info-cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem; /* Jarak antar kartu */
-    justify-content: center; /* Pusatkan kartu */
+    gap: 1.5rem;
+    justify-content: center;
     margin-top: 2rem;
 }
 
@@ -158,7 +142,7 @@ p {
 
 .info-icon {
     font-size: 3.5rem;
-    color: var(--primary); /* Ikon warna biru utama */
+    color: var(--primary);
     margin-bottom: 1rem;
 }
 
@@ -174,26 +158,25 @@ p {
     margin-bottom: 0;
 }
 
-/* Action Buttons Section (mirip image_2c8f76.jpg) */
 .action-buttons-section {
     margin-top: 3rem;
     display: flex;
     justify-content: center;
     gap: 1.5rem;
-    flex-wrap: wrap; /* Untuk responsif */
+    flex-wrap: wrap;
 }
 
 .btn {
-    padding: 0.9rem 1.8rem; /* Padding lebih besar */
+    padding: 0.9rem 1.8rem;
     font-size: 1.05rem;
     font-weight: 600;
-    border-radius: 8px; /* Sudut lebih lembut */
+    border-radius: 8px;
     text-decoration: none;
     transition: all 0.2s ease;
     display: inline-flex;
     align-items: center;
-    gap: 8px; /* Jarak ikon dengan teks */
-    border: 2px solid transparent; /* Default border transparan */
+    gap: 8px;
+    border: 2px solid transparent;
 }
 
 .btn-primary {
@@ -208,7 +191,7 @@ p {
     box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
 }
 
-.btn-outline-secondary { /* Mirip tombol "Kontak Kami" di image_2c8f76.jpg */
+.btn-outline-secondary {
     background-color: white;
     color: var(--secondary);
     border-color: var(--secondary);
@@ -222,7 +205,7 @@ p {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.btn-outline-info { /* Mirip tombol "Login" di image_2c8f76.jpg */
+.btn-outline-info {
     background-color: white;
     color: var(--info-blue);
     border-color: var(--info-blue);
@@ -236,18 +219,16 @@ p {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Footer */
 .footer {
-    background-color: white; /* Footer putih */
+    background-color: white;
     color: var(--text-medium);
     text-align: center;
     padding: 1.5rem;
     margin-top: auto;
     font-size: 0.9rem;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05); /* Shadow di atas footer */
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
 }
 
-/* Styles for login.php if needed (extracted from image_2bb57e.png) */
 .login-container {
     display: flex;
     justify-content: center;
@@ -275,7 +256,7 @@ p {
 
 .form-group {
     margin-bottom: 1.5rem;
-    text-align: left; /* Align label to left */
+    text-align: left;
 }
 
 .form-group label {
@@ -302,7 +283,7 @@ p {
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
-.btn-login { /* For the login button */
+.btn-login {
     width: 100%;
     padding: 0.9rem 1rem;
     font-size: 1.1rem;
@@ -324,9 +305,8 @@ p {
     transform: translateY(-2px);
 }
 
-/* --- Placeholder styles for pesan_makanan.php and contact.php --- */
 .menu-placeholder, .contact-placeholder {
-    background-color: #f0f8ff; /* Lightest blue background */
+    background-color: #f0f8ff;
     padding: 40px;
     border-radius: 15px;
     min-height: 350px;
@@ -340,7 +320,6 @@ p {
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
 }
 
-/* Contact Page specific styles (re-used and slightly adjusted for consistency) */
 .contact-info-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -349,7 +328,7 @@ p {
 }
 
 .contact-card {
-    background-color: var(--light); /* Atau white */
+    background-color: var(--light);
     padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
@@ -364,7 +343,7 @@ p {
 
 .contact-icon {
     font-size: 3.5rem;
-    color: var(--primary); /* Gunakan primary color untuk ikon kontak */
+    color: var(--primary);
     margin-bottom: 1rem;
 }
 
@@ -385,8 +364,6 @@ p {
     font-size: 0.9rem;
 }
 
-
-/* Responsive Adjustments */
 @media (max-width: 768px) {
     .navbar {
         flex-direction: column;
@@ -412,7 +389,7 @@ p {
         font-size: 0.95rem;
     }
     .info-cards-grid {
-        grid-template-columns: 1fr; /* Stack cards on small screens */
+        grid-template-columns: 1fr;
     }
     .info-card {
         padding: 1.5rem;
@@ -424,7 +401,7 @@ p {
         font-size: 1.3rem;
     }
     .action-buttons-section {
-        flex-direction: column; /* Stack buttons on small screens */
+        flex-direction: column;
     }
     .btn.large-btn {
         width: 100%;

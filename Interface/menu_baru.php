@@ -1,8 +1,6 @@
 <?php
-// Database connection
 require_once '../db_connection.php'; 
 
-// Fetch products from the database
 $products = [];
 $sql = "SELECT id_produk, nama AS nama_produk, harga, image, kategori, keterangan AS deskripsi FROM produk ORDER BY kategori, nama_produk";
 $result = $conn->query($sql);
@@ -124,7 +122,7 @@ $conn->close();
     </div>
 
     <script>
-        let cart = {}; // Stores {productId: {name, price, quantity}}
+        let cart = {}; 
 
         function updateQuantity(productId, change) {
             const qtyInput = document.getElementById(`qty-${productId}`);
@@ -133,7 +131,6 @@ $conn->close();
             let currentQty = parseInt(qtyInput.value);
             let newQty = currentQty + change;
 
-            // Ensure quantity does not go below 0
             if (newQty < 0) newQty = 0;
 
             qtyInput.value = newQty;
@@ -149,21 +146,21 @@ $conn->close();
                     quantity: newQty
                 };
             } else {
-                delete cart[productId]; // Remove item if quantity is 0
+                delete cart[productId]; 
             }
             updateCartDisplay();
         }
 
         function removeItemFromCart(productId) {
             const qtyInput = document.getElementById(`qty-${productId}`);
-            if (qtyInput) qtyInput.value = 0; // Reset quantity in product card
+            if (qtyInput) qtyInput.value = 0; 
             delete cart[productId];
             updateCartDisplay();
         }
 
         function updateCartDisplay() {
             const cartItemsList = document.getElementById('cart-items');
-            cartItemsList.innerHTML = ''; // Clear current cart display
+            cartItemsList.innerHTML = ''; 
             let total = 0;
             let hasItems = false;
 
@@ -197,7 +194,7 @@ $conn->close();
                     cartItemsList.appendChild(newEmptyMessage);
                 }
             } else {
-                if (emptyMessage) emptyMessage.style.display = 'none'; // Hide if there are items
+                if (emptyMessage) emptyMessage.style.display = 'none'; 
             }
             
             document.getElementById('cart-total').textContent = `Rp ${numberFormat(total)}`;
@@ -224,7 +221,7 @@ $conn->close();
             const orderData = {
                 nama_pembeli: namaPembeli,
                 meja: meja,
-                items: Object.values(cart) // Convert cart object to array of items
+                items: Object.values(cart) 
             };
 
             try {
@@ -240,29 +237,30 @@ $conn->close();
 
                 if (result.success) {
                     alert('Pesanan berhasil ditempatkan!');
-                    // Clear cart and reset form after successful order
                     cart = {};
                     document.getElementById('nama_pembeli').value = '';
                     document.getElementById('meja').value = '';
                     
-                    // Reset all quantity inputs in product cards
                     document.querySelectorAll('.quantity-controls input').forEach(input => {
                         input.value = 0;
                     });
-                    
+
+                    //update keranjang
                     updateCartDisplay();
-                    window.location.href = 'menu_baru.php?status=success'; // Redirect with success message
+                    window.location.href = 'menu_baru.php?status=success'; 
                 } else {
                     alert('Gagal menempatkan pesanan: ' + result.message);
-                    window.location.href = 'menu_baru.php?status=error'; // Redirect with error message
+                    window.location.href = 'menu_baru.php?status=error'; 
+                    // Jika gagal maka akan mengeluarkan pesan error
                 }
             } catch (error) {
                 console.error('Error:', error);
                 alert('Terjadi kesalahan saat memproses pesanan.');
-                window.location.href = 'menu_baru.php?status=error'; // Redirect with error message
+                window.location.href = 'menu_baru.php?status=error'; 
+                // Jika gagal maka akan mengeluarkan pesan error
             }
         }
-        document.addEventListener('DOMContentLoaded', updateCartDisplay); // Initialize cart display on load
+        document.addEventListener('DOMContentLoaded', updateCartDisplay); 
     </script>
 </body>
 </html>

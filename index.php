@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-// Clear any old messages or session data if returning to this landing page
 if (isset($_SESSION['login_message'])) {
     unset($_SESSION['login_message']);
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -20,7 +20,7 @@ if (isset($_SESSION['login_message'])) {
         <h2>Selamat Datang di System Kasir</h2>
         <p>Pilih bagaimana Anda ingin masuk:</p>
         <div class="button-group">
-            <a href="login.php" class="big-button admin-button">
+            <a href="interface/login.php" class="big-button admin-button">
                 <span class="icon">&#128100;</span> Masuk Sebagai Admin
             </a>
             <a href="Interface/home.php" class="big-button customer-button">

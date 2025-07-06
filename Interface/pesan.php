@@ -1,5 +1,4 @@
 <?php
-// Database connection
 require_once '../db_connection.php'; 
 
 // Fetch products from the database
@@ -21,7 +20,6 @@ if ($result->num_rows > 0) {
 
 $conn->close();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,29 +29,27 @@ $conn->close();
     <link rel="stylesheet" href="../css/css_pesan.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* Tambahkan CSS untuk tombol kembali */
         .back-btn {
-            background-color: #f44336; /* Warna merah */
+            background-color: #f44336; 
             color: white;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 1em;
-            margin-top: 15px; /* Spasi dari elemen di atasnya */
-            width: 100%; /* Lebar penuh */
-            box-sizing: border-box; /* Include padding in width */
+            margin-top: 15px; 
+            width: 100%; 
+            box-sizing: border-box; 
             text-align: center;
-            text-decoration: none; /* Untuk tag <a> */
-            display: inline-block; /* Untuk tag <a> */
+            text-decoration: none; 
+            display: inline-block; 
         }
 
         .back-btn:hover {
-            background-color: #d32f2f; /* Warna merah lebih gelap saat hover */
+            background-color: #d32f2f; 
         }
-        /* Sesuaikan jika tombol pesan sekarang juga butuh penyesuaian margin/padding */
         .place-order-btn {
-            margin-bottom: 10px; /* Tambahkan sedikit spasi di bawah tombol pesan */
+            margin-bottom: 10px; 
         }
     </style>
 </head>
@@ -61,7 +57,6 @@ $conn->close();
     <div class="main-container">
         <div class="menu-section">
             <h1>Menu Pesanan</h1>
-
             <?php if (isset($_GET['status'])): ?>
                 <?php if ($_GET['status'] == 'success'): ?>
                     <div class="message success">Pesanan Anda berhasil ditempatkan!</div>
@@ -101,7 +96,6 @@ $conn->close();
                 </div>
             <?php endforeach; ?>
         </div>
-
         <div class="cart-section">
             <h2>Ringkasan Pesanan</h2>
             <div class="cart-summary">
@@ -124,9 +118,8 @@ $conn->close();
             <a href="home.php" class="back-btn">Kembali</a>
         </div>
     </div>
-
     <script>
-        let cart = {}; // Stores {productId: {name, price, quantity}}
+        let cart = {}; 
 
         function updateQuantity(productId, change) {
             const qtyInput = document.getElementById(`qty-${productId}`);
@@ -135,7 +128,6 @@ $conn->close();
             let currentQty = parseInt(qtyInput.value);
             let newQty = currentQty + change;
 
-            // Pastikan kuantitas tidak kurang dari 0
             if (newQty < 0) newQty = 0;
             
             qtyInput.value = newQty;
@@ -145,27 +137,27 @@ $conn->close();
 
             if (newQty > 0) {
                 cart[productId] = {
-                    id: productId, // Tambahkan id untuk dikirim ke server
+                    id: productId, 
                     name: productName,
                     price: productPrice,
                     quantity: newQty
                 };
             } else {
-                delete cart[productId]; // Hapus item jika kuantitas 0
+                delete cart[productId]; 
             }
             updateCartDisplay();
         }
 
         function removeItemFromCart(productId) {
             const qtyInput = document.getElementById(`qty-${productId}`);
-            if (qtyInput) qtyInput.value = 0; // Reset kuantitas di kartu produk
+            if (qtyInput) qtyInput.value = 0; 
             delete cart[productId];
             updateCartDisplay();
         }
 
         function updateCartDisplay() {
             const cartItemsList = document.getElementById('cart-items');
-            cartItemsList.innerHTML = ''; // Bersihkan tampilan keranjang saat ini
+            cartItemsList.innerHTML = ''; 
             let total = 0;
             let hasItems = false;
 
@@ -188,9 +180,9 @@ $conn->close();
 
             const emptyMessage = document.getElementById('empty-cart-message');
             if (!hasItems) {
-                if (emptyMessage) { // Jika pesan sudah ada, pastikan ditampilkan
+                if (emptyMessage) { 
                     emptyMessage.style.display = 'block';
-                } else { // Buat dan tambahkan jika tidak ada
+                } else { 
                     const newEmptyMessage = document.createElement('li');
                     newEmptyMessage.id = 'empty-cart-message';
                     newEmptyMessage.style.textAlign = 'center';
@@ -199,7 +191,7 @@ $conn->close();
                     cartItemsList.appendChild(newEmptyMessage);
                 }
             } else {
-                if (emptyMessage) emptyMessage.style.display = 'none'; // Sembunyikan jika ada item
+                if (emptyMessage) emptyMessage.style.display = 'none'; 
             }
             
             document.getElementById('cart-total').textContent = `Rp ${numberFormat(total)}`;
@@ -226,7 +218,7 @@ $conn->close();
             const orderData = {
                 nama_pembeli: namaPembeli,
                 meja: meja,
-                items: Object.values(cart) // Ubah objek keranjang menjadi array item
+                items: Object.values(cart) 
             };
 
             try {
@@ -242,12 +234,12 @@ $conn->close();
 
                 if (result.success) {
                     alert('Pesanan berhasil ditempatkan!');
+                    
                     // Bersihkan keranjang dan reset form setelah pesanan berhasil
                     cart = {};
                     document.getElementById('nama_pembeli').value = '';
                     document.getElementById('meja').value = '';
                     
-                    // Reset semua input kuantitas di kartu produk
                     document.querySelectorAll('.quantity-controls input').forEach(input => {
                         input.value = 0;
                     });

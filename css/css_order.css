@@ -1,30 +1,26 @@
-/* css_order.css */
-
-/* Variabel CSS untuk konsistensi */
 :root {
-    --primary: #007bff; /* Blue */
-    --primary-light: #66b2ff; /* Lighter blue for subtle gradients */
+    --primary: #007bff; 
+    --primary-light: #66b2ff; 
     --primary-dark: #0056b3;
-    --secondary: #8b5cf6; /* A nice purple for price or accents */
+    --secondary: #8b5cf6; 
     --secondary-light: #a78bfa;
-    --light: #f8f9fa; /* Lighter background */
-    --dark: #343a40; /* Dark text */
-    --text-medium: #6c757d; /* Medium grey text */
-    --info-blue: #17a2b8; /* Info blue */
-    --bg-light-blue: #e0f2f7; /* Very light blue background */
-    --bg-gradient-start: #f0f8ff; /* Lightest blue for gradient start */
-    --bg-gradient-end: #e6f7ff;   /* Slightly darker light blue for gradient end */
-    --danger: #dc3545; /* Red */
-    --success: #28a745; /* Green */
-    --warning: #ffc107; /* Orange */
+    --light: #f8f9fa; 
+    --dark: #343a40;
+    --text-medium: #6c757d; 
+    --info-blue: #17a2b8;
+    --bg-light-blue: #e0f2f7; 
+    --bg-gradient-start: #f0f8ff; 
+    --bg-gradient-end: #e6f7ff;    
+    --danger: #dc3545; 
+    --success: #28a745; 
+    --warning: #ffc107; 
     --border-color: #ced4da;
-    --card-bg: linear-gradient(145deg, #ffffff, #f0f0f0); /* Subtle card background gradient */
+    --card-bg: linear-gradient(145deg, #ffffff, #f0f0f0); 
     --shadow-light: rgba(0, 0, 0, 0.05);
     --shadow-medium: rgba(0, 0, 0, 0.1);
     --shadow-strong: rgba(0, 0, 0, 0.15);
 }
 
-/* Basic Reset & Body Styling */
 * {
     margin: 0;
     padding: 0;
@@ -40,85 +36,83 @@ body {
     display: flex;
     flex-direction: column;
     scroll-behavior: smooth;
-    overflow-x: hidden; /* Mencegah scroll horizontal yang tidak diinginkan */
+    overflow-x: hidden;
 }
 
-/* Navbar Styles */
 .navbar {
     background-color: white;
     color: var(--dark);
-    padding: 1rem 2.5rem; /* Padding lebih besar */
+    padding: 1rem 2.5rem; 
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 4px 15px var(--shadow-light); /* Bayangan lebih halus */
+    box-shadow: 0 4px 15px var(--shadow-light); 
     flex-wrap: wrap;
     position: sticky;
     top: 0;
     z-index: 1000;
-    border-bottom: 1px solid rgba(0,0,0,0.05); /* Garis bawah halus */
+    border-bottom: 1px solid rgba(0,0,0,0.05); 
 }
 
 .navbar-brand {
-    font-size: 1.85rem; /* Lebih besar */
+    font-size: 1.85rem;
     font-weight: 700;
     color: var(--primary-dark);
     text-decoration: none;
-    letter-spacing: -0.7px; /* Sedikit penyesuaian spasi huruf */
+    letter-spacing: -0.7px;
     display: flex;
     align-items: center;
-    gap: 10px; /* Jarak antara logo dan teks */
+    gap: 10px;
 }
 
 .navbar-brand .logo-placeholder {
-    width: 35px; /* Ukuran logo */
+    width: 35px; 
     height: 35px;
     background-color: var(--primary);
-    border-radius: 8px; /* Sudut membulat */
+    border-radius: 8px; 
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
     font-size: 1.2rem;
     font-weight: 800;
-    line-height: 1; /* Untuk memastikan teks di tengah */
+    line-height: 1; 
 }
 
 .navbar-nav {
     display: flex;
-    gap: 1.8rem; /* Jarak antar link lebih besar */
+    gap: 1.8rem; 
 }
 
 .nav-link {
     color: var(--dark);
     text-decoration: none;
     font-weight: 500;
-    padding: 0.6rem 1rem; /* Padding lebih besar */
-    border-radius: 8px; /* Lebih membulat */
-    transition: all 0.3s ease; /* Transisi lebih halus */
-    position: relative; /* Untuk efek underline */
-    overflow: hidden; /* Untuk efek hover */
+    padding: 0.6rem 1rem; 
+    border-radius: 8px; 
+    transition: all 0.3s ease; 
+    position: relative; 
+    overflow: hidden; 
 }
 
 .nav-link:hover {
-    background-color: var(--primary-light); /* Warna hover lebih terang */
+    background-color: var(--primary-light); 
     color: white;
-    transform: translateY(-3px) scale(1.02); /* Efek lift dan scale lebih terasa */
+    transform: translateY(-3px) scale(1.02); 
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .nav-link.active {
-    background: linear-gradient(45deg, var(--primary), var(--primary-dark)); /* Gradien untuk active link */
+    background: linear-gradient(45deg, var(--primary), var(--primary-dark));
     color: white;
     font-weight: 600;
     box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
 }
 
-/* Main Content Wrapper */
 .main-content {
     flex-grow: 1;
-    padding: 3.5rem 2.5rem; /* Padding lebih besar */
-    max-width: 1280px; /* Lebar maksimum lebih besar */
+    padding: 3.5rem 2.5rem; 
+    max-width: 1280px; 
     margin: 0 auto;
     width: 100%;
 }
@@ -139,81 +133,78 @@ h2 {
 }
 
 p {
-    font-size: 1.05rem; /* Sedikit lebih kecil */
+    font-size: 1.05rem; 
     color: var(--text-medium);
-    margin-bottom: 1.2rem; /* Sedikit lebih kecil */
+    margin-bottom: 1.2rem; 
 }
 
-/* Footer Styles */
 .footer {
     background-color: var(--dark);
     color: white;
     text-align: center;
-    padding: 2.2rem; /* Padding lebih besar */
+    padding: 2.2rem; 
     margin-top: auto;
-    font-size: 0.95rem; /* Lebih besar sedikit */
-    box-shadow: 0 -5px 25px var(--shadow-medium); /* Bayangan lebih kuat */
-    border-top-left-radius: 20px; /* Lebih membulat */
+    font-size: 0.95rem; 
+    box-shadow: 0 -5px 25px var(--shadow-medium); 
+    border-top-left-radius: 20px; 
     border-top-right-radius: 20px;
     letter-spacing: 0.2px;
 }
 .footer p {
     margin-bottom: 0.6rem;
-    color: rgba(255, 255, 255, 0.9); /* Sedikit transparan */
+    color: rgba(255, 255, 255, 0.9); 
 }
 .footer p:last-child {
     margin-bottom: 0;
-    font-size: 0.85rem; /* Lebih besar sedikit */
+    font-size: 0.85rem; 
     opacity: 0.7;
 }
 
-/* --- Specific Styles for menu_page.php and pesan_makanan.php (shared components) --- */
-
 .order-page-title, .menu-page-title {
     text-align: center;
-    margin-bottom: 1.8rem; /* Sedikit lebih banyak ruang */
+    margin-bottom: 1.8rem; 
     color: var(--primary-dark);
-    font-size: 3.2rem; /* Lebih besar */
+    font-size: 3.2rem; 
     font-weight: 800;
-    letter-spacing: -1px; /* Spasi huruf lebih rapat */
-    text-shadow: 2px 2px 5px rgba(0,0,0,0.1); /* Bayangan teks yang lebih jelas */
+    letter-spacing: -1px; 
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.1); 
 }
 
 .order-page-description, .menu-page-description {
     text-align: center;
-    font-size: 1.15rem; /* Lebih besar sedikit */
+    font-size: 1.15rem; 
     color: var(--text-medium);
-    margin-bottom: 4rem; /* Jarak lebih besar */
-    max-width: 800px; /* Lebih lebar */
+    margin-bottom: 4rem; 
+    max-width: 800px; 
     margin-left: auto;
     margin-right: auto;
-    line-height: 1.8; /* Jarak baris lebih longgar */
+    line-height: 1.8; 
 }
 
 .menu-category-section {
-    background: rgba(255, 255, 255, 0.95); /* Sedikit lebih buram */
-    padding: 3rem 2.5rem; /* Padding lebih besar */
-    border-radius: 25px; /* Lebih membulat */
-    box-shadow: 0 12px 40px var(--shadow-medium); /* Bayangan lebih kuat */
-    margin-bottom: 3.5rem; /* Jarak antar bagian lebih besar */
-    transition: all 0.4s ease; /* Transisi lebih lambat */
-    border: 1px solid rgba(255, 255, 255, 0.7); /* Border lebih jelas */
-    backdrop-filter: blur(5px); /* Efek blur pada background (modern look) */
+    background: rgba(255, 255, 255, 0.95); 
+    padding: 3rem 2.5rem; 
+    border-radius: 25px; 
+    box-shadow: 0 12px 40px var(--shadow-medium); 
+    margin-bottom: 3.5rem; 
+    transition: all 0.4s ease; 
+    border: 1px solid rgba(255, 255, 255, 0.7); 
+    backdrop-filter: blur(5px); 
 }
 
 .menu-category-section:hover {
-    box-shadow: 0 20px 50px var(--shadow-strong); /* Bayangan sangat kuat */
-    transform: translateY(-8px); /* Lift lebih tinggi */
+    box-shadow: 0 20px 50px var(--shadow-strong); 
+    transform: translateY(-8px); 
 }
 
 .menu-category-section h3 {
-    font-size: 2.5rem; /* Lebih besar */
+    font-size: 2.5rem; 
     color: var(--primary);
     text-align: center;
-    margin-bottom: 3rem; /* Lebih banyak ruang */
+    margin-bottom: 3rem; 
     position: relative;
-    padding-bottom: 18px; /* Lebih banyak ruang untuk underline */
-    font-weight: 800; /* Extra bold */
+    padding-bottom: 18px; 
+    font-weight: 800; 
     letter-spacing: -0.8px;
     text-shadow: 1px 1px 3px rgba(0,0,0,0.08);
 }
@@ -224,52 +215,51 @@ p {
     left: 50%;
     bottom: 0;
     transform: translateX(-50%);
-    width: 120px; /* Underline lebih panjang */
-    height: 6px; /* Underline lebih tebal */
-    background: linear-gradient(90deg, var(--primary), var(--primary-dark)); /* Gradien pada underline */
+    width: 120px; 
+    height: 6px; 
+    background: linear-gradient(90deg, var(--primary), var(--primary-dark)); 
     border-radius: 5px;
 }
 
 .menu-grid {
     display: grid;
-    /* Disesuaikan: minmax lebih kecil untuk item yang tidak terlalu besar, memungkinkan lebih banyak kolom jika ruang cukup */
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* Disesuaikan dari 180px, agar lebih kecil */
-    gap: 1.5rem; /* Disesuaikan dari 1.8rem */
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); 
+    gap: 1.5rem; 
     justify-content: center;
     align-items: stretch;
 }
 
 .menu-item-card {
-    background: var(--card-bg); /* Menggunakan gradien untuk background kartu */
-    border-radius: 18px; /* Disesuaikan dari 20px */
-    box-shadow: 0 5px 18px var(--shadow-light); /* Bayangan lebih lembut, sedikit disesuaikan */
+    background: var(--card-bg); 
+    border-radius: 18px; 
+    box-shadow: 0 5px 18px var(--shadow-light); 
     text-align: center;
-    transition: transform 0.3s cubic-bezier(.25,.8,.25,1), box-shadow 0.3s cubic-bezier(.25,.8,.25,1); /* Kurva transisi lebih baik */
+    transition: transform 0.3s cubic-bezier(.25,.8,.25,1), box-shadow 0.3s cubic-bezier(.25,.8,.25,1); 
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.8); /* Border putih halus */
+    border: 1px solid rgba(255, 255, 255, 0.8); 
     position: relative;
     z-index: 1;
 }
 
-.menu-item-card::before { /* Efek overlay saat hover */
+.menu-item-card::before { 
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(var(--primary), 0.1); /* Warna primary transparan */
+    background: rgba(var(--primary), 0.1); 
     opacity: 0;
     transition: opacity 0.3s ease;
-    border-radius: 18px; /* Disesuaikan dari 20px */
+    border-radius: 18px; 
     z-index: -1;
 }
 
 .menu-item-card:hover {
-    transform: translateY(-10px); /* Disesuaikan dari -12px */
-    box-shadow: 0 15px 40px var(--shadow-medium); /* Disesuaikan dari 18px */
+    transform: translateY(-10px); 
+    box-shadow: 0 15px 40px var(--shadow-medium); 
 }
 
 .menu-item-card:hover::before {
@@ -278,18 +268,18 @@ p {
 
 .menu-item-card img {
     width: 100%;
-    height: 120px; /* Disesuaikan dari 140px, membuat gambar lebih kecil */
+    height: 120px; 
     object-fit: cover;
     border-radius: 18px 18px 0 0;
-    transition: transform 0.5s cubic-bezier(.25,.8,.25,1); /* Transisi lebih lambat dan halus */
+    transition: transform 0.5s cubic-bezier(.25,.8,.25,1); 
 }
 
 .menu-item-card:hover img {
-    transform: scale(1.08); /* Disesuaikan dari 1.1 */
+    transform: scale(1.08); 
 }
 
 .card-content {
-    padding: 15px; /* Disesuaikan dari 20px */
+    padding: 15px; 
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -297,19 +287,19 @@ p {
 }
 
 .card-content h4 {
-    font-size: 1.25rem; /* Disesuaikan dari 1.35rem */
+    font-size: 1.25rem; 
     color: var(--dark);
-    margin-bottom: 0.4rem; /* Disesuaikan */
-    font-weight: 700; /* Lebih tebal */
+    margin-bottom: 0.4rem; 
+    font-weight: 700; 
     letter-spacing: -0.3px;
 }
 
 .card-content p.description {
-    font-size: 0.85rem; /* Disesuaikan dari 0.88rem */
+    font-size: 0.85rem; 
     color: var(--text-medium);
-    margin-bottom: 10px; /* Disesuaikan dari 12px */
+    margin-bottom: 10px; 
     flex-grow: 1;
-    min-height: 40px; /* Sedikit disesuaikan */
+    min-height: 40px; 
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -319,33 +309,33 @@ p {
 }
 
 .card-content p.price {
-    font-size: 1.35rem; /* Disesuaikan dari 1.45rem */
-    font-weight: 900; /* Sangat tebal */
+    font-size: 1.35rem; 
+    font-weight: 900; 
     color: var(--secondary);
-    margin-bottom: 12px; /* Disesuaikan dari 15px */
+    margin-bottom: 12px; 
     letter-spacing: -0.5px;
-    text-shadow: 0 1px 2px rgba(139, 92, 246, 0.2); /* Bayangan pada harga */
+    text-shadow: 0 1px 2px rgba(139, 92, 246, 0.2); 
 }
 
 .stok-info {
-    font-size: 0.8rem; /* Disesuaikan dari 0.82rem */
+    font-size: 0.8rem; 
     color: var(--text-medium);
-    margin-top: -6px; /* Disesuaikan dari -8px */
-    margin-bottom: 15px; /* Disesuaikan agar ada ruang untuk tombol */
+    margin-top: -6px; 
+    margin-bottom: 15px; 
     font-weight: 600;
-    text-transform: capitalize; /* Kapitalisasi huruf pertama */
+    text-transform: capitalize; 
 }
 
 .stok-info.low-stock {
     color: var(--warning);
     font-weight: 700;
-    animation: pulseWarning 1.5s infinite; /* Animasi berkedip */
+    animation: pulseWarning 1.5s infinite; 
 }
 .stok-info.out-of-stock {
     color: var(--danger);
     font-weight: 700;
     text-transform: uppercase;
-    animation: pulseDanger 1.2s infinite; /* Animasi berkedip */
+    animation: pulseDanger 1.2s infinite; 
 }
 
 @keyframes pulseWarning {
@@ -360,26 +350,25 @@ p {
     100% { transform: scale(1); opacity: 1; }
 }
 
-/* NEW: Styles for the "Pesan" button on menu_page.php */
 .menu-item-order-btn {
     background: linear-gradient(to right, var(--primary), var(--primary-dark));
     color: white;
     border: none;
-    padding: 10px 18px; /* Padding tombol */
-    border-radius: 10px; /* Sudut membulat */
-    font-size: 0.95rem; /* Ukuran font tombol */
+    padding: 10px 18px; 
+    border-radius: 10px; 
+    font-size: 0.95rem; 
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
-    text-decoration: none; /* Penting untuk link */
-    display: inline-flex; /* Agar ikon dan teks sejajar */
+    text-decoration: none; 
+    display: inline-flex; 
     align-items: center;
     justify-content: center;
-    gap: 8px; /* Jarak antara ikon dan teks */
-    width: calc(100% - 30px); /* Hampir selebar kartu */
-    margin: 0 auto; /* Tengah */
-    margin-top: 10px; /* Jarak dari stok-info */
+    gap: 8px; 
+    width: calc(100% - 30px); 
+    margin: 0 auto; 
+    margin-top: 10px; 
 }
 
 .menu-item-order-btn:hover {
@@ -389,31 +378,30 @@ p {
 }
 
 .menu-item-order-btn[aria-disabled="true"] {
-    background-color: #cccccc !important; /* Warna abu-abu */
+    background-color: #cccccc !important; 
     cursor: not-allowed !important;
     box-shadow: none !important;
     transform: none !important;
-    pointer-events: none; /* Memastikan tidak bisa diklik */
+    pointer-events: none; 
     opacity: 0.6;
 }
 
 
-/* Styles specific to pesan_makanan.php (order specific elements) */
 .order-quantity-input {
-    width: 65px; /* Disesuaikan dari 70px */
-    padding: 7px 9px; /* Disesuaikan */
+    width: 65px; 
+    padding: 7px 9px; 
     border: 1px solid var(--border-color);
-    border-radius: 9px; /* Disesuaikan */
+    border-radius: 9px; 
     text-align: center;
-    font-size: 0.95rem; /* Disesuaikan */
+    font-size: 0.95rem; 
     -moz-appearance: textfield;
     transition: all 0.3s ease;
-    background-color: var(--light); /* Background input */
+    background-color: var(--light); 
 }
 .order-quantity-input:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Shadow lebih kecil */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); 
 }
 .order-quantity-input::-webkit-outer-spin-button,
 .order-quantity-input::-webkit-inner-spin-button {
@@ -424,33 +412,33 @@ p {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px; /* Disesuaikan dari 12px */
-    margin-top: 12px; /* Disesuaikan dari 15px */
+    gap: 10px; 
+    margin-top: 12px; 
 }
 .order-button-main {
     background: linear-gradient(to right, var(--success), #218838);
     color: white;
     border: none;
-    padding: 16px 35px; /* Disesuaikan dari 18px */
-    border-radius: 12px; /* Disesuaikan dari 15px */
-    font-size: 1.25rem; /* Disesuaikan dari 1.35rem */
+    padding: 16px 35px; 
+    border-radius: 12px; 
+    font-size: 1.25rem; 
     font-weight: 700;
     cursor: pointer;
     transition: all 0.4s ease;
-    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3); /* Disesuaikan dari 8px */
-    margin-top: 4rem; /* Disesuaikan dari 4.5rem */
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3); 
+    margin-top: 4rem; 
     width: fit-content;
     display: flex;
     align-items: center;
-    gap: 12px; /* Disesuaikan dari 15px */
+    gap: 12px; 
     position: relative;
     overflow: hidden;
     letter-spacing: 0.5px;
 }
 .order-button-main:hover {
     background: linear-gradient(to right, #218838, #1e7e34);
-    transform: translateY(-5px) scale(1.02); /* Disesuaikan dari -7px */
-    box-shadow: 0 10px 25px rgba(40, 167, 69, 0.5); /* Disesuaikan dari 15px */
+    transform: translateY(-5px) scale(1.02); 
+    box-shadow: 0 10px 25px rgba(40, 167, 69, 0.5); 
 }
 .order-button-main:disabled {
     background-color: #cccccc;
@@ -465,34 +453,33 @@ p {
     left: 50%;
     width: 0;
     height: 0;
-    background: rgba(255, 255, 255, 0.25); /* Efek kilat lebih kuat */
+    background: rgba(255, 255, 255, 0.25); 
     border-radius: 50%;
     transform: translate(-50%, -50%);
     transition: width 0.5s ease-out, height 0.5s ease-out, opacity 0.5s ease-out;
     opacity: 0;
 }
 .order-button-main:hover::before {
-    width: 200%; /* Disesuaikan dari 250% */
-    height: 200%; /* Disesuaikan dari 250% */
+    width: 200%; 
+    height: 200%; 
     opacity: 1;
 }
 .add-to-cart-btn {
-    display: none; /* Hidden on order page as well */
+    display: none; 
 }
 
-/* Message Box Styling */
 .message-box {
-    padding: 18px 30px; /* Disesuaikan dari 20px */
-    margin-bottom: 3.5rem; /* Disesuaikan dari 4rem */
-    border-radius: 15px; /* Disesuaikan dari 18px */
-    font-size: 1.15rem; /* Disesuaikan dari 1.2rem */
+    padding: 18px 30px; 
+    margin-bottom: 3.5rem; 
+    border-radius: 15px; 
+    font-size: 1.15rem; 
     font-weight: 600;
     border: 1px solid transparent;
-    animation: fadeInScale 0.7s forwards; /* Animasi lebih lambat */
-    max-width: 650px; /* Disesuaikan dari 700px */
+    animation: fadeInScale 0.7s forwards; 
+    max-width: 650px; 
     margin-left: auto;
     margin-right: auto;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Disesuaikan dari 8px */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -512,12 +499,11 @@ p {
 }
 
 @keyframes fadeInScale {
-    from { opacity: 0; transform: translateY(-30px) scale(0.95); } /* Disesuaikan dari -40px, 0.9 */
+    from { opacity: 0; transform: translateY(-30px) scale(0.95); } 
     to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 
-/* Responsive Adjustments (General, applied to all pages using style.css) */
 @media (max-width: 1024px) {
     .main-content {
         padding: 3rem 2rem;
@@ -542,45 +528,45 @@ p {
         height: 5px;
     }
     .menu-grid {
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* Disesuaikan lagi untuk 1024px */
-        gap: 1.2rem; /* Disesuaikan */
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+        gap: 1.2rem; 
     }
     .menu-item-card img {
-        height: 100px; /* Disesuaikan lagi */
+        height: 100px; 
     }
     .card-content h4 {
-        font-size: 1.1rem; /* Disesuaikan */
+        font-size: 1.1rem; 
     }
     .card-content p.description {
-        font-size: 0.8rem; /* Disesuaikan */
-        min-height: 35px; /* Disesuaikan */
+        font-size: 0.8rem; 
+        min-height: 35px; 
     }
     .card-content p.price {
-        font-size: 1.15rem; /* Disesuaikan */
+        font-size: 1.15rem; 
     }
     .stok-info {
-        font-size: 0.75rem; /* Disesuaikan */
+        font-size: 0.75rem; 
     }
-    .menu-item-order-btn { /* Untuk 1024px */
+    .menu-item-order-btn { 
         padding: 8px 15px;
         font-size: 0.85rem;
         width: calc(100% - 20px);
     }
     .order-quantity-input {
-        width: 55px; /* Disesuaikan */
-        padding: 6px 7px; /* Disesuaikan */
-        font-size: 0.9rem; /* Disesuaikan */
+        width: 55px; 
+        padding: 6px 7px; 
+        font-size: 0.9rem; 
     }
     .order-button-main {
-        padding: 12px 25px; /* Disesuaikan */
-        font-size: 1rem; /* Disesuaikan */
-        margin-top: 3rem; /* Disesuaikan */
-        gap: 8px; /* Disesuaikan */
+        padding: 12px 25px; 
+        font-size: 1rem; 
+        margin-top: 3rem; 
+        gap: 8px; 
     }
     .message-box {
-        font-size: 1.05rem; /* Disesuaikan */
-        padding: 14px 22px; /* Disesuaikan */
-        margin-bottom: 2.8rem; /* Disesuaikan */
+        font-size: 1.05rem; 
+        padding: 14px 22px; 
+        margin-bottom: 2.8rem; 
     }
 }
 
@@ -630,53 +616,53 @@ p {
         height: 4px;
     }
     .menu-grid {
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Disesuaikan lagi */
-        gap: 1rem; /* Disesuaikan */
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); 
+        gap: 1rem; 
     }
     .menu-item-card {
         border-radius: 15px;
     }
     .menu-item-card img {
-        height: 90px; /* Disesuaikan lagi */
+        height: 90px; 
     }
     .card-content {
-        padding: 10px; /* Disesuaikan */
+        padding: 10px; 
     }
     .card-content h4 {
-        font-size: 1rem; /* Disesuaikan */
+        font-size: 1rem; 
     }
     .card-content p.description {
-        font-size: 0.75rem; /* Disesuaikan */
-        min-height: 30px; /* Disesuaikan */
-        margin-bottom: 6px; /* Disesuaikan */
+        font-size: 0.75rem; 
+        min-height: 30px; 
+        margin-bottom: 6px; 
     }
     .card-content p.price {
-        font-size: 1.05rem; /* Disesuaikan */
-        margin-bottom: 8px; /* Disesuaikan */
+        font-size: 1.05rem; 
+        margin-bottom: 8px; 
     }
     .stok-info {
-        font-size: 0.7rem; /* Disesuaikan */
+        font-size: 0.7rem; 
     }
-    .menu-item-order-btn { /* Untuk 768px */
+    .menu-item-order-btn { 
         padding: 7px 12px;
         font-size: 0.8rem;
         width: calc(100% - 20px);
     }
     .order-quantity-input {
-        width: 50px; /* Disesuaikan */
-        font-size: 0.8rem; /* Disesuaikan */
+        width: 50px; 
+        font-size: 0.8rem; 
     }
     .order-button-main {
-        padding: 9px 18px; /* Disesuaikan */
-        font-size: 0.9rem; /* Disesuaikan */
-        margin-top: 2.2rem; /* Disesuaikan */
-        border-radius: 9px; /* Disesuaikan */
+        padding: 9px 18px; 
+        font-size: 0.9rem; 
+        margin-top: 2.2rem; 
+        border-radius: 9px; 
     }
     .message-box {
-        font-size: 0.95rem; /* Disesuaikan */
-        padding: 10px 18px; /* Disesuaikan */
-        margin-bottom: 2.2rem; /* Disesuaikan */
-        border-radius: 10px; /* Disesuaikan */
+        font-size: 0.95rem; 
+        padding: 10px 18px; 
+        margin-bottom: 2.2rem; 
+        border-radius: 10px; 
     }
     .footer {
         padding: 1.5rem;
@@ -723,48 +709,48 @@ p {
         height: 3px;
     }
     .menu-grid {
-        grid-template-columns: 1fr; /* Tetap stack pada layar sangat kecil */
-        gap: 0.8rem; /* Disesuaikan */
+        grid-template-columns: 1fr; 
+        gap: 0.8rem; 
     }
     .menu-item-card img {
-        height: 80px; /* Disesuaikan lagi */
+        height: 80px; 
     }
     .card-content h4 {
-        font-size: 0.95rem; /* Disesuaikan */
+        font-size: 0.95rem; 
     }
     .card-content p.description {
-        font-size: 0.68rem; /* Disesuaikan */
-        min-height: 25px; /* Disesuaikan */
-        margin-bottom: 5px; /* Disesuaikan */
+        font-size: 0.68rem; 
+        min-height: 25px; 
+        margin-bottom: 5px; 
     }
     .card-content p.price {
-        font-size: 0.95rem; /* Disesuaikan */
-        margin-bottom: 6px; /* Disesuaikan */
+        font-size: 0.95rem; 
+        margin-bottom: 6px; 
     }
     .stok-info {
-        font-size: 0.68rem; /* Disesuaikan */
+        font-size: 0.68rem; 
     }
-    .menu-item-order-btn { /* Untuk 500px */
+    .menu-item-order-btn { 
         padding: 6px 10px;
         font-size: 0.75rem;
         width: calc(100% - 20px);
     }
     .order-quantity-input {
-        width: 45px; /* Disesuaikan */
-        padding: 4px 5px; /* Disesuaikan */
-        font-size: 0.75rem; /* Disesuaikan */
+        width: 45px; 
+        padding: 4px 5px; 
+        font-size: 0.75rem; 
     }
     .order-button-main {
-        padding: 7px 12px; /* Disesuaikan */
-        font-size: 0.75rem; /* Disesuaikan */
-        margin-top: 1.8rem; /* Disesuaikan */
-        border-radius: 8px; /* Disesuaikan */
+        padding: 7px 12px; 
+        font-size: 0.75rem; 
+        margin-top: 1.8rem; 
+        border-radius: 8px; 
     }
     .message-box {
-        font-size: 0.8rem; /* Disesuaikan */
-        padding: 8px 12px; /* Disesuaikan */
-        margin-bottom: 1.2rem; /* Disesuaikan */
-        border-radius: 8px; /* Disesuaikan */
+        font-size: 0.8rem; 
+        padding: 8px 12px; 
+        margin-bottom: 1.2rem; 
+        border-radius: 8px; 
     }
     .footer {
         padding: 1rem;

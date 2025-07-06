@@ -17,11 +17,10 @@
             --light-bg: #f8f9fa;
             --border-color: #ced4da;
             --shadow-light: 0 8px 30px rgba(0, 0, 0, 0.1);
-            --bg-gradient-start: #e0f8ff; /* Sangat terang, mirip cloud */
-            --bg-gradient-end: #d0efff;   /* Biru langit lembut */
+            --bg-gradient-start: #e0f8ff; 
+            --bg-gradient-end: #d0efff;  
         }
 
-        /* Gaya Body Keseluruhan */
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
@@ -30,23 +29,22 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            color: var(--text-dark); /* Warna teks default */
+            color: var(--text-dark); 
             line-height: 1.6;
         }
 
-        /* Container Form Login */
         .container.login-form-container {
             background-color: white;
             padding: 3rem;
-            border-radius: 18px; /* Lebih membulat */
-            box-shadow: var(--shadow-light); /* Shadow yang lebih halus */
+            border-radius: 18px; 
+            box-shadow: var(--shadow-light); 
             width: 100%;
-            max-width: 420px; /* Lebar yang optimal */
+            max-width: 420px; 
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.7); /* Border putih lembut */
-            backdrop-filter: blur(5px); /* Efek frosted glass */
-            -webkit-backdrop-filter: blur(5px); /* Untuk Safari */
-            transition: transform 0.3s ease; /* Transisi saat di hover */
+            border: 1px solid rgba(255, 255, 255, 0.7); 
+            backdrop-filter: blur(5px); 
+            -webkit-backdrop-filter: blur(5px); 
+            transition: transform 0.3s ease; 
         }
 
         .container.login-form-container:hover {

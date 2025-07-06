@@ -43,8 +43,7 @@ if (!isset($conn) || !$conn instanceof mysqli || $conn->connect_error) {
 <body>
     <header class="navbar">
         <div class="navbar-brand">
-            <span class="logo-placeholder">E/R</span> 
-            System Kasir
+            Society Coffee
         </div>
         <nav class="navbar-nav">
             <a href="home.php" class="nav-link">Home</a>
@@ -102,9 +101,8 @@ if (!isset($conn) || !$conn instanceof mysqli || $conn->connect_error) {
         } 
         ?>
     </div>
-
     <footer class="footer">
-        <p>© <?php echo date("Y"); ?> RaymondElen</p>
+        <p>© <?php echo date("Y"); ?> Society Coffee</p>
     </footer>
 </body>
 </html>

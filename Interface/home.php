@@ -11,7 +11,7 @@
 <body>
     <header class="navbar">
         <div class="navbar-brand">
-            System Kasir
+            Society Coffee
         </div>
         <nav class="navbar-nav">
             <a href="index.php" class="nav-link active">Home</a>
@@ -23,7 +23,7 @@
 
     <div class="main-content home-customer-page">
         <section class="hero-section text-center">
-            <h1>Welcome di System Kasir Raymond & Elen</h1>
+            <h1>Welcome Society Coffee</h1>
             <p>Nikmati berbagai pilihan hidangan dan minuman spesial kami. Pesan dengan mudah dan cepat!</p>
         </section>
 
@@ -56,7 +56,7 @@
     </div>
 
     <footer class="footer">
-        <p>© <?php echo date("Y"); ?> RaymondElen</p>
+        <p>© <?php echo date("Y"); ?> Society Coffee</p>
     </footer>
 </body>
 </html>

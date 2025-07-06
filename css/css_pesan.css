@@ -86,7 +86,7 @@
             font-size: 0.9em;
             color: #666;
             margin-bottom: 10px;
-            height: 40px; /* Fixed height for description */
+            height: 40px; 
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
@@ -261,4 +261,26 @@
             background-color: #f8d7da;
             color: #721c24;
             border: 1px solid #f5c6cb;
+        }
+        .back-btn {
+            background-color: #f44336; 
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 15px;
+            width: 100%; 
+            box-sizing: border-box; 
+            text-align: center;
+            text-decoration: none; 
+            display: inline-block; 
+        }
+
+        .back-btn:hover {
+            background-color: #d32f2f; 
+        }
+        .place-order-btn {
+            margin-bottom: 10px; 
         }

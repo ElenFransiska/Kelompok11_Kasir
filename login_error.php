@@ -8,7 +8,7 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #f0f8ff, #e6f7ff); /* Light blue gradient */
+            background: linear-gradient(135deg, #f0f8ff, #e6f7ff); 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -26,7 +26,7 @@
             max-width: 400px;
         }
         .error-container h2 {
-            color: #dc3545; /* Red color for error */
+            color: #dc3545; 
             font-size: 2.2rem;
             margin-bottom: 20px;
             font-weight: 700;
@@ -38,7 +38,7 @@
         }
         .back-to-login-btn {
             display: inline-block;
-            background-color: #007bff; /* Primary blue button */
+            background-color: #007bff; 
             color: white;
             padding: 12px 25px;
             border: none;
@@ -50,7 +50,7 @@
             box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
         }
         .back-to-login-btn:hover {
-            background-color: #0056b3; /* Darker blue */
+            background-color: #0056b3; 
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
         }
@@ -82,7 +82,6 @@
     </div>
 
     <?php
-    // Tampilkan pop-up JavaScript hanya saat halaman diakses dengan parameter 'error'
     if(isset($_GET['error']) && $_GET['error'] == 1){
         echo "<script>alert('Username atau password tidak valid.');</script>";
     }
