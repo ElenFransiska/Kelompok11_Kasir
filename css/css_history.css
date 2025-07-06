@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #e7f3ff; /* Light blue background */
+    background-color: #e7f3ff; 
     margin: 0;
     padding: 20px;
 }
@@ -16,21 +16,21 @@ body {
 
 h1 {
     text-align: center;
-    color: #003366; /* Dark blue */
+    color: #003366; 
 }
 
 .message {
-    background-color: #cce5ff; /* Light blue message background */
-    color: #004085; /* Darker blue text */
+    background-color: #cce5ff; 
+    color: #004085; 
     padding: 10px;
-    border: 1px solid #b8daff; /* Light blue border */
+    border: 1px solid #b8daff; 
     border-radius: 5px;
     margin-bottom: 20px;
 }
 
 .back-btn, .delete-link {
     display: inline-block;
-    background-color: #007BFF; /* Bright blue */
+    background-color: #007BFF; 
     color: white;
     padding: 10px 15px;
     text-align: center;
@@ -40,7 +40,7 @@ h1 {
 }
 
 .back-btn:hover, .delete-link:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #0056b3; 
 }
 
 .history-table {
@@ -56,14 +56,14 @@ h1 {
 }
 
 .history-table th {
-    background-color: #007BFF; /* Bright blue header */
-    color: white; /* White text for header */
+    background-color: #007BFF; 
+    color: white; 
 }
 
 .history-table tr:nth-child(even) {
-    background-color: #f2f9ff; /* Very light blue for even rows */
+    background-color: #f2f9ff; 
 }
 
 .history-table tr:hover {
-    background-color: #d1e7ff; /* Light blue on hover */
+    background-color: #d1e7ff; 
 }
