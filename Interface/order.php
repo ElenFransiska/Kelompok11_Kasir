@@ -47,7 +47,7 @@ if (!isset($conn) || !$conn instanceof mysqli || $conn->connect_error) {
         </div>
         <nav class="navbar-nav">
             <a href="home.php" class="nav-link">Home</a>
-            <a href="menu_page.php" class="nav-link active">Menu</a> 
+            <a href="#" class="nav-link active">Menu</a> 
             <a href="pesan.php" class="nav-link">Pesan Sekarang</a>
             <a href="home.php" class="nav-link">Kembali</a>
         </nav>
