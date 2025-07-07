@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 06, 2025 at 04:56 PM
+-- Generation Time: Jul 07, 2025 at 07:01 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -25,6 +25,22 @@ DELIMITER $$
 --
 -- Procedures
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetMenuItems` ()   BEGIN
+  SELECT 
+    id_produk,
+    nama AS nama_produk,
+    harga,
+    kategori,
+    image,
+    stok,
+    CASE
+      WHEN stok = 0 THEN 'Produk habis'
+      ELSE keterangan
+    END AS keterangan
+  FROM produk
+  ORDER BY kategori, nama;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetOrderSummary` ()   BEGIN
     SELECT * FROM vw_order_summary;
 END$$
@@ -67,6 +83,15 @@ CREATE TABLE `orders` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id_order`, `nama_pembeli`, `meja`, `total_harga`, `created_at`) VALUES
+(26, 'Jamin', 1, 100000.00, '2025-07-07 04:07:26'),
+(28, 'Arie', 2, 50000.00, '2025-07-07 04:40:28'),
+(29, 'Budiman', 4, 40000.00, '2025-07-07 04:49:18');
+
 -- --------------------------------------------------------
 
 --
@@ -82,14 +107,19 @@ CREATE TABLE `order_items` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `order_items`
+--
+
+INSERT INTO `order_items` (`id_order_item`, `id_order`, `id_produk`, `jumlah`, `harga_satuan`) VALUES
+(33, 26, 51, 4, 25000.00),
+(34, 28, 51, 2, 25000.00),
+(35, 29, 4, 2, 20000.00);
+
+--
 -- Triggers `order_items`
 --
 DELIMITER $$
-CREATE TRIGGER `trg_check_stock_before_order_item_insert` 
-BEFORE INSERT 
-ON `order_items` 
-FOR EACH ROW 
-BEGIN
+CREATE TRIGGER `trg_check_stock_before_order_item_insert` BEFORE INSERT ON `order_items` FOR EACH ROW BEGIN
     DECLARE current_stock INT;
 
     SELECT stok INTO current_stock
@@ -97,8 +127,7 @@ BEGIN
     WHERE id_produk = NEW.id_produk;
 
     IF NEW.jumlah > current_stock THEN
-        SIGNAL SQLSTATE '45000' 
-        SET MESSAGE_TEXT = 'Stok produk tidak cukup untuk pesanan ini.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Stok produk tidak cukup untuk pesanan ini.';
     END IF;
 
 END
@@ -129,14 +158,14 @@ INSERT INTO `produk` (`id_produk`, `kategori`, `nama`, `image`, `keterangan`, `s
 (1, 'Makanan', 'Nasi Goreng Spesial', 'images/nasi_goreng_spesial.jpg', 'Nasi goreng dengan bumbu rempah pilihan dan telur mata sapi.', 50, 25000),
 (2, 'Makanan', 'Mie Ayam Bakso', 'images/mie_ayam_bakso.jpg', 'Mie ayam dengan toping bakso sapi dan pangsit goreng.', 45, 22000),
 (3, 'Makanan', 'Sate Ayam Madura', 'images/sate_ayam_madura.jpg', 'Sate ayam dengan bumbu kacang khas Madura.', 40, 30000),
-(4, 'Makanan', 'Gado-Gado Siram', 'images/gado-gado_siram.jpg', 'Sayuran segar dengan lontong dan bumbu kacang siram.', 31, 20000),
+(4, 'Makanan', 'Gado-Gado Siram', 'images/gado-gado_siram.jpg', 'Sayuran segar dengan lontong dan bumbu kacang siram.', 29, 20000),
 (5, 'Makanan', 'Soto Betawi', 'images/soto_betawi.webp', 'Soto santan khas Betawi dengan daging sapi.', 28, 28000),
 (6, 'Minuman', 'Es Teh Manis', 'images/es_teh_manis.webp', 'Minuman teh segar dengan gula asli.', 60, 8000),
 (7, 'Minuman', 'Es Jeruk Peras', 'images/es_jeruk_peras.jpeg', 'Minuman jeruk peras asli tanpa pengawet.', 55, 10000),
 (8, 'Minuman', 'Kopi Susu Dingin', 'images/kopi_susu_dingin.webp', 'Kopi robusta dengan susu dan es.', 50, 15000),
 (9, 'Minuman', 'Jus Alpukat', 'images/jus_alpukat.jpg', 'Jus alpukat segar dengan susu cokelat.', 44, 18000),
 (10, 'Minuman', 'Wedang Jahe', 'images/wedang_jahe.jpeg', 'Minuman hangat jahe dengan gula merah.', 36, 12000),
-(51, 'Minuman', 'Vanila Spesial', 'images/vanila_spesial.jpg', 'Jus Vanila dengan ekstrak Kopi', 2, 25000),
+(51, 'Minuman', 'Vanila Spesial', 'images/vanila_spesial.jpg', 'Jus Vanila dengan ekstrak Kopi', 0, 25000),
 (53, 'Makanan', 'Nasi Bakar Spesial', 'images/nasi_bakar_spesial.webp', 'Nasi yang dibakar dengan balutan daun pisang', 12, 48000);
 
 --
@@ -146,10 +175,12 @@ DELIMITER $$
 CREATE TRIGGER `check_duplicate_nama` BEFORE INSERT ON `produk` FOR EACH ROW BEGIN
     DECLARE duplicate_count INT;
 
+    -- Check for existing product with the same name
     SELECT COUNT(*) INTO duplicate_count
     FROM produk
     WHERE nama = NEW.nama;
 
+    -- If a duplicate is found, signal an error
     IF duplicate_count > 0 THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Produk sudah ada';
     END IF;
@@ -194,19 +225,7 @@ CREATE TABLE `vw_order_summary` (
 --
 DROP TABLE IF EXISTS `view_menu`;
 
-CREATE 
-ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
-VIEW `view_menu`  
-AS 
-SELECT `produk`.`id_produk` AS `id_produk`,
-`produk`.`kategori` AS `kategori`,
-`produk`.`nama` AS `nama`, 
-`produk`.`image` AS `image`, 
-`produk`.`keterangan` AS `keterangan`, 
-`produk`.`harga` AS `harga` 
-FROM `produk` 
-ORDER BY `produk`.`kategori` 
-ASC, `produk`.`nama` ASC ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_menu`  AS SELECT `produk`.`id_produk` AS `id_produk`, `produk`.`kategori` AS `kategori`, `produk`.`nama` AS `nama`, `produk`.`image` AS `image`, `produk`.`keterangan` AS `keterangan`, `produk`.`harga` AS `harga` FROM `produk` ORDER BY `produk`.`kategori` ASC, `produk`.`nama` ASC ;
 
 -- --------------------------------------------------------
 
@@ -215,21 +234,13 @@ ASC, `produk`.`nama` ASC ;
 --
 DROP TABLE IF EXISTS `vw_order_summary`;
 
-CREATE 
-ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
-VIEW `vw_order_summary`  
-AS 
-SELECT `o`.`id_order` AS `id_order`,
-`o`.`nama_pembeli` AS `nama_pembeli`, 
-`o`.`meja` AS `meja`, 
-sum(`oi`.`jumlah`) AS `total_produk`, 
-sum(`oi`.`jumlah` * `oi`.`harga_satuan`) AS `total_harga`, 
-`o`.`created_at` AS `created_at` 
-FROM (`orders` `o` 
-  join `order_items` `oi` on(`o`.`id_order` = `oi`.`id_order`)) 
-GROUP BY `o`.`id_order`, `o`.`nama_pembeli`, `o`.`meja`, `o`.`created_at` 
-ORDER BY `o`.`created_at` DESC, `o`.`nama_pembeli` ASC ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_order_summary`  AS SELECT `o`.`id_order` AS `id_order`, `o`.`nama_pembeli` AS `nama_pembeli`, `o`.`meja` AS `meja`, sum(`oi`.`jumlah`) AS `total_produk`, sum(`oi`.`jumlah` * `oi`.`harga_satuan`) AS `total_harga`, `o`.`created_at` AS `created_at` FROM (`orders` `o` join `order_items` `oi` on(`o`.`id_order` = `oi`.`id_order`)) GROUP BY `o`.`id_order`, `o`.`nama_pembeli`, `o`.`meja`, `o`.`created_at` ORDER BY `o`.`created_at` DESC, `o`.`nama_pembeli` ASC ;
 
+--
+-- Indexes for dumped tables
+--
+
+--
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
@@ -256,6 +267,11 @@ ALTER TABLE `order_items`
 ALTER TABLE `produk`
   ADD PRIMARY KEY (`id_produk`);
 
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
@@ -265,13 +281,13 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id_order_item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id_order_item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `produk`
@@ -279,35 +295,16 @@ ALTER TABLE `order_items`
 ALTER TABLE `produk`
   MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
-DELIMITER $$
-
-CREATE PROCEDURE GetMenuItems()
-BEGIN
-  SELECT 
-    id_produk,
-    nama AS nama_produk,
-    harga,
-    kategori,
-    image,
-    stok,
-    CASE
-      WHEN stok = 0 THEN 'Produk habis'
-      ELSE keterangan
-    END AS keterangan
-  FROM produk
-  ORDER BY kategori, nama;
-END$$
-
-DELIMITER ;
+--
+-- Constraints for dumped tables
+--
 
 --
 -- Constraints for table `order_items`
 --
 ALTER TABLE `order_items`
-  ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`id_order`) 
-  REFERENCES `orders` (`id_order`) ON DELETE CASCADE,
-  ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`id_produk`) 
-  REFERENCES `produk` (`id_produk`);
+  ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`id_order`) REFERENCES `orders` (`id_order`) ON DELETE CASCADE,
+  ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`id_produk`) REFERENCES `produk` (`id_produk`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
