@@ -202,11 +202,6 @@ DROP TABLE IF EXISTS `vw_order_summary`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_order_summary`  AS SELECT `o`.`id_order` AS `id_order`, `o`.`nama_pembeli` AS `nama_pembeli`, `o`.`meja` AS `meja`, sum(`oi`.`jumlah`) AS `total_produk`, sum(`oi`.`jumlah` * `oi`.`harga_satuan`) AS `total_harga`, `o`.`created_at` AS `created_at` FROM (`orders` `o` join `order_items` `oi` on(`o`.`id_order` = `oi`.`id_order`)) GROUP BY `o`.`id_order`, `o`.`nama_pembeli`, `o`.`meja`, `o`.`created_at` ORDER BY `o`.`created_at` DESC, `o`.`nama_pembeli` ASC ;
 
---
--- Indexes for dumped tables
---
-
---
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
@@ -233,11 +228,6 @@ ALTER TABLE `order_items`
 ALTER TABLE `produk`
   ADD PRIMARY KEY (`id_produk`);
 
---
--- AUTO_INCREMENT for dumped tables
---
-
---
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
@@ -261,9 +251,26 @@ ALTER TABLE `order_items`
 ALTER TABLE `produk`
   MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
---
--- Constraints for dumped tables
---
+DELIMITER $$
+
+CREATE PROCEDURE GetMenuItems()
+BEGIN
+  SELECT 
+    id_produk,
+    nama AS nama_produk,
+    harga,
+    kategori,
+    image,
+    stok,
+    CASE
+      WHEN stok = 0 THEN 'Produk habis'
+      ELSE keterangan
+    END AS keterangan
+  FROM produk
+  ORDER BY kategori, nama;
+END$$
+
+DELIMITER ;
 
 --
 -- Constraints for table `order_items`
