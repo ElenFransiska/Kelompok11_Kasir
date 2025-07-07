@@ -78,7 +78,7 @@
     <div class="error-container">
         <h2>Login Gagal!</h2>
         <p>Username atau password tidak valid.</p>
-        <a href="login.php" class="back-to-login-btn">Kembali ke Halaman Login</a>
+        <a href="../Kelompok11_Kasir/Interface/login.php" class="back-to-login-btn">Kembali ke Halaman Login</a>
     </div>
 
     <?php

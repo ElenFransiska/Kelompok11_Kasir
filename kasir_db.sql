@@ -85,7 +85,11 @@ CREATE TABLE `order_items` (
 -- Triggers `order_items`
 --
 DELIMITER $$
-CREATE TRIGGER `trg_check_stock_before_order_item_insert` BEFORE INSERT ON `order_items` FOR EACH ROW BEGIN
+CREATE TRIGGER `trg_check_stock_before_order_item_insert` 
+BEFORE INSERT 
+ON `order_items` 
+FOR EACH ROW 
+BEGIN
     DECLARE current_stock INT;
 
     SELECT stok INTO current_stock
@@ -93,7 +97,8 @@ CREATE TRIGGER `trg_check_stock_before_order_item_insert` BEFORE INSERT ON `orde
     WHERE id_produk = NEW.id_produk;
 
     IF NEW.jumlah > current_stock THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Stok produk tidak cukup untuk pesanan ini.';
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'Stok produk tidak cukup untuk pesanan ini.';
     END IF;
 
 END
@@ -141,12 +146,10 @@ DELIMITER $$
 CREATE TRIGGER `check_duplicate_nama` BEFORE INSERT ON `produk` FOR EACH ROW BEGIN
     DECLARE duplicate_count INT;
 
-    -- Check for existing product with the same name
     SELECT COUNT(*) INTO duplicate_count
     FROM produk
     WHERE nama = NEW.nama;
 
-    -- If a duplicate is found, signal an error
     IF duplicate_count > 0 THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Produk sudah ada';
     END IF;
@@ -191,7 +194,19 @@ CREATE TABLE `vw_order_summary` (
 --
 DROP TABLE IF EXISTS `view_menu`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_menu`  AS SELECT `produk`.`id_produk` AS `id_produk`, `produk`.`kategori` AS `kategori`, `produk`.`nama` AS `nama`, `produk`.`image` AS `image`, `produk`.`keterangan` AS `keterangan`, `produk`.`harga` AS `harga` FROM `produk` ORDER BY `produk`.`kategori` ASC, `produk`.`nama` ASC ;
+CREATE 
+ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+VIEW `view_menu`  
+AS 
+SELECT `produk`.`id_produk` AS `id_produk`,
+`produk`.`kategori` AS `kategori`,
+`produk`.`nama` AS `nama`, 
+`produk`.`image` AS `image`, 
+`produk`.`keterangan` AS `keterangan`, 
+`produk`.`harga` AS `harga` 
+FROM `produk` 
+ORDER BY `produk`.`kategori` 
+ASC, `produk`.`nama` ASC ;
 
 -- --------------------------------------------------------
 
@@ -200,7 +215,20 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `vw_order_summary`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_order_summary`  AS SELECT `o`.`id_order` AS `id_order`, `o`.`nama_pembeli` AS `nama_pembeli`, `o`.`meja` AS `meja`, sum(`oi`.`jumlah`) AS `total_produk`, sum(`oi`.`jumlah` * `oi`.`harga_satuan`) AS `total_harga`, `o`.`created_at` AS `created_at` FROM (`orders` `o` join `order_items` `oi` on(`o`.`id_order` = `oi`.`id_order`)) GROUP BY `o`.`id_order`, `o`.`nama_pembeli`, `o`.`meja`, `o`.`created_at` ORDER BY `o`.`created_at` DESC, `o`.`nama_pembeli` ASC ;
+CREATE 
+ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
+VIEW `vw_order_summary`  
+AS 
+SELECT `o`.`id_order` AS `id_order`,
+`o`.`nama_pembeli` AS `nama_pembeli`, 
+`o`.`meja` AS `meja`, 
+sum(`oi`.`jumlah`) AS `total_produk`, 
+sum(`oi`.`jumlah` * `oi`.`harga_satuan`) AS `total_harga`, 
+`o`.`created_at` AS `created_at` 
+FROM (`orders` `o` 
+  join `order_items` `oi` on(`o`.`id_order` = `oi`.`id_order`)) 
+GROUP BY `o`.`id_order`, `o`.`nama_pembeli`, `o`.`meja`, `o`.`created_at` 
+ORDER BY `o`.`created_at` DESC, `o`.`nama_pembeli` ASC ;
 
 -- Indexes for table `admin`
 --
@@ -276,8 +304,10 @@ DELIMITER ;
 -- Constraints for table `order_items`
 --
 ALTER TABLE `order_items`
-  ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`id_order`) REFERENCES `orders` (`id_order`) ON DELETE CASCADE,
-  ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`id_produk`) REFERENCES `produk` (`id_produk`);
+  ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`id_order`) 
+  REFERENCES `orders` (`id_order`) ON DELETE CASCADE,
+  ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`id_produk`) 
+  REFERENCES `produk` (`id_produk`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

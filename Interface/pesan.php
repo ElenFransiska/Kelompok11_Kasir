@@ -3,9 +3,7 @@ require_once '../db_connection.php';
 
 // Fetch products from the database
 $products = [];
-// Perhatikan: Menggunakan 'nama' dan 'keterangan' sesuai struktur tabel Anda
-// Menghilangkan 'stok' dari SELECT query
-$sql = "SELECT id_produk, nama AS nama_produk, harga, image, kategori, keterangan AS deskripsi FROM produk ORDER BY kategori, nama_produk";
+$sql = "CALL GetMenuItems()";
 $result = $conn->query($sql);
 
 if ($result === FALSE) {
@@ -14,6 +12,7 @@ if ($result === FALSE) {
 
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
+        $row['deskripsi'] = $row['keterangan'];
         $products[] = $row;
     }
 }

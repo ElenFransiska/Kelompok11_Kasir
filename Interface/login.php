@@ -231,7 +231,7 @@
             <button type="submit" class="login-button">
                 <span class="arrow-icon">&rarr;</span> OK
             </button>
-            <p class="back-link"><a href="index.php">&larr; Kembali ke Home</a></p>
+            <p class="back-link"><a href="../index.php">&larr; Kembali ke Home</a></p>
         </form>
     </div>
 </body>
